@@ -167,7 +167,7 @@ namespace Hspi.Pages
 
             StringBuilder stb = new StringBuilder();
 
-            stb.Append(PageBuilderAndMenu.clsPageBuilder.FormStart("ftmCameraPropertyChange", "IdChange", "Post"));
+            stb.Append(FormStart("ftmCameraPropertyChange", "IdChange", "Post"));
 
             stb.Append(@"<div>");
             stb.Append(@"<table class='full_width_table'>");
@@ -190,7 +190,7 @@ namespace Hspi.Pages
             }
             else
             {
-                stb.Append(HtmlTextBox(nameof(CameraProperty.Type), type, type: "hidden"));
+                stb.Append(HtmlEncode(type));
             }
             stb.Append("</td></tr>");
 
@@ -207,7 +207,7 @@ namespace Hspi.Pages
             stb.Append("<tr height='5'><td colspan=2></td></tr>");
             stb.Append(@"</table>");
             stb.Append(@"</div>");
-            stb.Append(PageBuilderAndMenu.clsPageBuilder.FormEnd());
+            stb.Append(FormEnd());
 
             return stb.ToString();
         }

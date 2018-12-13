@@ -90,6 +90,7 @@
     <Compile Include="Camera\HikvisionCamera.cs" />
     <Compile Include="Camera\RecordedVideo.cs" />
     <Compile Include="Camera\XmlPathData.cs" />
+    <Compile Include="DeviceData\DeviceType.cs" />
     <Compile Include="DeviceData\NumberDeviceData.cs" />
     <Compile Include="DeviceData\RootDeviceData.cs" />
     <Compile Include="DeviceData\AlarmDeviceData.cs" />

@@ -1,24 +1,11 @@
-﻿using Scheduler.Classes;
+﻿using NullGuard;
+using Scheduler.Classes;
 using System;
 using static System.FormattableString;
-using System.ComponentModel;
 
 namespace Hspi.DeviceData
 {
-    internal enum DeviceType
-    {
-        [Description("Camera Property String")]
-        Root = 0,
-
-        [Description("Camera Property String")]
-        CameraPropertyString = 1,
-
-        [Description("Camera Property Number")]
-        CameraPropertyNumber = 2,
-
-        Alarm,
-    }
-
+    [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal class DeviceIdentifier
     {
         public DeviceIdentifier(string deviceId, DeviceType deviceType, string deviceTypeId)
