@@ -10,6 +10,7 @@ using System.Linq;
 using static System.FormattableString;
 using NullGuard;
 using System.Collections.Immutable;
+using Hspi.Utils;
 
 namespace Hspi
 {
@@ -51,8 +52,7 @@ namespace Hspi
                              GetValue(nameof(CameraProperty.Name), string.Empty, cameraPropertyId),
                              GetValue(nameof(CameraProperty.UrlPath), string.Empty, cameraPropertyId),
                              GetValue(nameof(CameraProperty.XPathForGet.Path.Expression), string.Empty, cameraPropertyId),
-                             GetValue(nameof(CameraProperty.StringValues), string.Empty, cameraPropertyId)
-                             .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToImmutableSortedSet()));
+                             ObjectSerialize.DeSerializeToObject<List<string>>(GetValue(nameof(CameraProperty.StringValues), string.Empty, cameraPropertyId))?.ToImmutableSortedSet()));
                 }
                 catch (Exception ex)
                 {
@@ -170,7 +170,7 @@ namespace Hspi
                 cameraProperties[cameraProperty.Id] = cameraProperty;
 
                 SetValue(nameof(cameraProperty.Name), cameraProperty.Name, cameraProperty.Id);
-                SetValue(nameof(cameraProperty.StringValues), Environment.NewLine + string.Join(Environment.NewLine, cameraProperty.StringValues), cameraProperty.Id);
+                SetValue(nameof(cameraProperty.StringValues), ObjectSerialize.SerializeToString(cameraProperty.StringValues.ToList()), cameraProperty.Id);
                 SetValue(nameof(cameraProperty.UrlPath), cameraProperty.UrlPath, cameraProperty.Id);
                 SetValue(nameof(cameraProperty.XPathForGet.Path.Expression), cameraProperty.XPathForGet.Path.Expression, cameraProperty.Id);
 

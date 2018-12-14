@@ -120,6 +120,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ObjectSerialize.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -11,13 +11,13 @@ namespace Hspi.Camera
                              string name,
                              string urlPath,
                              string xpath,
-                             ImmutableSortedSet<string> stringValues)
+                             [AllowNull]ImmutableSortedSet<string> stringValues)
         {
             Id = id;
             Name = name;
             XPathForGet = new XmlPathData(xpath);
             UrlPath = urlPath;
-            StringValues = stringValues;
+            StringValues = stringValues ?? ImmutableSortedSet<string>.Empty;
         }
 
         public string Id { get; }

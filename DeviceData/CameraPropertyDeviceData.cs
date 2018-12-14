@@ -35,7 +35,8 @@ namespace Hspi.DeviceData
                             PairType = VSVGPairs.VSVGPairType.SingleValue,
                             Value = i++,
                             Status = value,
-                            Render = Enums.CAPIControlType.Button
+                            Render = Enums.CAPIControlType.Button,
+                            ControlUse = ePairControlUse.Not_Specified,
                         });
                     }
                 }
