@@ -67,11 +67,6 @@ namespace Hspi.DeviceData
             }
         }
 
-        public override Task HandleCommand(HikvisionCamera camera, CancellationToken token, string stringValue, double value, ePairControlUse control)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override void Update(IHSApplication HS, string deviceValue)
         {
             if (lastUpdateString == null || lastUpdateString != deviceValue)

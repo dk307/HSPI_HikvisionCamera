@@ -54,7 +54,7 @@ namespace Hspi.DeviceData
                 throw new HspiException(Invariant($"{deviceIdentifier.Address} Not Found."));
             }
 
-            return deviceData.HandleCommand(camera, cancellationToken, stringValue, value, control);
+            return deviceData.HandleCommand(HS, camera, cancellationToken, stringValue, value, control);
         }
 
         private void CreateDevice(DeviceIdentifier deviceIdentifier)
@@ -142,7 +142,7 @@ namespace Hspi.DeviceData
                     parent.AssociatedDevice_Add(HS, device.get_Ref(HS));
                 }
 
-                deviceData.SetInitialData(HS, refId);
+                deviceData.SetInitialData(HS, CameraSettings, refId);
             }
 
             return device;

@@ -126,7 +126,8 @@ namespace Hspi.DeviceData
             }
         }
 
-        public override Task HandleCommand(HikvisionCamera camera,
+        public override Task HandleCommand(IHSApplication HS,
+                                           HikvisionCamera camera,
                                            CancellationToken token,
                                            string stringValue,
                                            double value,
@@ -160,10 +161,10 @@ namespace Hspi.DeviceData
                     return camera.StopRecording(HikvisionCamera.Track2);
 
                 case Commands.TakeSnapshotTrack1:
-                    return camera.DownloadSnapshot(HikvisionCamera.Track1);
+                    return TakeSnapshot(HS, camera, HikvisionCamera.Track1);
 
                 case Commands.TakeSnapshotTrack2:
-                    return camera.DownloadSnapshot(HikvisionCamera.Track2);
+                    return TakeSnapshot(HS, camera, HikvisionCamera.Track2);
 
                 case Commands.Poll:
                     return camera.RefreshProperties();
@@ -172,12 +173,40 @@ namespace Hspi.DeviceData
             return Task.FromResult(true);
         }
 
-        public override void SetInitialData(IHSApplication HS, int refID)
+        public override void SetInitialData(IHSApplication HS, CameraSettings cameraSettings, int refID)
         {
             HS.set_DeviceInvalidValue(refID, false);
             HS.SetDeviceString(refID, "Root", false);
+            for (int i = 1; i <= TotalGlobalVars; i++)
+            {
+                HS.CreateVar(GetGlobalVarName(cameraSettings, i));
+            }
         }
 
         public override void Update(IHSApplication HS, string deviceValue) => throw new System.NotImplementedException();
+
+        private static string GetGlobalVarName(CameraSettings camera, int pos)
+        {
+            return Invariant($"{camera.Name.Replace(' ', '_')}_snapshot{pos}");
+        }
+
+        private void SetGlobalVar(IHSApplication HS, HikvisionCamera camera, string path)
+        {
+            HS.SaveVar(GetGlobalVarName(camera.CameraSettings, lastGlobalVar++), path);
+
+            if (lastGlobalVar > TotalGlobalVars)
+            {
+                lastGlobalVar = 1;
+            }
+        }
+
+        private async Task TakeSnapshot(IHSApplication HS, HikvisionCamera camera, int track)
+        {
+            string path = await camera.DownloadSnapshot(track).ConfigureAwait(false);
+            SetGlobalVar(HS, camera, path);
+        }
+
+        private const int TotalGlobalVars = 3;
+        private int lastGlobalVar = 1;
     }
 }

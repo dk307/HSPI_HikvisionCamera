@@ -44,9 +44,17 @@ namespace Hspi.DeviceData
         /// <returns></returns>
         public abstract IList<VSVGPairs.VSPair> StatusPairs { get; }
 
-        public abstract Task HandleCommand(HikvisionCamera camera, CancellationToken token, string stringValue, double value, ePairControlUse control);
+        public virtual Task HandleCommand(IHSApplication HS,
+                                          HikvisionCamera camera,
+                                          CancellationToken token,
+                                          string stringValue,
+                                          double value,
+                                          ePairControlUse control)
+        {
+            return Task.FromResult(true);
+        }
 
-        public virtual void SetInitialData(IHSApplication HS, int refId)
+        public virtual void SetInitialData(IHSApplication HS, CameraSettings cameraSettings, int refId)
         {
             HS.SetDeviceValueByRef(refId, 0D, false);
             HS.set_DeviceInvalidValue(refId, true);
