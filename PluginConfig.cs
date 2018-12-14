@@ -170,7 +170,7 @@ namespace Hspi
                 cameraProperties[cameraProperty.Id] = cameraProperty;
 
                 SetValue(nameof(cameraProperty.Name), cameraProperty.Name, cameraProperty.Id);
-                SetValue(nameof(cameraProperty.StringValues), string.Join(Environment.NewLine, cameraProperty.StringValues), cameraProperty.Id);
+                SetValue(nameof(cameraProperty.StringValues), Environment.NewLine + string.Join(Environment.NewLine, cameraProperty.StringValues), cameraProperty.Id);
                 SetValue(nameof(cameraProperty.UrlPath), cameraProperty.UrlPath, cameraProperty.Id);
                 SetValue(nameof(cameraProperty.XPathForGet.Path.Expression), cameraProperty.XPathForGet.Path.Expression, cameraProperty.Id);
 
