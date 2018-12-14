@@ -65,19 +65,34 @@ namespace Hspi.DeviceData
         protected void UpdateDeviceData(IHSApplication HS, double data)
         {
             HS.set_DeviceInvalidValue(RefId, false);
+            HS.SetDeviceString(RefId, string.Empty, false);
             HS.SetDeviceValueByRef(RefId, data, true);
         }
 
-        protected void UpdateDeviceData(IHSApplication HS, [AllowNull]string data)
+        protected void UpdateDeviceData(IHSApplication HS, string data)
         {
             if (data == null)
             {
+                HS.SetDeviceString(RefId, string.Empty, true);
                 HS.set_DeviceInvalidValue(RefId, true);
             }
             else
             {
                 HS.set_DeviceInvalidValue(RefId, false);
                 HS.SetDeviceString(RefId, data, true);
+            }
+        }
+
+        protected void UpdateDeviceData(IHSApplication HS, [AllowNull]string data, [AllowNull] double? doubleData)
+        {
+            if (doubleData.HasValue)
+            {
+                UpdateDeviceData(HS, doubleData.Value);
+            }
+            else
+            {
+                HS.SetDeviceString(RefId, data, true);
+                HS.set_DeviceInvalidValue(RefId, true);
             }
         }
     };

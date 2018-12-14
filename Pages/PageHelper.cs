@@ -114,6 +114,11 @@ namespace Hspi.Pages
             return b.Build();
         }
 
+        protected static string TextArea(string name, [AllowNull]string defaultText, int rows = 6, int cols = 120, bool @readonly = false)
+        {
+            return Invariant($"<textarea form_id=\'{NameToIdWithPrefix(name)}\' rows=\'{rows}\' cols=\'{cols}\' name=\'{name}\'  {(@readonly ? "readonly" : string.Empty)}>{HtmlEncode(defaultText)}</textarea>");
+        }
+
         protected static string FormDropDown(string name, NameValueCollection options, string selected,
                               int width, string tooltip, bool autoPostBack, string pageName)
         {

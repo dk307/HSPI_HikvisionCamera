@@ -25,13 +25,14 @@ namespace Hspi.Camera
 
         public string Id => AlarmReadableName(AlarmType);
 
-        public const string AlarmOffValue = "0";
+        public const string AlarmOffValue = "Off";
+        public const string AlarmOnValue = "On";
 
         public string Value
         {
             get
             {
-                return !Active ? AlarmOffValue : "1";
+                return !Active ? AlarmOffValue : AlarmOnValue;
             }
         }
 

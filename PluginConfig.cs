@@ -51,7 +51,8 @@ namespace Hspi
                              GetValue(nameof(CameraProperty.Name), string.Empty, cameraPropertyId),
                              GetValue(nameof(CameraProperty.UrlPath), string.Empty, cameraPropertyId),
                              GetValue(nameof(CameraProperty.XPathForGet.Path.Expression), string.Empty, cameraPropertyId),
-                             GetValue(nameof(CameraProperty.CameraPropertyType), CameraProperty.Type.String, cameraPropertyId)));
+                             GetValue(nameof(CameraProperty.StringValues), string.Empty, cameraPropertyId)
+                             .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToImmutableSortedSet()));
                 }
                 catch (Exception ex)
                 {
@@ -169,7 +170,7 @@ namespace Hspi
                 cameraProperties[cameraProperty.Id] = cameraProperty;
 
                 SetValue(nameof(cameraProperty.Name), cameraProperty.Name, cameraProperty.Id);
-                SetValue(nameof(cameraProperty.CameraPropertyType), cameraProperty.CameraPropertyType, cameraProperty.Id);
+                SetValue(nameof(cameraProperty.StringValues), string.Join(Environment.NewLine, cameraProperty.StringValues), cameraProperty.Id);
                 SetValue(nameof(cameraProperty.UrlPath), cameraProperty.UrlPath, cameraProperty.Id);
                 SetValue(nameof(cameraProperty.XPathForGet.Path.Expression), cameraProperty.XPathForGet.Path.Expression, cameraProperty.Id);
 

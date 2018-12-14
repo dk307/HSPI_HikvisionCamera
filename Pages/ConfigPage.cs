@@ -4,6 +4,7 @@ using NullGuard;
 using Scheduler;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
@@ -156,14 +157,10 @@ namespace Hspi.Pages
             string name = cameraProperties?.Name ?? string.Empty;
             string urlPath = cameraProperties?.UrlPath ?? string.Empty;
             string xpath = cameraProperties?.XPathForGet.Path.Expression ?? string.Empty;
-            string type = cameraProperties?.CameraPropertyType.ToString() ?? CameraProperty.Type.String.ToString();
+            string values = string.Join(Environment.NewLine, cameraProperties?.StringValues ?? ImmutableSortedSet<string>.Empty);
 
             string buttonLabel = cameraProperties != null ? "Save" : "Add";
             string header = cameraProperties != null ? "Edit Camera Property" : "Add New Camera Property";
-
-            NameValueCollection collection = new NameValueCollection();
-            collection.Add(CameraProperty.Type.String.ToString(), CameraProperty.Type.String.ToString());
-            collection.Add(CameraProperty.Type.Number.ToString(), CameraProperty.Type.Number.ToString());
 
             StringBuilder stb = new StringBuilder();
 
@@ -183,15 +180,8 @@ namespace Hspi.Pages
             stb.Append(Invariant($"<tr><td class='tablecell'>XPath:</td><td class='tablecell'>"));
             stb.Append(HtmlTextBox(nameof(CameraProperty.XPathForGet), xpath, size: 90));
             stb.Append("</td></tr>");
-            stb.Append(Invariant($"<tr><td class='tablecell'>Type:</td><td class='tablecell'>"));
-            if (cameraProperties == null)
-            {
-                stb.Append(FormDropDown(nameof(CameraProperty.Type), collection, type, 100, string.Empty, false, string.Empty));
-            }
-            else
-            {
-                stb.Append(HtmlEncode(type));
-            }
+            stb.Append(Invariant($"<tr><td class='tablecell'>Valid string values(separated by lines):</td><td class='tablecell'>"));
+            stb.Append(TextArea(nameof(CameraProperty.StringValues), values));
             stb.Append("</td></tr>");
 
             stb.Append(Invariant($"<tr><td colspan=2>{HtmlTextBox(RecordId, id, type: "hidden")}<div id='{SaveErrorDivId}' style='color:Red'></div></td><td></td></tr>"));
@@ -333,6 +323,7 @@ namespace Hspi.Pages
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "path")]
         private void HandleCameraPropertyPostBack(NameValueCollection parts, string form)
         {
             if (form == NameToIdWithPrefix(DeleteCameraProperty))
@@ -376,10 +367,7 @@ namespace Hspi.Pages
                     results.AppendLine("XPath is not valid.<br>");
                 }
 
-                if (!Enum.TryParse<CameraProperty.Type>(parts[nameof(CameraProperty.Type)], out var type))
-                {
-                    results.AppendLine("Type is not valid.<br>");
-                }
+                string stringValues = parts[nameof(CameraProperty.StringValues)];
 
                 if (results.Length > 0)
                 {
@@ -398,7 +386,7 @@ namespace Hspi.Pages
                                                   cameraPropertyName,
                                                   cameraPropertyUrlPath,
                                                   cameraPropertyXPath,
-                                                  type);
+                                                  stringValues.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToImmutableSortedSet());
 
                     this.pluginConfig.AddCameraProperty(data);
                     this.pluginConfig.FireConfigChanged();
@@ -560,7 +548,6 @@ namespace Hspi.Pages
             stb.Append(@"<thead><tr>");
 
             stb.Append(Invariant($"<th>Name</th>"));
-            stb.Append(Invariant($"<th>Type</th>"));
             stb.Append(Invariant($"<th>UrlPath</th>"));
             stb.Append(Invariant($"<th>XPath</th>"));
             stb.Append(Invariant($"<th></th>"));
@@ -575,7 +562,6 @@ namespace Hspi.Pages
 
                 stb.Append(@"<tr>");
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.Name)}</td>"));
-                stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.CameraPropertyType)}</td>"));
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.UrlPath)}</td>"));
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.XPathForGet.Path.Expression)}</td>"));
                 stb.Append("<td class='tablecell'>");
@@ -594,7 +580,6 @@ namespace Hspi.Pages
                                             { 'className': 'dt-left', 'targets': '_all'}
                                         ],
                                         'columns': [
-                                            null,
                                             null,
                                             null,
                                             null,

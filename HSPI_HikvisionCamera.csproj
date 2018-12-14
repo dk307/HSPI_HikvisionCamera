@@ -90,11 +90,10 @@
     <Compile Include="Camera\HikvisionCamera.cs" />
     <Compile Include="Camera\RecordedVideo.cs" />
     <Compile Include="Camera\XmlPathData.cs" />
+    <Compile Include="DeviceData\CameraPropertyDeviceData.cs" />
     <Compile Include="DeviceData\DeviceType.cs" />
-    <Compile Include="DeviceData\NumberDeviceData.cs" />
     <Compile Include="DeviceData\RootDeviceData.cs" />
     <Compile Include="DeviceData\AlarmDeviceData.cs" />
-    <Compile Include="DeviceData\StringDeviceData.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Utils\CombinedCancelToken.cs" />
     <Compile Include="Pages\PageHelper.cs" />

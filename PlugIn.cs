@@ -37,6 +37,8 @@ namespace Hspi
 #endif
                 pluginConfig.ConfigChanged += PluginConfig_ConfigChanged;
 
+                //Callback.RegisterEventCB(Enums.HSEvent.STRING_CHANGE, Name, string.Empty);
+
                 RegisterConfigPage();
 
                 RestartStreamSaveOperations();
@@ -143,11 +145,14 @@ namespace Hspi
                     {
                         if (connectorManager.TryGetValue(deviceIdentifier.DeviceId, out var connector))
                         {
-                            connector.HandleCommand(deviceIdentifier, control.ControlString, control.ControlValue, control.ControlUse).Wait();
+                            connector.HandleCommand(deviceIdentifier,
+                                                    control.Label,
+                                                    control.ControlValue,
+                                                    control.ControlUse).Wait();
                         }
                         else
                         {
-                            throw new HspiException(Invariant($"{refId} Device Not Found for processing."));
+                            throw new HspiException(Invariant($"{refId} device not found for processing."));
                         }
                     }
                 }

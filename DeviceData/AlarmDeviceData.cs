@@ -2,13 +2,10 @@ using HomeSeerAPI;
 using Hspi.Camera;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using static System.FormattableString;
 
 namespace Hspi.DeviceData
 {
-    internal class AlarmDeviceData : DeviceDataBase
+    internal sealed class AlarmDeviceData : DeviceDataBase
     {
         public AlarmDeviceData(string alarmType) : base(DeviceType.Alarm, alarmType)
         {
@@ -25,7 +22,7 @@ namespace Hspi.DeviceData
                 {
                     PairType = VSVGPairs.VSVGPairType.SingleValue,
                     Graphic = Path.Combine(PluginData.HSImagesPathRoot, "on.gif"),
-                    Set_Value = OnValue
+                    Set_Value = OnValue,
                 });
 
                 pairs.Add(new VSVGPairs.VGPair()
@@ -51,7 +48,7 @@ namespace Hspi.DeviceData
                     PairType = VSVGPairs.VSVGPairType.SingleValue,
                     Value = OffValue,
                     ControlUse = ePairControlUse._Off,
-                    Status = "Off",
+                    Status = AlarmInfo.AlarmOffValue,
                     Render = Enums.CAPIControlType.Button
                 });
 
@@ -60,7 +57,7 @@ namespace Hspi.DeviceData
                     PairType = VSVGPairs.VSVGPairType.SingleValue,
                     Value = OnValue,
                     ControlUse = ePairControlUse._On,
-                    Status = "On",
+                    Status = AlarmInfo.AlarmOnValue,
                     Render = Enums.CAPIControlType.Button
                 });
                 return pairs;

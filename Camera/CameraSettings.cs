@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NullGuard;
+using System;
 using System.Collections.Immutable;
 using System.Linq;
-using NullGuard;
 
 namespace Hspi.Camera
 {

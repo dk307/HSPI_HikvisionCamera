@@ -3,8 +3,7 @@
     internal enum DeviceType
     {
         Root,
-        CameraPropertyString,
-        CameraPropertyNumber,
+        CameraProperty,
         Alarm,
     }
 }

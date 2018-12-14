@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using NullGuard;
 
 namespace Hspi.Camera
@@ -6,27 +7,26 @@ namespace Hspi.Camera
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal class CameraProperty : IEquatable<CameraProperty>
     {
-        public enum Type
-        {
-            String,
-            Number,
-        }
-
-        public CameraProperty(string id, string name, string urlPath, string xpath, Type type)
+        public CameraProperty(string id,
+                             string name,
+                             string urlPath,
+                             string xpath,
+                             ImmutableSortedSet<string> stringValues)
         {
             Id = id;
             Name = name;
             XPathForGet = new XmlPathData(xpath);
             UrlPath = urlPath;
-            CameraPropertyType = type;
+            StringValues = stringValues;
         }
 
         public string Id { get; }
         public string Name { get; }
         public string UrlPath { get; }
         public XmlPathData XPathForGet { get; }
-        public Type CameraPropertyType { get; }
+        public ImmutableSortedSet<string> StringValues { get; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         public bool Equals([AllowNull] CameraProperty other)
         {
             if (other == null)
@@ -43,7 +43,7 @@ namespace Hspi.Camera
                    Name == other.Name &&
                    UrlPath == other.UrlPath &&
                    XPathForGet.Path.Expression == other.XPathForGet.Path.Expression &&
-                   CameraPropertyType == other.CameraPropertyType;
+                   StringValues.SetEquals(other.StringValues);
         }
 
         public override bool Equals(object obj)
@@ -69,7 +69,7 @@ namespace Hspi.Camera
             return Name.GetHashCode() ^
                    UrlPath.GetHashCode() ^
                    XPathForGet.Path.Expression.GetHashCode() ^
-                   CameraPropertyType.GetHashCode();
+                   StringValues.GetHashCode();
         }
     };
 }

@@ -50,7 +50,7 @@ namespace Hspi
 
             using (var deviceLock = await rootDeviceDataLock.LockAsync(cancelTokenSource.Token).ConfigureAwait(false))
             {
-                await rootDeviceData.HandleCommand(deviceIdentifier, camera, stringValue, value, control);
+                await rootDeviceData.HandleCommand(deviceIdentifier, camera, stringValue, value, control).ConfigureAwait(false);
             }
         }
 

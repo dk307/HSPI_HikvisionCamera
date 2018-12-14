@@ -206,17 +206,10 @@ namespace Hspi.DeviceData
                 case DeviceType.Root:
                     return new RootDeviceData();
 
-                case DeviceType.CameraPropertyString:
+                case DeviceType.CameraProperty:
                     if (CameraSettings.PeriodicFetchedCameraProperties.TryGetValue(deviceIdentifier.DeviceTypeId, out var cameraProperty))
                     {
-                        return new StringCameraDeviceData(cameraProperty);
-                    }
-                    return null;
-
-                case DeviceType.CameraPropertyNumber:
-                    if (CameraSettings.PeriodicFetchedCameraProperties.TryGetValue(deviceIdentifier.DeviceTypeId, out var cameraProperty2))
-                    {
-                        return new NumberCameraDeviceData(cameraProperty2);
+                        return new CameraPropertyDeviceData(cameraProperty);
                     }
                     return null;
 

@@ -13,24 +13,7 @@ namespace Hspi.Camera
             Value = value;
         }
 
-        public DeviceType DeviceType
-        {
-            get
-            {
-                switch (Property.CameraPropertyType)
-                {
-                    case CameraProperty.Type.String:
-                        return DeviceType.CameraPropertyString;
-
-                    case CameraProperty.Type.Number:
-                        return DeviceType.CameraPropertyNumber;
-
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-        }
-
+        public DeviceType DeviceType => DeviceType.CameraProperty;
         public string Id => Property.Id;
         public CameraProperty Property { get; }
         public string Value { get; }
