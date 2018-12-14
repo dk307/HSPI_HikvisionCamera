@@ -40,7 +40,7 @@ namespace Hspi.Camera
             alarmStreamTask = Task.Factory.StartNew(StartAlarmStream, Token,
                                                    TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
                                                    TaskScheduler.Default).WaitAndUnwrapException(Token);
-            resetBackAlarmsLoopTask = Task.Factory.StartNew(ResetBackAlarmsLoop, Token,
+            alarmsBackgroundProcessingTask = Task.Factory.StartNew(ResetBackAlarmsLoop, Token,
                                                     TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
                                                     TaskScheduler.Default).WaitAndUnwrapException(Token);
             fetchPropertiesTask = Task.Factory.StartNew(FetchProperties, Token,
@@ -259,6 +259,38 @@ namespace Hspi.Camera
         private static string ToISO8601(DateTimeOffset filterStartTime)
         {
             return filterStartTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
+        }
+
+        private async Task AlarmsBackgroundProcessing()
+        {
+            using (var sync = await alarmTimersLock.LockAsync(Token).ConfigureAwait(false))
+            {
+                foreach (var pair in alarmsData)
+                {
+                    var alarmData = pair.Value;
+                    if (alarmData.state)
+                    {
+                        if (alarmData.lastReceived.Elapsed >= CameraSettings.AlarmCancelInterval)
+                        {
+                            alarmData.state = false;
+                            alarmData.lastReceived.Reset();
+                            alarmData.lastUpdated.Reset();
+                            var alarm = new AlarmInfo(pair.Key, alarmData.state);
+                            await Enqueue(alarm).ConfigureAwait(false);
+                        }
+                    }
+
+                    if (alarmData.state)
+                    {
+                        if (alarmData.lastUpdated.Elapsed >= CameraSettings.AlarmCancelInterval)
+                        {
+                            alarmData.lastUpdated.Restart();
+                            var alarm = new AlarmInfo(pair.Key, alarmData.state);
+                            await Enqueue(alarm).ConfigureAwait(false);
+                        }
+                    }
+                }
+            }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
@@ -485,52 +517,13 @@ namespace Hspi.Camera
 
             if (!string.IsNullOrWhiteSpace(alarmType) && enabled.HasValue)
             {
-                AlarmInfo alarm = new AlarmInfo(alarmType, enabled.Value);
+                var alarm = new AlarmInfo(alarmType, enabled.Value);
                 if (enabled.Value)
                 {
-                    if (!await ResetAlarmTimer(alarmType).ConfigureAwait(false))
+                    if (await UpdateForAlarm(alarmType).ConfigureAwait(false))
                     {
                         await Enqueue(alarm).ConfigureAwait(false);
                     }
-                }
-            }
-        }
-
-        private async Task<bool> ResetAlarmTimer(string alarmType)
-        {
-            bool alreadyContains = true;
-            using (var sync = await alarmCancelTimersLock.LockAsync(Token).ConfigureAwait(false))
-            {
-                if (!alarmCancelTimers.ContainsKey(alarmType))
-                {
-                    alarmCancelTimers.Add(alarmType, new Stopwatch());
-                    alreadyContains = false;
-                }
-
-                alarmCancelTimers[alarmType].Restart();
-            }
-
-            return alreadyContains;
-        }
-
-        private async Task ResetBackAlarms()
-        {
-            using (var sync = await alarmCancelTimersLock.LockAsync(Token).ConfigureAwait(false))
-            {
-                List<string> keysToRemove = new List<string>();
-                foreach (var alarmCancelTimer in alarmCancelTimers)
-                {
-                    if (alarmCancelTimer.Value.Elapsed >= CameraSettings.AlarmCancelInterval)
-                    {
-                        keysToRemove.Add(alarmCancelTimer.Key);
-                        var alarm = new AlarmInfo(alarmCancelTimer.Key, false);
-                        await Enqueue(alarm).ConfigureAwait(false);
-                    }
-                }
-
-                foreach (var key in keysToRemove)
-                {
-                    alarmCancelTimers.Remove(key);
                 }
             }
         }
@@ -540,7 +533,7 @@ namespace Hspi.Camera
             while (!Token.IsCancellationRequested)
             {
                 await Task.Delay(1000, Token).ConfigureAwait(false);
-                await ResetBackAlarms().ConfigureAwait(false);
+                await AlarmsBackgroundProcessing().ConfigureAwait(false);
             }
         }
 
@@ -648,6 +641,42 @@ namespace Hspi.Camera
             }
         }
 
+        private async Task<bool> UpdateForAlarm(string alarmType)
+        {
+            bool sendNow = false;
+            using (var sync = await alarmTimersLock.LockAsync(Token).ConfigureAwait(false))
+            {
+                if (!alarmsData.TryGetValue(alarmType, out var alarmData))
+                {
+                    alarmData = new AlarmData();
+                    alarmsData.Add(alarmType, alarmData);
+                    sendNow = true;
+                }
+
+                if (!sendNow)
+                {
+                    sendNow = !alarmData.state;
+                }
+
+                alarmData.state = true;
+                alarmData.lastReceived.Restart();
+
+                if (sendNow)
+                {
+                    alarmData.lastUpdated.Restart();
+                }
+            }
+
+            return sendNow;
+        }
+
+        private class AlarmData
+        {
+            public Stopwatch lastReceived = new Stopwatch();
+            public Stopwatch lastUpdated = new Stopwatch();
+            public bool state = false;
+        }
+
         public const int Track1 = 101;
 
         public const int Track2 = 201;
@@ -668,15 +697,15 @@ namespace Hspi.Camera
         private readonly static XmlPathData xPathForSelectingVideos =
                                                     new XmlPathData(@"*[local-name()='matchList']/*");
 
-        private readonly Dictionary<string, Stopwatch> alarmCancelTimers = new Dictionary<string, Stopwatch>();
-        private readonly AsyncLock alarmCancelTimersLock = new AsyncLock();
+        private readonly Task alarmsBackgroundProcessingTask;
+        private readonly Dictionary<string, AlarmData> alarmsData = new Dictionary<string, AlarmData>();
         private readonly Task alarmStreamTask;
         private readonly TimeSpan alarmStreamThreshold = TimeSpan.FromSeconds(15);
+        private readonly AsyncLock alarmTimersLock = new AsyncLock();
         private readonly HttpClient defaultHttpClient;
         private readonly AsyncAutoResetEvent downloadEvent = new AsyncAutoResetEvent();
         private readonly Task fetchPropertiesTask;
         private readonly Dictionary<string, List<CameraProperty>> propertiesGroups;
-        private readonly Task resetBackAlarmsLoopTask;
         private readonly CancellationTokenSource sourceToken;
         private readonly Task videoDownloadTask;
 
@@ -688,7 +717,7 @@ namespace Hspi.Camera
             {
                 sourceToken.Cancel();
                 alarmStreamTask?.WaitWithoutException();
-                resetBackAlarmsLoopTask?.WaitWithoutException();
+                alarmsBackgroundProcessingTask?.WaitWithoutException();
                 fetchPropertiesTask?.WaitWithoutException();
                 videoDownloadTask?.WaitWithoutException();
                 defaultHttpClient.Dispose();

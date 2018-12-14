@@ -66,21 +66,17 @@ namespace Hspi.DeviceData
 
         public override void Update(IHSApplication HS, string deviceValue)
         {
-            if (lastUpdateString == null || lastUpdateString != deviceValue)
+            if (deviceValue == AlarmInfo.AlarmOffValue)
             {
-                if (deviceValue == AlarmInfo.AlarmOffValue)
-                {
-                    UpdateDeviceData(HS, OffValue);
-                }
-                else
-                {
-                    UpdateDeviceData(HS, OnValue);
-                }
+                UpdateDeviceData(HS, OffValue);
+            }
+            else
+            {
+                UpdateDeviceData(HS, OnValue);
             }
         }
 
         private const int OffValue = 0;
         private const int OnValue = 100;
-        private string lastUpdateString = null;
     }
 }

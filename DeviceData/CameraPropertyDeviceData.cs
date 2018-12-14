@@ -50,42 +50,38 @@ namespace Hspi.DeviceData
 
         public override void Update(IHSApplication HS, [AllowNull]string deviceValue)
         {
-            if (lastUpdateString == null || lastUpdateString != deviceValue)
+            if (Property.StringValues.IsEmpty)
             {
-                if (Property.StringValues.IsEmpty)
-                {
-                    UpdateDeviceData(HS, deviceValue);
-                }
-                else
-                {
-                    var pairs = HS.DeviceVSP_GetAllStatus(RefId);
+                UpdateDeviceData(HS, deviceValue);
+            }
+            else
+            {
+                var pairs = HS.DeviceVSP_GetAllStatus(RefId);
 
-                    double? doubleValue = null;
-                    foreach (var value in pairs)
+                double? doubleValue = null;
+                foreach (var value in pairs)
+                {
+                    if (value.ControlStatus == ePairStatusControl.Control)
                     {
-                        if (value.ControlStatus == ePairStatusControl.Control)
-                        {
-                            continue;
-                        }
-
-                        if (string.Compare(value.GetPairString(0, string.Empty, null),
-                                            deviceValue, StringComparison.OrdinalIgnoreCase) == 0)
-                        {
-                            if (value.PairType == VSVGPairs.VSVGPairType.SingleValue)
-                            {
-                                doubleValue = value.Value;
-                            }
-                            else
-                            {
-                                doubleValue = value.RangeStart;
-                            }
-                            break;
-                        }
+                        continue;
                     }
 
-                    UpdateDeviceData(HS, deviceValue, doubleValue);
+                    if (string.Compare(value.GetPairString(0, string.Empty, null),
+                                        deviceValue, StringComparison.OrdinalIgnoreCase) == 0)
+                    {
+                        if (value.PairType == VSVGPairs.VSVGPairType.SingleValue)
+                        {
+                            doubleValue = value.Value;
+                        }
+                        else
+                        {
+                            doubleValue = value.RangeStart;
+                        }
+                        break;
+                    }
                 }
-                lastUpdateString = deviceValue;
+
+                UpdateDeviceData(HS, deviceValue, doubleValue);
             }
         }
 
@@ -96,10 +92,7 @@ namespace Hspi.DeviceData
                                            double value,
                                            ePairControlUse control)
         {
-            lastUpdateString = null;
             return camera.Put(Property, stringValue ?? string.Empty);
         }
-
-        private string lastUpdateString = null;
     }
 }
