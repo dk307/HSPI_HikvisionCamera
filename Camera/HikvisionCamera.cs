@@ -412,6 +412,10 @@ namespace Hspi.Camera
                     catch (Exception ex)
                     {
                         Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download {video.RstpUri} for {CameraSettings.CameraHost} with {ex}."));
+                        if (ex is System.IO.IOException)
+                        {
+                            break;
+                        }
                     }
                 }
             }
