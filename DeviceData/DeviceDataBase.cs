@@ -54,10 +54,14 @@ namespace Hspi.DeviceData
             return Task.FromResult(true);
         }
 
-        public virtual void SetInitialData(IHSApplication HS, CameraSettings cameraSettings, int refId)
+        public virtual void SetOnDeviceCreateData(IHSApplication HS, CameraSettings cameraSettings, int refId)
         {
             HS.SetDeviceValueByRef(refId, 0D, false);
             HS.set_DeviceInvalidValue(refId, true);
+        }
+
+        public virtual void OnPlugInLoad(IHSApplication HS, CameraSettings cameraSettings)
+        {
         }
 
         public abstract void Update(IHSApplication HS, string deviceValue);

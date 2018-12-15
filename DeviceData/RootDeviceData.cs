@@ -173,14 +173,18 @@ namespace Hspi.DeviceData
             return Task.FromResult(true);
         }
 
-        public override void SetInitialData(IHSApplication HS, CameraSettings cameraSettings, int refID)
+        public override void OnPlugInLoad(IHSApplication HS, CameraSettings cameraSettings)
         {
-            HS.set_DeviceInvalidValue(refID, false);
-            HS.SetDeviceString(refID, "Root", false);
             for (int i = 1; i <= TotalGlobalVars; i++)
             {
                 HS.CreateVar(GetGlobalVarName(cameraSettings, i));
             }
+        }
+
+        public override void SetOnDeviceCreateData(IHSApplication HS, CameraSettings cameraSettings, int refID)
+        {
+            HS.set_DeviceInvalidValue(refID, false);
+            HS.SetDeviceString(refID, "Root", false);
         }
 
         public override void Update(IHSApplication HS, string deviceValue) => throw new System.NotImplementedException();

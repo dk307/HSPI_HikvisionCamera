@@ -142,7 +142,7 @@ namespace Hspi.DeviceData
                     parent.AssociatedDevice_Add(HS, device.get_Ref(HS));
                 }
 
-                deviceData.SetInitialData(HS, CameraSettings, refId);
+                deviceData.SetOnDeviceCreateData(HS, CameraSettings, refId);
             }
 
             return device;
@@ -160,6 +160,7 @@ namespace Hspi.DeviceData
                 parentRefId = parentHSDevice.get_Ref(HS);
                 rootDeviceData.RefId = parentRefId.Value;
                 devices[parentAddress] = rootDeviceData;
+                rootDeviceData.OnPlugInLoad(HS, CameraSettings);
             }
         }
 
@@ -187,6 +188,7 @@ namespace Hspi.DeviceData
                         if (deviceData != null)
                         {
                             devices.Add(address, deviceData);
+                            deviceData.OnPlugInLoad(HS, CameraSettings);
                         }
 
                         var rootDevice = (deviceData as RootDeviceData);
