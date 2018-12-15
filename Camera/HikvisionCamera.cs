@@ -57,6 +57,8 @@ namespace Hspi.Camera
 
         public async Task DownloadRecordedVideo(RecordedVideo video, string path)
         {
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Downloading {video.Name}"));
+
             Uri uri = CreateUri(@"/ISAPI/ContentMgmt/download");
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -388,6 +390,8 @@ namespace Hspi.Camera
                     }
                     list.AddRange(collection);
                 } while (!Token.IsCancellationRequested);
+
+                Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Found {list.Count} recorded files on camera"));
 
                 var videos = list.OrderBy(x => x.StartTime);
 
