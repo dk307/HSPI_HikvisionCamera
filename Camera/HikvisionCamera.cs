@@ -84,6 +84,8 @@ namespace Hspi.Camera
         {
             string path = Path.Combine(CameraSettings.SnapshotDownloadDirectory, DateTimeOffset.Now.ToString("yyyy-MM-dd--HH-mm-ss-ff"));
             Uri uri = CreateUri(Invariant($"/ISAPI/Streaming/channels/{channel}/picture"));
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Taking snapshot at {path}"));
+
             return await DownloadToFile(path, uri, null, HttpMethod.Get, null).ConfigureAwait(false);
         }
 
@@ -327,7 +329,7 @@ namespace Hspi.Camera
             }
 
             var httpClient = new HttpClient(handler, true);
-            httpClient.Timeout = TimeSpan.FromMinutes(2);
+            httpClient.Timeout = TimeSpan.FromSeconds(1);
             return httpClient;
         }
 
@@ -381,54 +383,62 @@ namespace Hspi.Camera
             {
                 await downloadEvent.WaitAsync(Token).ConfigureAwait(false);
 
-                //oldest first
-                List<RecordedVideo> list = new List<RecordedVideo>();
-                do
+                try
                 {
-                    Token.ThrowIfCancellationRequested();
-                    IList<RecordedVideo> collection = await GetRecording(256, list.Count, null, null).ConfigureAwait(false);
-                    if (collection.Count == 0)
+                    //oldest first
+                    List<RecordedVideo> list = new List<RecordedVideo>();
+                    do
                     {
-                        break;
-                    }
-                    list.AddRange(collection);
-                } while (!Token.IsCancellationRequested);
-
-                Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Found {list.Count} recorded files on camera"));
-
-                var videos = list.OrderBy(x => x.StartTime);
-
-                foreach (var video in videos)
-                {
-                    try
-                    {
-                        var dayDirectory = video.StartTime.ToLocalTime().ToString("yyyy-MM-dd");
-                        string fileDirectory = Path.Combine(CameraSettings.VideoDownloadDirectory, dayDirectory);
-                        string fileName = Path.Combine(fileDirectory, video.Name + ".mp4");
-                        Directory.CreateDirectory(fileDirectory);
-
-                        var fileInfo = new FileInfo(fileName);
-
-                        if (!fileInfo.Exists)
-                        {
-                            await DownloadRecordedVideo(video, fileName).ConfigureAwait(false);
-                            File.SetCreationTimeUtc(fileName, video.StartTime.UtcDateTime);
-                            File.SetLastWriteTimeUtc(fileName, video.EndTime.UtcDateTime);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.IsCancelException() && Token.IsCancellationRequested)
-                        {
-                            throw;
-                        }
-
-                        Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download {video.RstpUri} for {CameraSettings.CameraHost} with {ex}."));
-                        if (ex is System.IO.IOException)
+                        Token.ThrowIfCancellationRequested();
+                        IList<RecordedVideo> collection = await GetRecording(40, list.Count, null, null).ConfigureAwait(false);
+                        if (collection.Count == 0)
                         {
                             break;
                         }
+                        list.AddRange(collection);
+                    } while (!Token.IsCancellationRequested);
+
+                    Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Found {list.Count} recorded files on camera"));
+
+                    var videos = list.OrderBy(x => x.StartTime);
+
+                    foreach (var video in videos)
+                    {
+                        try
+                        {
+                            var dayDirectory = video.StartTime.ToLocalTime().ToString("yyyy-MM-dd");
+                            string fileDirectory = Path.Combine(CameraSettings.VideoDownloadDirectory, dayDirectory);
+                            string fileName = Path.Combine(fileDirectory, video.Name + ".mp4");
+                            Directory.CreateDirectory(fileDirectory);
+
+                            var fileInfo = new FileInfo(fileName);
+
+                            if (!fileInfo.Exists)
+                            {
+                                await DownloadRecordedVideo(video, fileName).ConfigureAwait(false);
+                                File.SetCreationTimeUtc(fileName, video.StartTime.UtcDateTime);
+                                File.SetLastWriteTimeUtc(fileName, video.EndTime.UtcDateTime);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.IsCancelException() && Token.IsCancellationRequested)
+                            {
+                                throw;
+                            }
+
+                            Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download {video.RstpUri} for {CameraSettings.CameraHost} with {ex.GetFullMessage()}."));
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    if (ex.IsCancelException() && Token.IsCancellationRequested)
+                    {
+                        throw;
+                    }
+
+                    Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download  videos for {CameraSettings.CameraHost} with {ex.GetFullMessage()}."));
                 }
             }
         }
