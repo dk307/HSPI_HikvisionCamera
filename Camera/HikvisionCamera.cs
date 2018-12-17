@@ -329,7 +329,7 @@ namespace Hspi.Camera
             }
 
             var httpClient = new HttpClient(handler, true);
-            httpClient.Timeout = TimeSpan.FromSeconds(1);
+            httpClient.Timeout = TimeSpan.FromSeconds(120);
             return httpClient;
         }
 
