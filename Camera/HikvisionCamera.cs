@@ -77,6 +77,7 @@ namespace Hspi.Camera
             }
 
             await DownloadToFile(path, uri, "mp4", HttpMethod.Get, stringBuilder.ToString()).ConfigureAwait(false);
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Finished downloading {video.Name}"));
         }
 
         public async Task<string> DownloadSnapshot(int channel)
@@ -325,7 +326,9 @@ namespace Hspi.Camera
                 handler = httpClientHandler;
             }
 
-            return new HttpClient(handler, true);
+            var httpClient = new HttpClient(handler, true);
+            httpClient.Timeout = TimeSpan.FromMinutes(2);
+            return httpClient;
         }
 
         private Uri CreateUri(string path)
@@ -415,6 +418,11 @@ namespace Hspi.Camera
                     }
                     catch (Exception ex)
                     {
+                        if (ex.IsCancelException() && Token.IsCancellationRequested)
+                        {
+                            throw;
+                        }
+
                         Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download {video.RstpUri} for {CameraSettings.CameraHost} with {ex}."));
                         if (ex is System.IO.IOException)
                         {
@@ -447,7 +455,7 @@ namespace Hspi.Camera
                 }
                 catch (Exception ex)
                 {
-                    if (ex.IsCancelException())
+                    if (ex.IsCancelException() && Token.IsCancellationRequested)
                     {
                         throw;
                     }
@@ -588,7 +596,7 @@ namespace Hspi.Camera
                     using (var client = CreateHttpClient())  // create new one
                     {
                         Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Listening to alarm stream"));
-                        client.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
+                        client.Timeout = Timeout.InfiniteTimeSpan;
                         using (var response = await SendToClient(HttpMethod.Get,
                                                          uri,
                                                          client: client,
@@ -635,7 +643,7 @@ namespace Hspi.Camera
                 }
                 catch (Exception ex)
                 {
-                    if (ex.IsCancelException())
+                    if (ex.IsCancelException() && Token.IsCancellationRequested)
                     {
                         throw;
                     }
