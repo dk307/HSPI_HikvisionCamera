@@ -45,7 +45,7 @@ namespace Hspi
         {
             if (deviceIdentifier.DeviceId != CameraSettings.Id)
             {
-                throw new ArgumentException("Invalid Device Identifier");
+                throw new ArgumentException("Invalid Device Identifier", nameof(deviceIdentifier));
             }
 
             using (var deviceLock = await rootDeviceDataLock.LockAsync(cancelTokenSource.Token).ConfigureAwait(false))

@@ -172,7 +172,7 @@ namespace Hspi
 
             try
             {
-                DeviceClass deviceClass = (DeviceClass)HS.GetDeviceByRef(deviceId);
+                var deviceClass = (DeviceClass)HS.GetDeviceByRef(deviceId);
                 var deviceIdentifier = DeviceIdentifier.Identify(deviceClass);
 
                 if (deviceIdentifier != null)
@@ -185,8 +185,15 @@ namespace Hspi
 
                             stb.Append(@"<table style='width:100%;border-spacing:0px;'");
                             stb.Append("<tr height='5'><td style='width:25%'></td><td style='width:20%'></td><td style='width:55%'></td></tr>");
-                            stb.Append(Invariant($"<tr><td class='tablecell'>Name:</td><td class='tablecell' colspan=2>{PageHelper.HtmlEncode(camera.Value.Name)}</td></tr>"));
-                            stb.Append(Invariant($"<tr><td class='tablecell'>Uri:</td><td class='tablecell' colspan=2>{PageHelper.HtmlEncode(camera.Value.CameraHost)}</td></tr>"));
+                            stb.Append($"<tr><td class='tablecell'>Name:</td><td class='tablecell' colspan=2>");
+                            stb.Append(PageHelper.HtmlEncode(camera.Value.Name));
+                            stb.Append("</td></tr>");
+                            stb.Append($"<tr><td class='tablecell'>Uri:</td><td class='tablecell' colspan=2>");
+                            stb.Append(Invariant($"<a href=\"{PageHelper.HtmlEncode(camera.Value.CameraHost)}\" target=\"_blank\">{PageHelper.HtmlEncode(camera.Value.CameraHost)}</a>"));
+                            stb.Append("</td></tr>");
+                            stb.Append($"<tr><td class='tablecell'>Type:</td><td class='tablecell' colspan=2>");
+                            stb.Append(PageHelper.HtmlEncode(deviceIdentifier.DeviceType));
+                            stb.Append("</td></tr>");
                             stb.Append(Invariant($"</td><td></td></tr>"));
                             stb.Append("<tr height='5'><td colspan=3></td></tr>");
                             stb.Append(@" </table>");
