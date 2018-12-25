@@ -121,6 +121,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils\ObjectSerialize.cs" />
+    <Compile Include="Utils\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

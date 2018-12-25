@@ -3,7 +3,6 @@ using Hspi.Camera;
 using Hspi.DeviceData;
 using Hspi.Utils;
 using Nito.AsyncEx;
-using Nito.AsyncEx.Synchronous;
 using NullGuard;
 using System;
 using System.Diagnostics;
@@ -26,10 +25,7 @@ namespace Hspi
             rootDeviceData = new DeviceRootDeviceManager(cameraSettings, this.HS, cancelTokenSource.Token);
             camera = new HikvisionCamera(CameraSettings, cancelTokenSource.Token);
 
-            processUpdatesTask = Task.Factory.StartNew(ProcessUpdates,
-                                cancelTokenSource.Token,
-                                TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
-                                TaskScheduler.Default).WaitAndUnwrapException(cancelTokenSource.Token);
+            TaskHelper.StartAsync(ProcessUpdates, cancelTokenSource.Token);
         }
 
         private async Task ProcessUpdates()
@@ -72,7 +68,6 @@ namespace Hspi
             {
                 Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Disposing Camera Manager"));
                 cancelTokenSource.Cancel();
-                processUpdatesTask.WaitWithoutException();
                 DisposeConnector();
                 cancelTokenSource.Dispose();
 
@@ -85,7 +80,6 @@ namespace Hspi
         #endregion IDisposable Support
 
         private readonly HikvisionCamera camera;
-        private readonly Task processUpdatesTask;
         private readonly CombinedCancelToken cancelTokenSource;
         private readonly IHSApplication HS;
         private readonly DeviceRootDeviceManager rootDeviceData;

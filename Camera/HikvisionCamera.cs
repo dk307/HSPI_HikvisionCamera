@@ -1,6 +1,6 @@
 ﻿using HeyRed.Mime;
+using Hspi.Utils;
 using Nito.AsyncEx;
-using Nito.AsyncEx.Synchronous;
 using NullGuard;
 using System;
 using System.Collections.Generic;
@@ -37,18 +37,10 @@ namespace Hspi.Camera
 
             defaultHttpClient = CreateHttpClient();
 
-            alarmStreamTask = Task.Factory.StartNew(StartAlarmStream, Token,
-                                                   TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
-                                                   TaskScheduler.Default).WaitAndUnwrapException(Token);
-            alarmsBackgroundProcessingTask = Task.Factory.StartNew(ResetBackAlarmsLoop, Token,
-                                                    TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
-                                                    TaskScheduler.Default).WaitAndUnwrapException(Token);
-            fetchPropertiesTask = Task.Factory.StartNew(FetchProperties, Token,
-                                                    TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
-                                                    TaskScheduler.Default).WaitAndUnwrapException(Token);
-            videoDownloadTask = Task.Factory.StartNew(DownloadVideos, Token,
-                                                    TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
-                                                    TaskScheduler.Default).WaitAndUnwrapException(Token);
+            TaskHelper.StartAsync(StartAlarmStream, Token);
+            TaskHelper.StartAsync(ResetBackAlarmsLoop, Token);
+            TaskHelper.StartAsync(FetchProperties, Token);
+            TaskHelper.StartAsync(DownloadVideos, Token);
         }
 
         public CameraSettings CameraSettings { get; }
@@ -723,17 +715,13 @@ namespace Hspi.Camera
         private readonly static XmlPathData xPathForSelectingVideos =
                                                     new XmlPathData(@"*[local-name()='matchList']/*");
 
-        private readonly Task alarmsBackgroundProcessingTask;
         private readonly Dictionary<string, AlarmData> alarmsData = new Dictionary<string, AlarmData>();
-        private readonly Task alarmStreamTask;
         private readonly TimeSpan alarmStreamThreshold = TimeSpan.FromSeconds(15);
         private readonly AsyncLock alarmTimersLock = new AsyncLock();
         private readonly HttpClient defaultHttpClient;
         private readonly AsyncAutoResetEvent downloadEvent = new AsyncAutoResetEvent();
-        private readonly Task fetchPropertiesTask;
         private readonly Dictionary<string, List<CameraProperty>> propertiesGroups;
         private readonly CancellationTokenSource sourceToken;
-        private readonly Task videoDownloadTask;
 
         #region IDisposable Support
 
@@ -742,10 +730,6 @@ namespace Hspi.Camera
             if (!disposedValue)
             {
                 sourceToken.Cancel();
-                alarmStreamTask?.WaitWithoutException();
-                alarmsBackgroundProcessingTask?.WaitWithoutException();
-                fetchPropertiesTask?.WaitWithoutException();
-                videoDownloadTask?.WaitWithoutException();
                 defaultHttpClient.Dispose();
                 sourceToken.Dispose();
                 disposedValue = true;
