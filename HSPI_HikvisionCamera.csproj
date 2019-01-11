@@ -95,6 +95,8 @@
     <Compile Include="DeviceData\RootDeviceData.cs" />
     <Compile Include="DeviceData\AlarmDeviceData.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Pages\ActionPage.cs" />
+    <Compile Include="Pages\TakeSnapshotAction.cs" />
     <Compile Include="Utils\CombinedCancelToken.cs" />
     <Compile Include="Pages\PageHelper.cs" />
     <Compile Include="Pages\ConfigPage.cs" />

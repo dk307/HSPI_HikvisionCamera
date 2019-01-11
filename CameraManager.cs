@@ -50,6 +50,14 @@ namespace Hspi
             }
         }
 
+        public async Task TakeSnapshots(CancellationToken token, int channel)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                await camera.DownloadSnapshot(channel).ConfigureAwait(false);
+            }
+        }
+
         private void DisposeConnector()
         {
             if (camera != null)

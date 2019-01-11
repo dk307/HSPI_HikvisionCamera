@@ -1,122 +1,30 @@
-﻿using Scheduler;
+﻿using HomeSeerAPI;
 using NullGuard;
-using static System.FormattableString;
-using HomeSeerAPI;
-using System.Web;
-using System.Collections.Specialized;
+using Scheduler;
 using System;
-using System.Linq;
+using System.Collections.Specialized;
 using System.Text;
-using System.Collections.Generic;
+using System.Web;
+using static System.FormattableString;
 
 namespace Hspi.Pages
 {
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal abstract class PageHelper : PageBuilderAndMenu.clsPageBuilder
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigPage" /> class.
-        /// </summary>
-        /// <param name="HS">The hs.</param>
-        /// <param name="pluginConfig">The plugin configuration.</param>
-        public PageHelper(IHSApplication HS, PluginConfig pluginConfig) : base(pageName)
+        public PageHelper(IHSApplication HS, PluginConfig pluginConfig, string pageName) : base(pageName)
         {
             this.HS = HS;
             this.pluginConfig = pluginConfig;
         }
 
-        protected enum PageType
+        public static string HtmlEncode<T>([AllowNull]T value)
         {
-            Default,
-            AddCamera,
-            EditCamera,
-            AddCameraProperty,
-            EditCameraProperty,
-        };
-
-        /// <summary>
-        /// Gets the name of the web page.
-        /// </summary>
-        public static string Name => pageName;
-
-        /// <summary>
-        /// Get the web page string for the configuration page.
-        /// </summary>
-        /// <returns>
-        /// System.String.
-        /// </returns>
-        public string GetWebPage(string queryString)
-        {
-            try
+            if (value == null)
             {
-                reset();
-                this.UsesJqAll = false;
-
-                NameValueCollection parts = HttpUtility.ParseQueryString(queryString);
-
-                if (Enum.TryParse<PageType>(parts[PageTypeId], true, out var pageType))
-                {
-                    return GetWebPage(pageType, parts);
-                }
-                else
-                {
-                    return GetWebPage(PageType.Default, parts);
-                }
+                return string.Empty;
             }
-            catch (Exception)
-            {
-                return "error";
-            }
-        }
-
-        protected static string HtmlTextBox(string name, [AllowNull]string defaultText, int size = 25, string type = "text", bool @readonly = false)
-        {
-            return Invariant($"<input type=\'{type}\' id=\'{NameToIdWithPrefix(name)}\' size=\'{size}\' name=\'{name}\' value=\'{HtmlEncode(defaultText)}\' {(@readonly ? "readonly" : string.Empty)}>");
-        }
-
-        protected static string NameToIdWithPrefix(string name)
-        {
-            return Invariant($"{ IdPrefix}{NameToId(name)}");
-        }
-
-        protected string FormButton(string name, string label, string toolTip)
-        {
-            var button = new clsJQuery.jqButton(name, label, PageName, true)
-            {
-                id = NameToIdWithPrefix(name),
-                toolTip = toolTip,
-            };
-            button.toolTip = toolTip;
-            button.enabled = true;
-
-            return button.Build();
-        }
-
-        protected string FormCheckBox(string name, string label, bool @checked, bool autoPostBack = false)
-        {
-            this.UsesjqCheckBox = true;
-            var cb = new clsJQuery.jqCheckBox(name, label, PageName, true, true)
-            {
-                id = NameToIdWithPrefix(name),
-                @checked = @checked,
-                autoPostBack = autoPostBack,
-            };
-            return cb.Build();
-        }
-
-        protected string FormPageButton(string name, string label)
-        {
-            var b = new clsJQuery.jqButton(name, label, PageName, true)
-            {
-                id = NameToIdWithPrefix(name),
-            };
-
-            return b.Build();
-        }
-
-        protected static string TextArea(string name, [AllowNull]string defaultText, int rows = 6, int cols = 120, bool @readonly = false)
-        {
-            return Invariant($"<textarea form_id=\'{NameToIdWithPrefix(name)}\' rows=\'{rows}\' cols=\'{cols}\' name=\'{name}\'  {(@readonly ? "readonly" : string.Empty)}>{HtmlEncode(defaultText)}</textarea>");
+            return HttpUtility.HtmlEncode(value);
         }
 
         protected static string FormDropDown(string name, NameValueCollection options, string selected,
@@ -145,22 +53,72 @@ namespace Hspi.Pages
             return dropdown.Build();
         }
 
-        protected string PageTypeButton(string name, string label, PageType type, string id = null)
+        protected static string HtmlTextBox(string name, [AllowNull]string defaultText, int size = 25, string type = "text", bool @readonly = false)
         {
-            var b = new clsJQuery.jqButton(name, label, PageName, false)
+            return Invariant($"<input type=\'{type}\' id=\'{NameToIdWithPrefix(name)}\' size=\'{size}\' name=\'{name}\' value=\'{HtmlEncode(defaultText)}\' {(@readonly ? "readonly" : string.Empty)}>");
+        }
+
+        protected static string NameToIdWithPrefix(string name)
+        {
+            return Invariant($"{ IdPrefix}{NameToId(name)}");
+        }
+
+        protected static string TextArea(string name, [AllowNull]string defaultText, int rows = 6, int cols = 120, bool @readonly = false)
+        {
+            return Invariant($"<textarea form_id=\'{NameToIdWithPrefix(name)}\' rows=\'{rows}\' cols=\'{cols}\' name=\'{name}\'  {(@readonly ? "readonly" : string.Empty)}>{HtmlEncode(defaultText)}</textarea>");
+        }
+
+        protected string FormButton(string name, string label, string toolTip)
+        {
+            var button = new clsJQuery.jqButton(name, label, PageName, true)
             {
                 id = NameToIdWithPrefix(name),
-                url = Invariant($"/{pageUrl}?{PageTypeId}={HttpUtility.UrlEncode(type.ToString())}&{RecordId}={HttpUtility.UrlEncode(id ?? string.Empty)}"),
+                toolTip = toolTip,
+            };
+            button.toolTip = toolTip;
+            button.enabled = true;
+
+            return button.Build();
+        }
+
+        protected string FormCheckBox(string name, string label, bool @checked, bool autoPostBack = false)
+        {
+            this.UsesjqCheckBox = true;
+            var cb = new clsJQuery.jqCheckBox(name, label, PageName, true, true)
+            {
+                id = NameToIdWithPrefix(name),
+                @checked = @checked,
+                autoPostBack = autoPostBack,
+            };
+            return cb.Build();
+        }
+
+        protected string FormDropDown(string name, NameValueCollection options, string selected,
+                                                                      int width, string tooltip, bool autoPostBack)
+        {
+            return FormDropDown(name, options, selected,
+                              width, tooltip, autoPostBack, PageName);
+        }
+
+        protected string FormPageButton(string name, string label)
+        {
+            var b = new clsJQuery.jqButton(name, label, PageName, true)
+            {
+                id = NameToIdWithPrefix(name),
             };
 
             return b.Build();
         }
 
-        protected abstract string GetWebPage(PageType pageType, NameValueCollection parts);
-
-        private static string NameToId(string name)
+        protected string FormTimeSpan(string name, string label, TimeSpan timeSpan, bool submit)
         {
-            return name.Replace(' ', '_');
+            var b = new clsJQuery.jqTimeSpanPicker(name, label, PageName, submit)
+            {
+                id = NameToIdWithPrefix(name),
+                defaultTimeSpan = timeSpan,
+            };
+
+            return b.Build();
         }
 
         protected void IncludeResourceCSS(StringBuilder stb, string scriptFile)
@@ -179,21 +137,15 @@ namespace Hspi.Pages
             this.AddScript(stb.ToString());
         }
 
-        public static string HtmlEncode<T>([AllowNull]T value)
+        private static string NameToId(string name)
         {
-            if (value == null)
-            {
-                return string.Empty;
-            }
-            return HttpUtility.HtmlEncode(value);
+            return name.Replace(' ', '_');
         }
 
-        protected static readonly string pageName = Invariant($"{PluginData.PlugInName} Configuration").Replace(' ', '_');
-        protected static readonly string pageUrl = HttpUtility.UrlEncode(pageName);
+        protected const string PageTypeId = "pagetype";
+        protected const string RecordId = "recordid";
         protected readonly IHSApplication HS;
         protected readonly PluginConfig pluginConfig;
         private const string IdPrefix = "id_";
-        private const string PageTypeId = "pagetype";
-        protected const string RecordId = "recordid";
     }
 }
