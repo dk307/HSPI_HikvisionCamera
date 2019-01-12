@@ -425,6 +425,7 @@ namespace Hspi
                                 if (cameraManager != null)
                                 {
                                     Task.Run(() => TakeSnapshots(action.TimeSpan, action.Interval, cameraManager));
+                                    return true;
                                 }
                             }
                         }
