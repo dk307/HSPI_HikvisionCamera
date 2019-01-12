@@ -1,13 +1,15 @@
 using HomeSeerAPI;
+using Hspi.Camera;
 using Hspi.Exceptions;
 using NullGuard;
 using Scheduler.Classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Hspi.Camera;
-using System.Diagnostics;
+using System.Linq;
+using Nito.AsyncEx;
 using static System.FormattableString;
 
 namespace Hspi.DeviceData
@@ -28,33 +30,49 @@ namespace Hspi.DeviceData
 
         public CameraSettings CameraSettings { get; }
 
-        public void ProcessUpdate(ICameraContruct value)
+        public async Task ProcessUpdate(ICameraContruct value)
         {
-            var deviceIdentifier = new DeviceIdentifier(CameraSettings.Id, value.DeviceType, value.Id);
-
-            string address = deviceIdentifier.Address;
-            if (!devices.ContainsKey(address))
+            using (var sync = await dataLock.WriterLockAsync().ConfigureAwait(false))
             {
-                CreateDevice(deviceIdentifier);
-            }
+                var deviceIdentifier = new DeviceIdentifier(CameraSettings.Id, value.DeviceType, value.Id);
 
-            var childDevice = devices[address];
-            childDevice.Update(HS, value.Value);
+                string address = deviceIdentifier.Address;
+                if (!devices.ContainsKey(address))
+                {
+                    CreateDevice(deviceIdentifier);
+                }
+
+                var childDevice = devices[address];
+                childDevice.Update(HS, value.Value);
+            }
         }
 
-        internal Task HandleCommand(DeviceIdentifier deviceIdentifier, HikvisionCamera camera, string stringValue, double value, ePairControlUse control)
+        public async Task HandleCommand(DeviceIdentifier deviceIdentifier, HikvisionCamera camera, string stringValue, double value, ePairControlUse control)
         {
             if (deviceIdentifier.DeviceId != CameraSettings.Id)
             {
                 throw new ArgumentException("Invalid Device Identifier");
             }
 
-            if (!devices.TryGetValue(deviceIdentifier.Address, out var deviceData))
+            DeviceDataBase deviceData;
+
+            using (var sync = await dataLock.ReaderLockAsync().ConfigureAwait(false))
             {
-                throw new HspiException(Invariant($"{deviceIdentifier.Address} Not Found."));
+                if (!devices.TryGetValue(deviceIdentifier.Address, out deviceData))
+                {
+                    throw new HspiException(Invariant($"{deviceIdentifier.Address} Not Found."));
+                }
             }
 
-            return deviceData.HandleCommand(HS, camera, cancellationToken, stringValue, value, control);
+            await deviceData.HandleCommand(HS, camera, cancellationToken, stringValue, value, control);
+        }
+
+        public bool HasDevice(int deviceId)
+        {
+            using (var sync = dataLock.ReaderLock())
+            {
+                return devices.Values.Any((x) => x.RefId == deviceId);
+            }
         }
 
         private void CreateDevice(DeviceIdentifier deviceIdentifier)
@@ -243,5 +261,6 @@ namespace Hspi.DeviceData
         private readonly Dictionary<string, DeviceDataBase> devices = new Dictionary<string, DeviceDataBase>();
         private readonly IHSApplication HS;
         private int? parentRefId = null;
+        private readonly AsyncReaderWriterLock dataLock = new AsyncReaderWriterLock();
     };
 }

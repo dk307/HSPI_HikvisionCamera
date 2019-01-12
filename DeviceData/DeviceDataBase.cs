@@ -51,7 +51,7 @@ namespace Hspi.DeviceData
                                           double value,
                                           ePairControlUse control)
         {
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
 
         public virtual void SetOnDeviceCreateData(IHSApplication HS, CameraSettings cameraSettings, int refId)

@@ -305,6 +305,8 @@ namespace Hspi
 
                                 stringBuilder.Append(@"Take snapshots for ");
                                 stringBuilder.Append(action.TimeSpan);
+                                stringBuilder.Append(" at interval of ");
+                                stringBuilder.Append(action.Interval);
                                 stringBuilder.Append(" on ");
 
                                 if ((action != null) && pluginConfig.Cameras.TryGetValue(action.Id, out var device))
@@ -357,7 +359,34 @@ namespace Hspi
 
         public override bool ActionReferencesDevice(IPlugInAPI.strTrigActInfo actionInfo, int deviceId)
         {
-            return false;
+            try
+            {
+                switch (actionInfo.TANumber)
+                {
+                    case ActionTakeSnapshotsTANumber:
+                        if (actionInfo.DataIn != null)
+                        {
+                            var action = ObjectSerialize.DeSerializeFromBytes(actionInfo.DataIn) as TakeSnapshotAction;
+                            if ((action != null))
+                            {
+                                CameraManager cameraManager = GetCameraManager(action.Id);
+                                if (cameraManager != null)
+                                {
+                                    return cameraManager.HasDevice(deviceId);
+                                }
+                            }
+                        }
+                        return false;
+
+                    default:
+                        return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(Invariant($"Failed to give Action Name with {ex.GetFullMessage()}"));
+                throw;
+            }
         }
 
         public override string get_ActionName(int actionNumber)
@@ -392,14 +421,10 @@ namespace Hspi
                             var action = ObjectSerialize.DeSerializeFromBytes(actionInfo.DataIn) as TakeSnapshotAction;
                             if ((action != null) && (action.IsValid()))
                             {
-                                CameraManager cameraManager = null;
-                                lock (connectorManagerLock)
-                                {
-                                    connectorManager.TryGetValue(action.Id, out cameraManager);
-                                }
+                                CameraManager cameraManager = GetCameraManager(action.Id);
                                 if (cameraManager != null)
                                 {
-                                    TakeSnapshots(action.TimeSpan, cameraManager).ResultForSync();
+                                    Task.Run(() => TakeSnapshots(action.TimeSpan, action.Interval, cameraManager));
                                 }
                             }
                         }
@@ -422,17 +447,21 @@ namespace Hspi
             }
         }
 
-        private async Task TakeSnapshots(TimeSpan timeSpan, CameraManager cameraManager)
+        private static async Task TakeSnapshots(TimeSpan timeSpan, TimeSpan interval, CameraManager cameraManager)
         {
-            using (var stopTokenSource = new CancellationTokenSource())
+            await cameraManager.DownloadContinuousSnapshots(timeSpan, interval,
+                                                       HikvisionCamera.Track1).ConfigureAwait(false);
+        }
+
+        private CameraManager GetCameraManager(string camerId)
+        {
+            CameraManager cameraManager = null;
+            lock (connectorManagerLock)
             {
-                using (var combinedStopTokenSource =
-                   CancellationTokenSource.CreateLinkedTokenSource(stopTokenSource.Token, ShutdownCancellationToken))
-                {
-                    stopTokenSource.CancelAfter(timeSpan);
-                    await cameraManager.TakeSnapshots(stopTokenSource.Token, HikvisionCamera.Track1).ConfigureAwait(false);
-                }
+                connectorManager.TryGetValue(camerId, out cameraManager);
             }
+
+            return cameraManager;
         }
 
         #endregion "Action Override"

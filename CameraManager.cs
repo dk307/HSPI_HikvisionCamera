@@ -2,7 +2,6 @@ using HomeSeerAPI;
 using Hspi.Camera;
 using Hspi.DeviceData;
 using Hspi.Utils;
-using Nito.AsyncEx;
 using NullGuard;
 using System;
 using System.Diagnostics;
@@ -28,13 +27,9 @@ namespace Hspi
             TaskHelper.StartAsync(ProcessUpdates, cancelTokenSource.Token);
         }
 
-        private async Task ProcessUpdates()
+        public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval, int channel)
         {
-            while (!cancelTokenSource.Token.IsCancellationRequested)
-            {
-                var update = await camera.Updates.DequeueAsync(cancelTokenSource.Token).ConfigureAwait(false);
-                rootDeviceData.ProcessUpdate(update);
-            }
+            await camera.DownloadContinuousSnapshots(totalTimeSpan, interval, channel).ConfigureAwait(false);
         }
 
         public async Task HandleCommand(DeviceIdentifier deviceIdentifier, string stringValue, double value, ePairControlUse control)
@@ -44,18 +39,12 @@ namespace Hspi
                 throw new ArgumentException("Invalid Device Identifier", nameof(deviceIdentifier));
             }
 
-            using (var deviceLock = await rootDeviceDataLock.LockAsync(cancelTokenSource.Token).ConfigureAwait(false))
-            {
-                await rootDeviceData.HandleCommand(deviceIdentifier, camera, stringValue, value, control).ConfigureAwait(false);
-            }
+            await rootDeviceData.HandleCommand(deviceIdentifier, camera, stringValue, value, control).ConfigureAwait(false);
         }
 
-        public async Task TakeSnapshots(CancellationToken token, int channel)
+        public bool HasDevice(int deviceId)
         {
-            while (!token.IsCancellationRequested)
-            {
-                await camera.DownloadSnapshot(channel).ConfigureAwait(false);
-            }
+            return rootDeviceData.HasDevice(deviceId);
         }
 
         private void DisposeConnector()
@@ -63,6 +52,15 @@ namespace Hspi
             if (camera != null)
             {
                 camera.Dispose();
+            }
+        }
+
+        private async Task ProcessUpdates()
+        {
+            while (!cancelTokenSource.Token.IsCancellationRequested)
+            {
+                var update = await camera.Updates.DequeueAsync(cancelTokenSource.Token).ConfigureAwait(false);
+                await rootDeviceData.ProcessUpdate(update).ConfigureAwait(false);
             }
         }
 
@@ -91,6 +89,5 @@ namespace Hspi
         private readonly CombinedCancelToken cancelTokenSource;
         private readonly IHSApplication HS;
         private readonly DeviceRootDeviceManager rootDeviceData;
-        private readonly AsyncLock rootDeviceDataLock = new AsyncLock();
     }
 }

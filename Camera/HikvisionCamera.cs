@@ -17,6 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
+
 using static System.FormattableString;
 
 namespace Hspi.Camera
@@ -47,6 +48,29 @@ namespace Hspi.Camera
         private CancellationToken Token => sourceToken.Token;
         public AsyncProducerConsumerQueue<ICameraContruct> Updates { get; } = new AsyncProducerConsumerQueue<ICameraContruct>();
 
+        public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval,
+                                                      int channel)
+        {
+            var tasks = new List<Task>();
+
+            tasks.Add(DownloadSnapshot(channel));
+
+            TimeSpan delay = interval;
+            while (delay < totalTimeSpan)
+            {
+                tasks.Add(DownloadSnapshotWithDelay(channel, delay));
+                delay = delay.Add(interval);
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(false);
+        }
+
+        private async Task DownloadSnapshotWithDelay(int channel, TimeSpan delay)
+        {
+            await Task.Delay(delay).ConfigureAwait(false);
+            await DownloadSnapshot(channel).ConfigureAwait(false);
+        }
+
         public async Task DownloadRecordedVideo(RecordedVideo video, string path)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Downloading {video.Name}"));
@@ -76,7 +100,6 @@ namespace Hspi.Camera
         {
             string path = Path.Combine(CameraSettings.SnapshotDownloadDirectory, DateTimeOffset.Now.ToString("yyyy-MM-dd--HH-mm-ss-ff"));
             Uri uri = CreateUri(Invariant($"/ISAPI/Streaming/channels/{channel}/picture"));
-            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Taking snapshot at {path}"));
 
             return await DownloadToFile(path, uri, null, HttpMethod.Get, null).ConfigureAwait(false);
         }
@@ -334,7 +357,30 @@ namespace Hspi.Camera
             return uri;
         }
 
-        private async Task<string> DownloadToFile(string path, Uri uri, [AllowNull]string extension, HttpMethod httpMethod, [AllowNull]string data)
+        private async Task<string> DownloadToFile(string path, Uri uri,
+                                                  [AllowNull]string extension, HttpMethod httpMethod,
+                                                  [AllowNull]string data)
+        {
+            string tempPath = Path.ChangeExtension(path, "tmp");
+            string mediaType = null;
+            using (var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+            {
+                mediaType = await DownloadToStream(fileStream, uri, httpMethod, data).ConfigureAwait(false);
+            }
+            string fileExtension = extension ?? MimeTypesMap.GetExtension(mediaType);
+            string destFileName = Path.ChangeExtension(path, fileExtension);
+            if (File.Exists(destFileName))
+            {
+                string destFileNameOld = Path.ChangeExtension(destFileName, "old");
+                File.Move(destFileName, destFileNameOld);
+                File.Delete(destFileNameOld);
+            }
+
+            File.Move(tempPath, destFileName);
+            return destFileName;
+        }
+
+        private async Task<string> DownloadToStream(Stream stream, Uri uri, HttpMethod httpMethod, [AllowNull]string data)
         {
             using (var response = await SendToClient(httpMethod, uri, data,
                                             HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
@@ -346,26 +392,13 @@ namespace Hspi.Camera
                     throw new Exception(Invariant($"[{CameraSettings.Name}]Invalid Data for {uri} :{mediaType ?? string.Empty}"));
                 }
 
-                string fileExtension = extension ?? MimeTypesMap.GetExtension(mediaType);
-
-                string tempPath = path + ".tmp";
                 using (var downloadStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 {
-                    using (var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-                    {
-                        await downloadStream.CopyToAsync(fileStream, 81920, Token).ConfigureAwait(false);
-                    }
+                    const int DownloadBufferSize = 512 * 1024;
+                    await downloadStream.CopyToAsync(stream, DownloadBufferSize, Token).ConfigureAwait(false);
                 }
 
-                if (File.Exists(path))
-                {
-                    File.Move(path, path + ".old");
-                    File.Delete(path + ".old");
-                }
-
-                string destFileName = Path.ChangeExtension(path, fileExtension);
-                File.Move(tempPath, destFileName);
-                return destFileName;
+                return mediaType;
             }
         }
 

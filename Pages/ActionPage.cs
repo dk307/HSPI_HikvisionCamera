@@ -14,6 +14,7 @@ namespace Hspi.Pages
         {
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public IPlugInAPI.strMultiReturn GetRefreshActionPostUI([AllowNull] NameValueCollection postData, IPlugInAPI.strTrigActInfo actionInfo)
         {
             IPlugInAPI.strMultiReturn result = default;
@@ -28,14 +29,14 @@ namespace Hspi.Pages
 
                 foreach (var pair in postData)
                 {
-                    string text = Convert.ToString(pair);
+                    string text = Convert.ToString(pair, CultureInfo.InvariantCulture);
                     if (!string.IsNullOrWhiteSpace(text))
                     {
-                        if (text.StartsWith(nameof(TakeSnapshotAction.Id)))
+                        if (text.StartsWith(nameof(TakeSnapshotAction.Id), StringComparison.Ordinal))
                         {
                             action.Id = postData[text];
                         }
-                        else if (text.StartsWith(NameToIdWithPrefix(nameof(TakeSnapshotAction.TimeSpan))))
+                        else if (text.StartsWith(NameToIdWithPrefix(nameof(TakeSnapshotAction.TimeSpan)), StringComparison.Ordinal))
                         {
                             try
                             {
@@ -44,6 +45,17 @@ namespace Hspi.Pages
                             catch (Exception)
                             {
                                 result.sResult += "<BR>Time span is not valid";
+                            }
+                        }
+                        else if (text.StartsWith(NameToIdWithPrefix(nameof(TakeSnapshotAction.Interval)), StringComparison.Ordinal))
+                        {
+                            try
+                            {
+                                action.Interval = TimeSpan.Parse(postData[text], CultureInfo.InvariantCulture);
+                            }
+                            catch (Exception)
+                            {
+                                result.sResult += "<BR>Interval is not valid";
                             }
                         }
                     }
@@ -73,6 +85,8 @@ namespace Hspi.Pages
             stb.Append(FormDropDown(nameof(TakeSnapshotAction.Id) + uniqueControlId, cameras, action?.Id ?? string.Empty, 250, string.Empty, true));
             stb.Append("for &nbsp;");
             stb.Append(FormTimeSpan(nameof(TakeSnapshotAction.TimeSpan) + uniqueControlId, string.Empty, action?.TimeSpan ?? TimeSpan.Zero, true));
+            stb.Append("at interval");
+            stb.Append(FormTimeSpan(nameof(TakeSnapshotAction.Interval) + uniqueControlId, string.Empty, action?.Interval ?? TimeSpan.FromSeconds(1), true));
             return stb.ToString();
         }
     }
