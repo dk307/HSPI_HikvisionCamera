@@ -17,8 +17,7 @@ namespace Hspi.Camera
                               ImmutableDictionary<string, CameraProperty> periodicFetchedProperties,
                               in TimeSpan cameraPropertiesRefreshInterval,
                               string snapshotDownloadDirectory,
-                              string videoDownloadDirectory,
-                              FFMpegRecordSettings ffMpegRecordSettings)
+                              string videoDownloadDirectory)
         {
             Id = id;
             Name = name;
@@ -30,16 +29,18 @@ namespace Hspi.Camera
             CameraPropertiesRefreshInterval = cameraPropertiesRefreshInterval;
             SnapshotDownloadDirectory = snapshotDownloadDirectory;
             VideoDownloadDirectory = videoDownloadDirectory;
-            FfMpegRecordSettings = ffMpegRecordSettings;
         }
 
-        public TimeSpan CameraPropertiesRefreshInterval { get; }
-        public string FfmpegVideosSaveDirectory { get; }
-        public string Name { get; }
         public ImmutableDictionary<string, CameraProperty> PeriodicFetchedCameraProperties { get; }
+        public TimeSpan CameraPropertiesRefreshInterval { get; }
         public string SnapshotDownloadDirectory { get; }
         public string VideoDownloadDirectory { get; }
-        public FFMpegRecordSettings FfMpegRecordSettings { get; }
+        public string Name { get; }
+        public readonly TimeSpan AlarmCancelInterval;
+        public readonly string CameraHost;
+        public readonly string Id;
+        public readonly string Login;
+        public readonly string Password;
 
         public bool Equals(CameraSettings other)
         {
@@ -54,8 +55,7 @@ namespace Hspi.Camera
                    other.AlarmCancelInterval == AlarmCancelInterval &&
                    other.CameraPropertiesRefreshInterval == CameraPropertiesRefreshInterval &&
                    other.SnapshotDownloadDirectory == SnapshotDownloadDirectory &&
-                   other.VideoDownloadDirectory == VideoDownloadDirectory &&
-                   other.FfMpegRecordSettings.Equals(FfmpegVideosSaveDirectory);
+                   other.VideoDownloadDirectory == VideoDownloadDirectory;
 
             if (same)
             {
@@ -91,20 +91,12 @@ namespace Hspi.Camera
                    CameraPropertiesRefreshInterval.GetHashCode() ^
                    SnapshotDownloadDirectory.GetHashCode() ^
                    VideoDownloadDirectory.GetHashCode() ^
-                   FfmpegVideosSaveDirectory.GetHashCode() ^
                    Name.GetHashCode() ^
                    AlarmCancelInterval.GetHashCode() ^
                    CameraHost.GetHashCode() ^
                    Id.GetHashCode() ^
                    Login.GetHashCode() ^
-                   Password.GetHashCode() ^
-                   FfMpegRecordSettings.GetHashCode();
+                   Password.GetHashCode();
         }
-
-        public readonly TimeSpan AlarmCancelInterval;
-        public readonly string CameraHost;
-        public readonly string Id;
-        public readonly string Login;
-        public readonly string Password;
     }
 }

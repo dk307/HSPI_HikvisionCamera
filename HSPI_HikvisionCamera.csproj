@@ -87,7 +87,6 @@
     <Compile Include="Camera\CameraProperty.cs" />
     <Compile Include="Camera\CameraPropertyInfo.cs" />
     <Compile Include="Camera\CameraSettings.cs" />
-    <Compile Include="Camera\FFMpegRecordSettings.cs" />
     <Compile Include="Camera\HikvisionCamera.cs" />
     <Compile Include="Camera\RecordedVideo.cs" />
     <Compile Include="Camera\XmlPathData.cs" />
