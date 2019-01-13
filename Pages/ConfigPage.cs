@@ -224,6 +224,9 @@ namespace Hspi.Pages
         {
             TimeSpan DefaultAlarmCancelInterval = TimeSpan.FromSeconds(30);
             TimeSpan DefaultCameraPropertiesRefreshInterval = TimeSpan.FromSeconds(60);
+            const string DefaultRTSPArguments = "-err_detect aggressive -fflags +nobuffer+discardcorrupt -rtsp_transport tcp -analyzeduration 10000000 -probesize 10000000";
+            const string DefaultFileNameExtension = "mp4";
+            const string DefaultFileEncodeOptions = "-acodec copy -vcodec copy";
 
             string id = cameraSettings?.Id ?? Guid.NewGuid().ToString();
             string name = cameraSettings?.Name ?? string.Empty;
@@ -234,6 +237,12 @@ namespace Hspi.Pages
             string propertiesRefreshInterval = (cameraSettings?.CameraPropertiesRefreshInterval ?? DefaultCameraPropertiesRefreshInterval).TotalSeconds.ToString(CultureInfo.InvariantCulture);
             string snapshotDownloadDirectory = cameraSettings?.SnapshotDownloadDirectory ?? string.Empty;
             string videoDownloadDirectory = cameraSettings?.VideoDownloadDirectory ?? string.Empty;
+
+            string streamArguments = cameraSettings?.FfMpegRecordSettings.StreamArguments ?? DefaultRTSPArguments;
+            string recordingSaveDirectory = cameraSettings?.FfMpegRecordSettings.RecordingSaveDirectory ?? string.Empty;
+            string fileNamePrefix = cameraSettings?.FfMpegRecordSettings.FileNamePrefix ?? string.Empty;
+            string fileNameExtension = cameraSettings?.FfMpegRecordSettings.FileNameExtension ?? DefaultFileNameExtension;
+            string fileEncodeOptions = cameraSettings?.FfMpegRecordSettings.FileEncodeOptions ?? DefaultFileEncodeOptions;
 
             string buttonLabel = cameraSettings != null ? "Save" : "Add";
             string header = cameraSettings != null ? "Edit Camera" : "Add New Camera";
@@ -259,17 +268,32 @@ namespace Hspi.Pages
             stb.Append(Invariant($"<tr><td class='tablecell'>Password:</td><td class='tablecell'>"));
             stb.Append(HtmlTextBox(nameof(CameraSettings.Password), password, type: "password"));
             stb.Append("</td></tr>");
-            stb.Append(Invariant($"<tr><td class='tablecell'>Alarm Cancel Interval(seconds):</td><td class='tablecell'>"));
+            stb.Append(Invariant($"<tr><td class='tablecell'>Alarm cancel interval(seconds):</td><td class='tablecell'>"));
             stb.Append(HtmlTextBox(nameof(CameraSettings.AlarmCancelInterval), alarmCancelInterval));
             stb.Append("</td></tr>");
-            stb.Append(Invariant($"<tr><td class='tablecell'>Properties Refresh Interval(seconds):</td><td class='tablecell'>"));
+            stb.Append(Invariant($"<tr><td class='tablecell'>Properties refresh interval(seconds):</td><td class='tablecell'>"));
             stb.Append(HtmlTextBox(nameof(CameraSettings.CameraPropertiesRefreshInterval), propertiesRefreshInterval));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>Snapshot download directory:</td><td class='tablecell'>"));
             stb.Append(HtmlTextBox(nameof(CameraSettings.SnapshotDownloadDirectory), snapshotDownloadDirectory));
             stb.Append("</td></tr>");
-            stb.Append(Invariant($"<tr><td class='tablecell'>Video download directory:</td><td class='tablecell'>"));
+            stb.Append(Invariant($"<tr><td class='tablecell'>Video download directory from Camera:</td><td class='tablecell'>"));
             stb.Append(HtmlTextBox(nameof(CameraSettings.VideoDownloadDirectory), videoDownloadDirectory));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>FFmpeg options for stream capture:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(CameraSettings.FfMpegRecordSettings.StreamArguments), streamArguments, size: 75));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>FFmpeg recording save directory:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(CameraSettings.FfMpegRecordSettings.RecordingSaveDirectory), recordingSaveDirectory, size: 75));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>FFmpeg prefix for recorded files:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(CameraSettings.FfMpegRecordSettings.FileNamePrefix), fileNamePrefix));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>FFmpeg extension for recorded files:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(CameraSettings.FfMpegRecordSettings.FileNameExtension), fileNameExtension));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>FFmpeg options for recorded files:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(CameraSettings.FfMpegRecordSettings.FileEncodeOptions), fileEncodeOptions, size: 75));
             stb.Append("</td></tr>");
 
             stb.Append(Invariant($"<tr><td colspan=2>{HtmlTextBox(RecordId, id, type: "hidden")}<div id='{SaveErrorDivId}' style='color:Red'></div></td><td></td></tr>"));
@@ -476,20 +500,23 @@ namespace Hspi.Pages
 
         private string BuildMainSettingTab()
         {
+            var ffmpegPath = pluginConfig.FfmpegPath;
+
             StringBuilder stb = new StringBuilder();
-            stb.Append(PageBuilderAndMenu.clsPageBuilder.FormStart("ftmSettings", "IdSettings", "Post"));
+            stb.Append(FormStart("ftmSettings", "IdSettings", "Post"));
 
             stb.Append(@"<br>");
             stb.Append(@"<div>");
             stb.Append(@"<table class='full_width_table'>");
             stb.Append("<tr height='5'><td style='width:35%'></td><td style='width:65%'></td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>FFMPEG Path:</td><td class='tablecell'>{HtmlTextBox(nameof(PluginConfig.FfmpegPath), ffmpegPath, size: 75)} </td></tr>"));
             stb.Append(Invariant($"<tr><td class='tablecell'>Debug Logging Enabled:</td><td class='tablecell'>{FormCheckBox(DebugLoggingId, string.Empty, this.pluginConfig.DebugLogging)}</td ></tr>"));
             stb.Append(Invariant($"<tr><td colspan=2><div id='{ErrorDivId}' style='color:Red'></div></td></tr>"));
             stb.Append(Invariant($"<tr><td colspan=2>{FormButton(SettingSaveButtonName, "Save", "Save Settings")}</td></tr>"));
             stb.Append("<tr height='5'><td colspan=2></td></tr>");
             stb.Append(@" </table>");
             stb.Append(@"</div>");
-            stb.Append(PageBuilderAndMenu.clsPageBuilder.FormEnd());
+            stb.Append(FormEnd());
 
             return stb.ToString();
         }
@@ -550,6 +577,28 @@ namespace Hspi.Pages
                     results.AppendLine("Video download directory is not valid.<br>");
                 }
 
+                string ffmpegStreamArguments = parts[nameof(CameraSettings.FfMpegRecordSettings.StreamArguments)];
+
+                var ffmpegRecordingSaveDirectory = parts[nameof(CameraSettings.FfMpegRecordSettings.RecordingSaveDirectory)];
+                if (!Directory.Exists(ffmpegRecordingSaveDirectory))
+                {
+                    results.AppendLine("FFmpeg save directory is not valid.<br>");
+                }
+
+                string ffmpegFileNamePrefix = parts[nameof(CameraSettings.FfMpegRecordSettings.FileNamePrefix)];
+                if (string.IsNullOrWhiteSpace(ffmpegFileNamePrefix))
+                {
+                    results.AppendLine("FFmpeg file name prefix is not valid.<br>");
+                }
+
+                string fffmpegFileNameExtension = parts[nameof(CameraSettings.FfMpegRecordSettings.FileNameExtension)];
+                if (string.IsNullOrWhiteSpace(fffmpegFileNameExtension))
+                {
+                    results.AppendLine("FFmpeg file name extension is not valid.<br>");
+                }
+
+                string ffmpegFileEncodeOptions = parts[nameof(CameraSettings.FfMpegRecordSettings.FileEncodeOptions)];
+
                 if (results.Length > 0)
                 {
                     this.divToUpdate.Add(SaveErrorDivId, results.ToString());
@@ -572,7 +621,9 @@ namespace Hspi.Pages
                                                   pluginConfig.CameraProperties,
                                                   TimeSpan.FromSeconds(propertiesRefreshInterval),
                                                   snapshotDirectory,
-                                                  videoDownloadDirectory);
+                                                  videoDownloadDirectory,
+                                                  new FFMpegRecordSettings(ffmpegStreamArguments,
+                                                    ffmpegRecordingSaveDirectory, ffmpegFileNamePrefix, fffmpegFileNameExtension, ffmpegFileEncodeOptions));
 
                     this.pluginConfig.AddCamera(data);
                     this.pluginConfig.FireConfigChanged();
@@ -658,6 +709,12 @@ namespace Hspi.Pages
             StringBuilder results = new StringBuilder();
 
             // Validate
+            string ffmpegPath = parts[nameof(PluginConfig.FfmpegPath)];
+
+            if (!File.Exists(ffmpegPath))
+            {
+                results.AppendLine("FFMPEG Path is not valid.<br>");
+            }
 
             if (results.Length > 0)
             {
@@ -667,6 +724,7 @@ namespace Hspi.Pages
             {
                 this.divToUpdate.Add(ErrorDivId, string.Empty);
 
+                this.pluginConfig.FfmpegPath = ffmpegPath;
                 this.pluginConfig.DebugLogging = parts[DebugLoggingId] == "checked";
                 this.pluginConfig.FireConfigChanged();
             }
