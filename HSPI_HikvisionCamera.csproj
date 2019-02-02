@@ -97,6 +97,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Pages\ActionPage.cs" />
     <Compile Include="Pages\TakeSnapshotAction.cs" />
+    <Compile Include="PluginActions.cs" />
     <Compile Include="Utils\CombinedCancelToken.cs" />
     <Compile Include="Pages\PageHelper.cs" />
     <Compile Include="Pages\ConfigPage.cs" />
@@ -156,10 +157,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Costura.Fody">
-      <Version>3.2.1</Version>
+      <Version>3.3.2</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>3.3.3</Version>
+      <Version>3.3.5</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -185,10 +186,10 @@
       <Version>2.0.0</Version>
     </PackageReference>
     <PackageReference Include="NullGuard.Fody">
-      <Version>1.8.5</Version>
+      <Version>1.8.7</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http.WinHttpHandler">
-      <Version>4.5.1</Version>
+      <Version>4.5.2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

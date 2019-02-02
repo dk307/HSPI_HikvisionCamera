@@ -19,12 +19,11 @@ namespace Hspi.Utils
             Task.Run(() => @this).Wait();
         }
 
-        public static Task StartAsync(Func<Task> taskAction, CancellationToken token)
+        public static void StartAsync(Func<Task> taskAction, CancellationToken token)
         {
             var task = Task.Factory.StartNew(() => taskAction(), token,
                                           TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
                                           TaskScheduler.Current).WaitAndUnwrapException(token);
-            return task;
         }
     }
 }

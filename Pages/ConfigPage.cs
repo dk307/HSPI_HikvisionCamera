@@ -54,7 +54,7 @@ namespace Hspi.Pages
             try
             {
                 reset();
-                this.UsesJqAll = false;
+                UsesJqAll = false;
 
                 NameValueCollection parts = HttpUtility.ParseQueryString(queryString);
 
@@ -426,31 +426,36 @@ namespace Hspi.Pages
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "System.Int32.TryParse(System.String,System.Int32@)")]
         private string BuildDefaultWebPageBody(NameValueCollection parts)
         {
-            this.UsesJqTabs = true;
+            UsesJqTabs = true;
             string tab = parts[TabId] ?? "0";
-            int defaultTab = 0;
-            int.TryParse(tab, out defaultTab);
+            int.TryParse(tab, out int defaultTab);
 
             int i = 0;
             StringBuilder stb = new StringBuilder();
 
             var tabs = new clsJQuery.jqTabs("tab1id", PageName);
-            var tab1 = new clsJQuery.Tab();
-            tab1.tabTitle = "Settings";
-            tab1.tabDIVID = Invariant($"tabs{i++}");
-            tab1.tabContent = BuildMainSettingTab();
+            var tab1 = new clsJQuery.Tab
+            {
+                tabTitle = "Settings",
+                tabDIVID = Invariant($"tabs{i++}"),
+                tabContent = BuildMainSettingTab()
+            };
             tabs.tabs.Add(tab1);
 
-            var tab2 = new clsJQuery.Tab();
-            tab2.tabTitle = "Cameras";
-            tab2.tabDIVID = Invariant($"tabs{i++}");
-            tab2.tabContent = BuildCamerasTab(parts);
+            var tab2 = new clsJQuery.Tab
+            {
+                tabTitle = "Cameras",
+                tabDIVID = Invariant($"tabs{i++}"),
+                tabContent = BuildCamerasTab(parts)
+            };
             tabs.tabs.Add(tab2);
 
-            var tab3 = new clsJQuery.Tab();
-            tab3.tabTitle = "Camera Properties";
-            tab3.tabDIVID = Invariant($"tabs{i++}");
-            tab3.tabContent = BuildCamerasPropertiesTab(parts);
+            var tab3 = new clsJQuery.Tab
+            {
+                tabTitle = "Camera Properties",
+                tabDIVID = Invariant($"tabs{i++}"),
+                tabContent = BuildCamerasPropertiesTab(parts)
+            };
             tabs.tabs.Add(tab3);
 
             switch (defaultTab)
@@ -483,7 +488,7 @@ namespace Hspi.Pages
             stb.Append(@"<div>");
             stb.Append(@"<table class='full_width_table'>");
             stb.Append("<tr height='5'><td style='width:35%'></td><td style='width:65%'></td></tr>");
-            stb.Append(Invariant($"<tr><td class='tablecell'>Debug Logging Enabled:</td><td class='tablecell'>{FormCheckBox(DebugLoggingId, string.Empty, this.pluginConfig.DebugLogging)}</td ></tr>"));
+            stb.Append(Invariant($"<tr><td class='tablecell'>Debug Logging Enabled:</td><td class='tablecell'>{FormCheckBox(DebugLoggingId, string.Empty, pluginConfig.DebugLogging)}</td ></tr>"));
             stb.Append(Invariant($"<tr><td colspan=2><div id='{ErrorDivId}' style='color:Red'></div></td></tr>"));
             stb.Append(Invariant($"<tr><td colspan=2>{FormButton(SettingSaveButtonName, "Save", "Save Settings")}</td></tr>"));
             stb.Append("<tr height='5'><td colspan=2></td></tr>");
@@ -498,13 +503,13 @@ namespace Hspi.Pages
         {
             if (form == NameToIdWithPrefix(DeleteCamera))
             {
-                this.pluginConfig.RemoveCamera(parts[RecordId]);
-                this.pluginConfig.FireConfigChanged();
-                this.divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                pluginConfig.RemoveCamera(parts[RecordId]);
+                pluginConfig.FireConfigChanged();
+                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
             }
             else if (form == NameToIdWithPrefix(CancelCamera))
             {
-                this.divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
             }
             else if (form == NameToIdWithPrefix(SaveCamera))
             {
@@ -552,7 +557,7 @@ namespace Hspi.Pages
 
                 if (results.Length > 0)
                 {
-                    this.divToUpdate.Add(SaveErrorDivId, results.ToString());
+                    divToUpdate.Add(SaveErrorDivId, results.ToString());
                 }
                 else
                 {
@@ -574,9 +579,9 @@ namespace Hspi.Pages
                                                   snapshotDirectory,
                                                   videoDownloadDirectory);
 
-                    this.pluginConfig.AddCamera(data);
-                    this.pluginConfig.FireConfigChanged();
-                    this.divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                    pluginConfig.AddCamera(data);
+                    pluginConfig.FireConfigChanged();
+                    divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
                 }
             }
         }
@@ -586,13 +591,13 @@ namespace Hspi.Pages
         {
             if (form == NameToIdWithPrefix(DeleteCameraProperty))
             {
-                this.pluginConfig.RemoveCameraProperty(parts[RecordId]);
-                this.pluginConfig.FireConfigChanged();
-                this.divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
+                pluginConfig.RemoveCameraProperty(parts[RecordId]);
+                pluginConfig.FireConfigChanged();
+                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
             }
             else if (form == NameToIdWithPrefix(CancelCameraProperty))
             {
-                this.divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
+                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
             }
             else if (form == NameToIdWithPrefix(SaveCameraProperty))
             {
@@ -629,7 +634,7 @@ namespace Hspi.Pages
 
                 if (results.Length > 0)
                 {
-                    this.divToUpdate.Add(SaveErrorDivId, results.ToString());
+                    divToUpdate.Add(SaveErrorDivId, results.ToString());
                 }
                 else
                 {
@@ -646,9 +651,9 @@ namespace Hspi.Pages
                                                   cameraPropertyXPath,
                                                   stringValues.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToImmutableSortedSet());
 
-                    this.pluginConfig.AddCameraProperty(data);
-                    this.pluginConfig.FireConfigChanged();
-                    this.divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
+                    pluginConfig.AddCameraProperty(data);
+                    pluginConfig.FireConfigChanged();
+                    divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
                 }
             }
         }
@@ -661,14 +666,14 @@ namespace Hspi.Pages
 
             if (results.Length > 0)
             {
-                this.divToUpdate.Add(ErrorDivId, results.ToString());
+                divToUpdate.Add(ErrorDivId, results.ToString());
             }
             else
             {
-                this.divToUpdate.Add(ErrorDivId, string.Empty);
+                divToUpdate.Add(ErrorDivId, string.Empty);
 
-                this.pluginConfig.DebugLogging = parts[DebugLoggingId] == "checked";
-                this.pluginConfig.FireConfigChanged();
+                pluginConfig.DebugLogging = parts[DebugLoggingId] == "checked";
+                pluginConfig.FireConfigChanged();
             }
         }
 
