@@ -55,43 +55,50 @@ namespace Hspi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         private void RestartCameraOperations()
         {
-            lock (connectorManagerLock)
+            try
             {
-                // This returns a new copy every time
-                var currentDevices = pluginConfig.Cameras;
-
-                // Update changed or new
-                foreach (var device in pluginConfig.Cameras)
+                lock (connectorManagerLock)
                 {
-                    if (connectorManager.TryGetValue(device.Key, out var oldConnector))
+                    // This returns a new copy every time
+                    var currentDevices = pluginConfig.Cameras;
+
+                    // Update changed or new
+                    foreach (var device in pluginConfig.Cameras)
                     {
-                        if (!device.Value.Equals(oldConnector.CameraSettings))
+                        if (connectorManager.TryGetValue(device.Key, out var oldConnector))
                         {
-                            oldConnector.Dispose();
-                            connectorManager[device.Key] = new CameraManager(HS, device.Value, ShutdownCancellationToken);
+                            if (!device.Value.Equals(oldConnector.CameraSettings))
+                            {
+                                oldConnector.Dispose();
+                                connectorManager[device.Key] = new CameraManager(HS, device.Value, ShutdownCancellationToken);
+                            }
+                        }
+                        else
+                        {
+                            connectorManager.Add(device.Key, new CameraManager(HS, device.Value, ShutdownCancellationToken));
                         }
                     }
-                    else
+
+                    // Remove deleted
+                    List<string> removalList = new List<string>();
+                    foreach (var deviceKeyPair in connectorManager)
                     {
-                        connectorManager.Add(device.Key, new CameraManager(HS, device.Value, ShutdownCancellationToken));
+                        if (!currentDevices.ContainsKey(deviceKeyPair.Key))
+                        {
+                            deviceKeyPair.Value.Dispose();
+                            removalList.Add(deviceKeyPair.Key);
+                        }
+                    }
+
+                    foreach (var key in removalList)
+                    {
+                        connectorManager.Remove(key);
                     }
                 }
-
-                // Remove deleted
-                List<string> removalList = new List<string>();
-                foreach (var deviceKeyPair in connectorManager)
-                {
-                    if (!currentDevices.ContainsKey(deviceKeyPair.Key))
-                    {
-                        deviceKeyPair.Value.Dispose();
-                        removalList.Add(deviceKeyPair.Key);
-                    }
-                }
-
-                foreach (var key in removalList)
-                {
-                    connectorManager.Remove(key);
-                }
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(Invariant($"Failed in starting with {ex.GetFullMessage()}"));
             }
         }
 

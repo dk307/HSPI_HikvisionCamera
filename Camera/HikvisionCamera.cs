@@ -51,9 +51,10 @@ namespace Hspi.Camera
         public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval,
                                                       int channel)
         {
-            var tasks = new List<Task>();
-
-            tasks.Add(DownloadSnapshot(channel));
+            var tasks = new List<Task>
+            {
+                DownloadSnapshot(channel)
+            };
 
             TimeSpan delay = interval;
             while (delay < totalTimeSpan)
@@ -343,15 +344,19 @@ namespace Hspi.Camera
                 handler = httpClientHandler;
             }
 
-            var httpClient = new HttpClient(handler, true);
-            httpClient.Timeout = TimeSpan.FromSeconds(120);
+            var httpClient = new HttpClient(handler, true)
+            {
+                Timeout = TimeSpan.FromSeconds(120)
+            };
             return httpClient;
         }
 
         private Uri CreateUri(string path)
         {
-            var uriBuilder = new UriBuilder(CameraSettings.CameraHost);
-            uriBuilder.Path = path;
+            var uriBuilder = new UriBuilder(CameraSettings.CameraHost)
+            {
+                Path = path
+            };
 
             var uri = uriBuilder.Uri;
             return uri;
@@ -651,6 +656,11 @@ namespace Hspi.Camera
                                         {
                                             string line = await readTask.ConfigureAwait(false);
 
+                                            if (string.IsNullOrWhiteSpace(line))
+                                            {
+                                                continue;
+                                            }
+
                                             if (line == "--boundary")
                                             {
                                                 await ProcessAlarmEvent(builder).ConfigureAwait(false);
@@ -736,7 +746,7 @@ namespace Hspi.Camera
 
         private static readonly XmlPathData EndTimeXPath = new XmlPathData("*[local-name()='timeSpan']/*[local-name()='endTime']");
 
-        private readonly static Regex eventTypeRegex = new Regex(@"<eventType>(.*?)<\/eventType>",
+        private static readonly Regex eventTypeRegex = new Regex(@"<eventType>(.*?)<\/eventType>",
                                                                  RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         private static readonly XmlPathData PlaybackURIXPath = new XmlPathData("*[local-name()='mediaSegmentDescriptor']/*[local-name()='playbackURI']");
@@ -745,7 +755,7 @@ namespace Hspi.Camera
 
         private static readonly XmlPathData StartTimeXPath = new XmlPathData("*[local-name()='timeSpan']/*[local-name()='startTime']");
 
-        private readonly static XmlPathData xPathForSelectingVideos =
+        private static readonly XmlPathData xPathForSelectingVideos =
                                                     new XmlPathData(@"*[local-name()='matchList']/*");
 
         private readonly Dictionary<string, AlarmData> alarmsData = new Dictionary<string, AlarmData>();
