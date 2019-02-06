@@ -439,12 +439,12 @@ namespace Hspi.Camera
                             var dayDirectory = video.StartTime.ToLocalTime().ToString("yyyy-MM-dd");
                             string fileDirectory = Path.Combine(CameraSettings.VideoDownloadDirectory, dayDirectory);
                             string fileName = Path.Combine(fileDirectory, video.Name + ".mp4");
-                            Directory.CreateDirectory(fileDirectory);
 
                             var fileInfo = new FileInfo(fileName);
 
                             if (!fileInfo.Exists)
                             {
+                                Directory.CreateDirectory(fileDirectory);
                                 await DownloadRecordedVideo(video, fileName).ConfigureAwait(false);
                                 File.SetCreationTimeUtc(fileName, video.StartTime.UtcDateTime);
                                 File.SetLastWriteTimeUtc(fileName, video.EndTime.UtcDateTime);
