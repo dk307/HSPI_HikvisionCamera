@@ -656,9 +656,10 @@ namespace Hspi.Camera
                                         {
                                             string line = await readTask.ConfigureAwait(false);
 
-                                            if (string.IsNullOrWhiteSpace(line))
+                                            if (line == null)
                                             {
-                                                continue;
+                                                Trace.TraceError(Invariant($"[{CameraSettings.Name}]Alarm Stream for {CameraSettings.CameraHost} disconnected. Restarting it."));
+                                                break;
                                             }
 
                                             if (line == "--boundary")
