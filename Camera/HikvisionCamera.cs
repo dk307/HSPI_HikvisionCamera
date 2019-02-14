@@ -66,12 +66,6 @@ namespace Hspi.Camera
             await Task.WhenAll(tasks).ConfigureAwait(false);
         }
 
-        private async Task DownloadSnapshotWithDelay(int channel, TimeSpan delay)
-        {
-            await Task.Delay(delay).ConfigureAwait(false);
-            await DownloadSnapshot(channel).ConfigureAwait(false);
-        }
-
         public async Task DownloadRecordedVideo(RecordedVideo video, string path)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Downloading {video.Name}"));
@@ -296,7 +290,7 @@ namespace Hspi.Camera
                             alarmData.state = false;
                             alarmData.lastReceived.Reset();
                             alarmData.lastUpdated.Reset();
-                            var alarm = new AlarmInfo(pair.Key, alarmData.state);
+                            var alarm = new AlarmInfo(pair.Key, alarmData.channelId, alarmData.state);
                             await Enqueue(alarm).ConfigureAwait(false);
                         }
                     }
@@ -306,7 +300,7 @@ namespace Hspi.Camera
                         if (alarmData.lastUpdated.Elapsed >= CameraSettings.AlarmCancelInterval)
                         {
                             alarmData.lastUpdated.Restart();
-                            var alarm = new AlarmInfo(pair.Key, alarmData.state);
+                            var alarm = new AlarmInfo(pair.Key, alarmData.channelId, alarmData.state);
                             await Enqueue(alarm).ConfigureAwait(false);
                         }
                     }
@@ -360,6 +354,12 @@ namespace Hspi.Camera
 
             var uri = uriBuilder.Uri;
             return uri;
+        }
+
+        private async Task DownloadSnapshotWithDelay(int channel, TimeSpan delay)
+        {
+            await Task.Delay(delay).ConfigureAwait(false);
+            await DownloadSnapshot(channel).ConfigureAwait(false);
         }
 
         private async Task<string> DownloadToFile(string path, Uri uri,
@@ -475,7 +475,7 @@ namespace Hspi.Camera
 
         private async Task Enqueue(AlarmInfo alarm)
         {
-            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm:{alarm.AlarmType} Enabled:{alarm.Active}"));
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm:{alarm.AlarmType} ChannelID:{alarm.ChannelID} Enabled:{alarm.Active}"));
             await Updates.EnqueueAsync(alarm, Token).ConfigureAwait(false);
         }
 
@@ -548,6 +548,7 @@ namespace Hspi.Camera
         {
             string alarmType = null;
             bool? enabled = null;
+            int? channelId = null;
 
             foreach (var line in lines)
             {
@@ -562,18 +563,27 @@ namespace Hspi.Camera
                         break;
 
                     default:
-                        Match match = eventTypeRegex.Match(line);
+                        var match = eventTypeRegex.Match(line);
                         if (match.Success)
                         {
                             alarmType = string.Intern(match.Groups[1].Value);
+                            break;
+                        }
+                        match = channelTypeRegex.Match(line);
+                        if (match.Success)
+                        {
+                            if (int.TryParse(match.Groups[1].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
+                            {
+                                channelId = result;
+                            }
                         }
                         break;
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(alarmType) && enabled.HasValue)
+            if (!string.IsNullOrWhiteSpace(alarmType) && enabled.HasValue && channelId.HasValue)
             {
-                var alarm = new AlarmInfo(alarmType, enabled.Value);
+                var alarm = new AlarmInfo(alarmType, channelId.Value, enabled.Value);
                 if (enabled.Value)
                 {
                     if (await UpdateForAlarm(alarmType).ConfigureAwait(false))
@@ -594,9 +604,9 @@ namespace Hspi.Camera
         }
 
         private async Task<HttpResponseMessage> Send(HttpMethod method,
-                                                            Uri uri,
-                                                            string content = null,
-                                                            HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
+                                                     Uri uri,
+                                                     string content = null,
+                                                     HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
             return await SendToClient(method, uri, content, completionOption).ConfigureAwait(false);
         }
@@ -646,19 +656,20 @@ namespace Hspi.Camera
                             {
                                 using (var reader = new StreamReader(stream, Encoding.UTF8))
                                 {
-                                    List<string> builder = new List<string>();
+                                    List<string> builder = new List<string>(20);
                                     while (true) //(!reader.EndOfStream)
                                     {
                                         var readTask = reader.ReadLineAsync();
+                                        var delayTask = Task.Delay(alarmStreamThreshold, Token);
 
-                                        var completedTask = await Task.WhenAny(readTask, Task.Delay(alarmStreamThreshold, Token)).ConfigureAwait(false);
+                                        var completedTask = await Task.WhenAny(delayTask, readTask).ConfigureAwait(false);
                                         if (completedTask == readTask)
                                         {
-                                            string line = await readTask.ConfigureAwait(false);
+                                            string line = readTask.Result;
 
                                             if (line == null)
                                             {
-                                                Trace.TraceError(Invariant($"[{CameraSettings.Name}]Alarm Stream for {CameraSettings.CameraHost} disconnected. Restarting it."));
+                                                Trace.TraceWarning(Invariant($"[{CameraSettings.Name}]Alarm Stream for {CameraSettings.CameraHost} disconnected. Restarting it."));
                                                 break;
                                             }
 
@@ -669,8 +680,12 @@ namespace Hspi.Camera
                                             }
                                             else
                                             {
-                                                if (line.StartsWith("<eventType>") ||
-                                                    line.StartsWith("<eventState>"))
+                                                if (line.StartsWith("<eventType>", StringComparison.InvariantCultureIgnoreCase) ||
+                                                    line.StartsWith("<eventState>", StringComparison.InvariantCulture))
+                                                {
+                                                    builder.Add(line);
+                                                }
+                                                else if (line.StartsWith("<channelID>", StringComparison.InvariantCulture))
                                                 {
                                                     builder.Add(line);
                                                 }
@@ -694,7 +709,7 @@ namespace Hspi.Camera
                         throw;
                     }
 
-                    Trace.TraceError(Invariant($"[{CameraSettings.Name}]Alarm Stream for {CameraSettings.CameraHost} failed with {ex}. Restarting it."));
+                    Trace.TraceWarning(Invariant($"[{CameraSettings.Name}]Alarm Stream for {CameraSettings.CameraHost} failed with {ex}. Restarting it."));
                     if (!Token.IsCancellationRequested)
                     {
                         await Task.Delay(1000, Token).ConfigureAwait(false);
@@ -732,13 +747,6 @@ namespace Hspi.Camera
             return sendNow;
         }
 
-        private class AlarmData
-        {
-            public Stopwatch lastReceived = new Stopwatch();
-            public Stopwatch lastUpdated = new Stopwatch();
-            public bool state = false;
-        }
-
         public const int Track1 = 101;
 
         public const int Track2 = 201;
@@ -748,6 +756,9 @@ namespace Hspi.Camera
         private static readonly XmlPathData EndTimeXPath = new XmlPathData("*[local-name()='timeSpan']/*[local-name()='endTime']");
 
         private static readonly Regex eventTypeRegex = new Regex(@"<eventType>(.*?)<\/eventType>",
+                                                                 RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        private static readonly Regex channelTypeRegex = new Regex(@"<channelID>(.*?)<\/channelID>",
                                                                  RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         private static readonly XmlPathData PlaybackURIXPath = new XmlPathData("*[local-name()='mediaSegmentDescriptor']/*[local-name()='playbackURI']");
@@ -760,12 +771,26 @@ namespace Hspi.Camera
                                                     new XmlPathData(@"*[local-name()='matchList']/*");
 
         private readonly Dictionary<string, AlarmData> alarmsData = new Dictionary<string, AlarmData>();
-        private readonly TimeSpan alarmStreamThreshold = TimeSpan.FromSeconds(15);
+
+        private readonly TimeSpan alarmStreamThreshold = TimeSpan.FromSeconds(120);
+
         private readonly AsyncLock alarmTimersLock = new AsyncLock();
+
         private readonly HttpClient defaultHttpClient;
+
         private readonly AsyncAutoResetEvent downloadEvent = new AsyncAutoResetEvent();
+
         private readonly Dictionary<string, List<CameraProperty>> propertiesGroups;
+
         private readonly CancellationTokenSource sourceToken;
+
+        private class AlarmData
+        {
+            public int channelId = 0;
+            public Stopwatch lastReceived = new Stopwatch();
+            public Stopwatch lastUpdated = new Stopwatch();
+            public bool state = false;
+        }
 
         #region IDisposable Support
 

@@ -6,7 +6,7 @@ namespace Hspi.Camera
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal class AlarmInfo : ICameraContruct
     {
-        public AlarmInfo(string alarmType, bool active)
+        public AlarmInfo(string alarmType, int channelID, bool active)
         {
             if (string.IsNullOrWhiteSpace(alarmType))
             {
@@ -14,19 +14,18 @@ namespace Hspi.Camera
             }
 
             AlarmType = alarmType;
+            ChannelID = channelID;
             Active = active;
         }
 
         public bool Active { get; }
 
         public string AlarmType { get; }
+        public int ChannelID { get; }
 
         public DeviceType DeviceType => DeviceType.Alarm;
 
         public string Id => AlarmReadableName(AlarmType);
-
-        public const string AlarmOffValue = "Off";
-        public const string AlarmOnValue = "On";
 
         public string Value
         {
@@ -47,5 +46,8 @@ namespace Hspi.Camera
                     return alarmType;
             }
         }
+
+        public const string AlarmOffValue = "Off";
+        public const string AlarmOnValue = "On";
     };
 }
