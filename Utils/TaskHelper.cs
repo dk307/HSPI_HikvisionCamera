@@ -29,11 +29,15 @@ namespace Hspi.Utils
 
         private static async Task RunInLoop(string taskName, Func<Task> taskAction, CancellationToken token)
         {
-            while (!token.IsCancellationRequested)
+            bool loop = true;
+            while (loop && !token.IsCancellationRequested)
             {
                 try
                 {
+                    Trace.WriteLine(Invariant($"{taskName} Starting"));
                     await taskAction().ConfigureAwait(false);
+                    Trace.WriteLine(Invariant($"{taskName} Finished"));
+                    loop = false;  //finished sucessfully
                 }
                 catch (Exception ex)
                 {
