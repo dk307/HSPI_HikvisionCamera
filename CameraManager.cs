@@ -19,12 +19,12 @@ namespace Hspi
                             CancellationToken shutdownDownToken)
         {
             this.HS = HS;
-            this.CameraSettings = cameraSettings;
-            this.cancelTokenSource = new CombinedCancelToken(shutdownDownToken);
+            CameraSettings = cameraSettings;
+            cancelTokenSource = new CombinedCancelToken(shutdownDownToken);
             rootDeviceData = new DeviceRootDeviceManager(cameraSettings, this.HS, cancelTokenSource.Token);
             camera = new HikvisionCamera(CameraSettings, cancelTokenSource.Token);
 
-            TaskHelper.StartAsync(ProcessUpdates, cancelTokenSource.Token);
+            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Process Updates"), ProcessUpdates, cancelTokenSource.Token);
         }
 
         public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval, int channel)

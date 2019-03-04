@@ -1,7 +1,8 @@
-﻿using Nito.AsyncEx.Synchronous;
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.FormattableString;
 
 namespace Hspi.Utils
 {
@@ -19,11 +20,31 @@ namespace Hspi.Utils
             Task.Run(() => @this).Wait();
         }
 
-        public static void StartAsync(Func<Task> taskAction, CancellationToken token)
+        public static void StartAsyncWithErrorChecking(string taskName, Func<Task> taskAction, CancellationToken token)
         {
-            var task = Task.Factory.StartNew(() => taskAction(), token,
-                                          TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
-                                          TaskScheduler.Current).WaitAndUnwrapException(token);
+            var task = Task.Factory.StartNew(() => RunInLoop(taskName, taskAction, token), token,
+                                         TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
+                                         TaskScheduler.Current);
+        }
+
+        private static async Task RunInLoop(string taskName, Func<Task> taskAction, CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                try
+                {
+                    await taskAction().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.IsCancelException())
+                    {
+                        throw;
+                    }
+
+                    Trace.TraceError(Invariant($"{taskName} failed with {ex.GetFullMessage()}. Restarting ..."));
+                }
+            }
         }
     }
 }

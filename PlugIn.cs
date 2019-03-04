@@ -2,6 +2,7 @@ using HomeSeerAPI;
 using Hspi.DeviceData;
 using Hspi.Exceptions;
 using Hspi.Pages;
+using Hspi.Utils;
 using NullGuard;
 using Scheduler.Classes;
 using System;

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hspi
+namespace Hspi.Utils
 {
     internal static class ExceptionHelper
     {
@@ -29,7 +29,8 @@ namespace Hspi
         public static bool IsCancelException(this Exception ex)
         {
             return (ex is TaskCanceledException) ||
-                   (ex is OperationCanceledException);
+                   (ex is OperationCanceledException) ||
+                   (ex is ObjectDisposedException);
         }
     };
 }
