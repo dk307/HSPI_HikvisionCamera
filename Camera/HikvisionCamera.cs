@@ -38,10 +38,10 @@ namespace Hspi.Camera
 
             defaultHttpClient = CreateHttpClient();
 
-            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Alarm Steam"), StartAlarmStream, Token);
-            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Alarm Reset Loop"), ResetBackAlarmsLoop, Token);
-            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Fetch Properties"), FetchProperties, Token);
-            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Download Videos"), DownloadVideos, Token);
+            Utils.TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Alarm Steam"), StartAlarmStream, Token);
+            Utils.TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Alarm Reset Loop"), ResetBackAlarmsLoop, Token);
+            Utils.TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Fetch Properties"), FetchProperties, Token);
+            Utils.TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Download Videos"), DownloadVideos, Token);
         }
 
         public CameraSettings CameraSettings { get; }
