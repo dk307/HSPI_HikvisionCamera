@@ -367,22 +367,33 @@ namespace Hspi.Camera
                                                   [AllowNull]string data)
         {
             string tempPath = Path.ChangeExtension(path, "tmp");
-            string mediaType = null;
-            using (var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+            try
             {
-                mediaType = await DownloadToStream(fileStream, uri, httpMethod, data).ConfigureAwait(false);
-            }
-            string fileExtension = extension ?? MimeTypesMap.GetExtension(mediaType);
-            string destFileName = Path.ChangeExtension(path, fileExtension);
-            if (File.Exists(destFileName))
-            {
-                string destFileNameOld = Path.ChangeExtension(destFileName, "old");
-                File.Move(destFileName, destFileNameOld);
-                File.Delete(destFileNameOld);
-            }
+                string mediaType = null;
+                using (var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+                {
+                    mediaType = await DownloadToStream(fileStream, uri, httpMethod, data).ConfigureAwait(false);
+                }
+                string fileExtension = extension ?? MimeTypesMap.GetExtension(mediaType);
+                string destFileName = Path.ChangeExtension(path, fileExtension);
+                if (File.Exists(destFileName))
+                {
+                    string destFileNameOld = Path.ChangeExtension(destFileName, "old");
+                    File.Move(destFileName, destFileNameOld);
+                    File.Delete(destFileNameOld);
+                }
 
-            File.Move(tempPath, destFileName);
-            return destFileName;
+                File.Move(tempPath, destFileName);
+                return destFileName;
+            }
+            finally
+            {
+                // always delete the tmp file
+                if (File.Exists(tempPath))
+                {
+                    File.Delete(tempPath);
+                }
+            }
         }
 
         private async Task<string> DownloadToStream(Stream stream, Uri uri, HttpMethod httpMethod, [AllowNull]string data)
