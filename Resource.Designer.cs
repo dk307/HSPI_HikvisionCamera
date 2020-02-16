@@ -19,7 +19,7 @@ namespace Hspi {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resource {
@@ -98,7 +98,7 @@ namespace Hspi {
         /// DataTables 1.10.16
         /// ©2008-2017 SpryMedia Ltd - datatables.net/license
         ///*/
-        ///(function(h){&quot;function&quot;===typeof define&amp;&amp;define.amd?define([&quot;jquery&quot;],function(E){return h(E,window,document)}):&quot;object&quot;===typeof exports?module.exports=function(E,G){E||(E=window);G||(G=&quot;undefined&quot;!==typeof window?require(&quot;jquery&quot;):require(&quot;jquery&quot;)(E));return h(G,E,E.document)}:h(jQuery,window,document)})(function(h,E,G,k){function X(a){var b,c,d={};h.each(a,function(e){if((b=e.match(/^([^A-Z]+?)([A-Z])/))&amp;&amp;-1!==&quot;a aa ai ao as b [rest of string was truncated]&quot;;.
+        ///(function(h){&quot;function&quot;===typeof define&amp;&amp;define.amd?define([&quot;jquery&quot;],function(E){return h(E,window,document)}):&quot;object&quot;===typeof exports?module.exports=function(E,G){E||(E=window);G||(G=&quot;undefined&quot;!==typeof window?require(&quot;jquery&quot;):require(&quot;jquery&quot;)(E));return h(G,E,E.document)}:h(jQuery,window,document)})(function(h,E,G,k){function X(a){var b,c,d={};h.each(a,function(e){if((b=e.match(/^([^A-Z]+?)([A-Z])/))&amp;&amp;-1!==&quot;a aa ai ao  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string jquery_dataTables_min_js {
             get {
