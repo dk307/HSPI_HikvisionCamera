@@ -3,6 +3,7 @@ using NullGuard;
 
 namespace Hspi.Camera
 {
+
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal class AlarmInfo : ICameraContruct
     {
@@ -27,13 +28,7 @@ namespace Hspi.Camera
 
         public string Id => AlarmReadableName(AlarmType);
 
-        public string Value
-        {
-            get
-            {
-                return !Active ? AlarmOffValue : AlarmOnValue;
-            }
-        }
+        public string Value =>  !Active ? OnOffDeviceData.OffValueString: OnOffDeviceData.OnValueString;
 
         private static string AlarmReadableName(string alarmType)
         {
@@ -47,7 +42,5 @@ namespace Hspi.Camera
             }
         }
 
-        public const string AlarmOffValue = "Off";
-        public const string AlarmOnValue = "On";
     };
 }
