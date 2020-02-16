@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="CameraManager.cs" />
     <Compile Include="Camera\AlarmInfo.cs" />
+    <Compile Include="Camera\AlarmStreamConnectedInfo.cs" />
     <Compile Include="Camera\CameraContruct.cs" />
     <Compile Include="Camera\CameraProperty.cs" />
     <Compile Include="Camera\CameraPropertyInfo.cs" />
@@ -90,8 +91,10 @@
     <Compile Include="Camera\HikvisionCamera.cs" />
     <Compile Include="Camera\RecordedVideo.cs" />
     <Compile Include="Camera\XmlPathData.cs" />
+    <Compile Include="DeviceData\AlarmConnectedDeviceData.cs" />
     <Compile Include="DeviceData\CameraPropertyDeviceData.cs" />
     <Compile Include="DeviceData\DeviceType.cs" />
+    <Compile Include="DeviceData\OnOffDeviceData.cs" />
     <Compile Include="DeviceData\RootDeviceData.cs" />
     <Compile Include="DeviceData\AlarmDeviceData.cs" />
     <Compile Include="GlobalSuppressions.cs" />

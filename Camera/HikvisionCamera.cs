@@ -490,6 +490,13 @@ namespace Hspi.Camera
             await Updates.EnqueueAsync(alarm, Token).ConfigureAwait(false);
         }
 
+        private async Task EnqueueAlarmStreamConnectedInfo( bool connected)
+        {
+            var alarmStreamConnectedInfo = new AlarmStreamConnectedInfo(connected);
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm Stream Connected:{alarmStreamConnectedInfo.Connected}"));
+            await Updates.EnqueueAsync(alarmStreamConnectedInfo, Token).ConfigureAwait(false);
+        }
+
         private async Task Enqueue(CameraProperty cameraInfo, [AllowNull]string value)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Property:{cameraInfo.Name} Value:{value ?? string.Empty}"));
@@ -648,6 +655,7 @@ namespace Hspi.Camera
 
         private async Task StartAlarmStream()
         {
+            await EnqueueAlarmStreamConnectedInfo(false).ConfigureAwait(false);
             while (!Token.IsCancellationRequested)
             {
                 try
@@ -663,6 +671,8 @@ namespace Hspi.Camera
                                                          client: client,
                                                          completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                         {
+                            await EnqueueAlarmStreamConnectedInfo(true).ConfigureAwait(false);
+
                             using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                             {
                                 using (var reader = new StreamReader(stream, Encoding.UTF8))
@@ -719,6 +729,8 @@ namespace Hspi.Camera
                     {
                         throw;
                     }
+
+                    await EnqueueAlarmStreamConnectedInfo(false).ConfigureAwait(false);
 
                     Trace.TraceWarning(Invariant($"[{CameraSettings.Name}]Alarm Stream for {CameraSettings.CameraHost} failed with {ex}. Restarting it."));
                     if (!Token.IsCancellationRequested)
