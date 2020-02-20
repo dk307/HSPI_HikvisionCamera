@@ -46,10 +46,10 @@ namespace Hspi.DeviceData
 
         public virtual Task HandleCommand(IHSApplication HS,
                                           HikvisionCamera camera,
-                                          CancellationToken token,
                                           string stringValue,
                                           double value,
-                                          ePairControlUse control)
+                                          ePairControlUse control,
+                                          CancellationToken token)
         {
             return Task.CompletedTask;
         }

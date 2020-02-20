@@ -10,6 +10,10 @@ namespace Hspi.Exceptions
         {
         }
 
+        public HspiConnectionException(string message) : base(message)
+        {
+        }
+
         public HspiConnectionException()
         {
         }

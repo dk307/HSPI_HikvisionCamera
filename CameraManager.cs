@@ -76,6 +76,7 @@ namespace Hspi
                 cancelTokenSource.Cancel();
                 DisposeConnector();
                 cancelTokenSource.Dispose();
+                camera.Dispose();
 
                 disposedValue = true;
             }
