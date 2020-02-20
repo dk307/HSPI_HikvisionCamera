@@ -2,8 +2,9 @@
 {
     internal enum DeviceType
     {
-        Root,
-        CameraProperty,
-        Alarm,
+        Root = 0,
+        CameraProperty = 1,
+        Alarm = 2,
+        AlarmStreamConnected = 3,
     }
 }

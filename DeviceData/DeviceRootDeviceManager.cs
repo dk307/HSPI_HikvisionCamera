@@ -236,6 +236,9 @@ namespace Hspi.DeviceData
                 case DeviceType.Alarm:
                     return new AlarmDeviceData(deviceIdentifier.DeviceTypeId);
 
+                case DeviceType.AlarmStreamConnected:
+                    return new AlarmConnectedDeviceData();
+
                 default:
                     throw new NotImplementedException();
             }

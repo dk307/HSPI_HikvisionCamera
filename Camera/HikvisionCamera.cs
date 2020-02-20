@@ -408,7 +408,7 @@ namespace Hspi.Camera
         }
 
         private async Task<string> DownloadToFile(string path, Uri uri,
-                                                  [AllowNull]string extension, 
+                                                  [AllowNull]string extension,
                                                   HttpMethod httpMethod,
                                                   [AllowNull]string data)
         {
@@ -539,6 +539,13 @@ namespace Hspi.Camera
             await Updates.EnqueueAsync(alarm, Token).ConfigureAwait(false);
         }
 
+        private async Task EnqueueAlarmStreamConnectedInfo(bool connected)
+        {
+            var alarmStreamConnectedInfo = new AlarmStreamConnectedInfo(connected);
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm Stream Connected:{alarmStreamConnectedInfo.Connected}"));
+            await Updates.EnqueueAsync(alarmStreamConnectedInfo, Token).ConfigureAwait(false);
+        }
+
         private async Task Enqueue(CameraProperty cameraInfo, [AllowNull]string value)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Property:{cameraInfo.Name} Value:{value ?? string.Empty}"));
@@ -666,16 +673,6 @@ namespace Hspi.Camera
             }
         }
 
-        //private async Task<XmlDocument> SendToClient2(HttpMethod method,
-        //                                                    Uri uri,
-        //                                                    string content = null,
-        //                                                    HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
-        //                                                    HttpClient client = null)
-        //{
-        //    var response = await SendToClient(method, uri, content, completionOption, client).ConfigureAwait(false);
-
-        //}
-
         private async Task<HttpResponseMessage> Send(HttpRequestMessage httpRequestMessage,
                                                      string content = null,
                                                      HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
@@ -707,6 +704,7 @@ namespace Hspi.Camera
         private async Task StartAlarmStream()
         {
             Uri uri = CreateUri(@"ISAPI/Event/notification/alertStream");
+            await EnqueueAlarmStreamConnectedInfo(false).ConfigureAwait(false);
             while (!Token.IsCancellationRequested)
             {
                 HttpClient client = null;
@@ -719,9 +717,11 @@ namespace Hspi.Camera
                         using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
                         {
                             using (var response = await SendToClient(httpRequestMessage,
-                                                                     client: client,
-                                                                     completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                                                                    client: client,
+                                                                    completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                             {
+                                await EnqueueAlarmStreamConnectedInfo(true).ConfigureAwait(false);
+
                                 using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                                 {
                                     using (var reader = new StreamReader(stream, Encoding.UTF8))
@@ -779,6 +779,8 @@ namespace Hspi.Camera
                     {
                         throw;
                     }
+
+                    await EnqueueAlarmStreamConnectedInfo(false).ConfigureAwait(false);
 
                     Trace.TraceWarning(Invariant($"[{CameraSettings.Name}]Alarm Stream for {CameraSettings.CameraHost} failed with {ex}. Restarting it."));
                     if (!Token.IsCancellationRequested)
