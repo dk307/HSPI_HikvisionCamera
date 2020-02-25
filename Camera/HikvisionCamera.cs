@@ -356,10 +356,15 @@ namespace Hspi.Camera
 #pragma warning disable CA2000 // Dispose objects before losing scope , handler does it
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
+                    // This is used because it supports GET with a body, HttpClientHandler dosn't 
                     var winHttpHandler = new WinHttpHandler
                     {
                         ServerCredentials = credCache,
+                        MaxConnectionsPerServer = 4,
+                        AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
+
                     };
+
                     handler = winHttpHandler;
                 }
                 else
@@ -367,6 +372,7 @@ namespace Hspi.Camera
                     var httpClientHandler = new HttpClientHandler
                     {
                         Credentials = credCache,
+                        MaxConnectionsPerServer = 4,
                     };
 
                     if (httpClientHandler.SupportsAutomaticDecompression)
