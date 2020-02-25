@@ -35,6 +35,7 @@ namespace Hspi.Camera
             sourceToken = CancellationTokenSource.CreateLinkedTokenSource(shutdown);
             propertiesGroups = CreatePropertyGroup(cameraSettings.PeriodicFetchedCameraProperties);
 
+            handler = CreateHttpHandler();
             defaultHttpClient = CreateHttpClient();
 
             Utils.TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Alarm Steam"), StartAlarmStream, Token);
@@ -63,31 +64,6 @@ namespace Hspi.Camera
             }
 
             await Task.WhenAll(tasks).ConfigureAwait(false);
-        }
-
-        private async Task DownloadRecordedVideo(RecordedVideo video, string path)
-        {
-            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Downloading {video.Name}"));
-
-            Uri uri = CreateUri(@"/ISAPI/ContentMgmt/download");
-
-            StringBuilder stringBuilder = new StringBuilder();
-            XmlWriterSettings settings = new XmlWriterSettings()
-            {
-                OmitXmlDeclaration = true,
-            };
-
-            using (XmlWriter writer = XmlWriter.Create(stringBuilder, settings))
-            {
-                writer.WriteStartDocument();
-                writer.WriteStartElement("downloadRequest");
-                writer.WriteElementString("playbackURI", video.RstpUri.ToString());
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-            }
-
-            await DownloadToFile(path, uri, "mp4", HttpMethod.Get, stringBuilder.ToString()).ConfigureAwait(false);
-            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Finished downloading {video.Name}"));
         }
 
         public async Task<string> DownloadSnapshot(int channel)
@@ -346,53 +322,44 @@ namespace Hspi.Camera
 
         private HttpClient CreateHttpClient()
         {
+            var httpClient = new HttpClient(handler, false)
+            {
+                Timeout = TimeSpan.FromSeconds(120)
+            };
+            return httpClient;
+        }
+
+        private HttpMessageHandler CreateHttpHandler()
+        {
             var credCache = new CredentialCache();
             var credentials = new NetworkCredential(CameraSettings.Login, CameraSettings.Password);
             credCache.Add(new Uri(CameraSettings.CameraHost), "Digest", credentials);
 
-            HttpMessageHandler handler = null;
-            try
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-#pragma warning disable CA2000 // Dispose objects before losing scope , handler does it
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                // This is used because it supports GET with a body, HttpClientHandler doesn't
+                var winHttpHandler = new WinHttpHandler
                 {
-                    // This is used because it supports GET with a body, HttpClientHandler doesn't 
-                    var winHttpHandler = new WinHttpHandler
-                    {
-                        ServerCredentials = credCache,
-                        MaxConnectionsPerServer = 2,
-                        AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
-
-                    };
-
-                    handler = winHttpHandler;
-                }
-                else
-                {
-                    var httpClientHandler = new HttpClientHandler
-                    {
-                        Credentials = credCache,
-                        MaxConnectionsPerServer = 2,
-                    };
-
-                    if (httpClientHandler.SupportsAutomaticDecompression)
-                    {
-                        httpClientHandler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-                    }
-                    handler = httpClientHandler;
-                }
-#pragma warning restore CA2000 // Dispose objects before losing scope
-
-                var httpClient = new HttpClient(handler, true)
-                {
-                    Timeout = TimeSpan.FromSeconds(120)
+                    ServerCredentials = credCache,
+                    MaxConnectionsPerServer = 2,
+                    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
                 };
-                handler = null;
-                return httpClient;
+
+                return winHttpHandler;
             }
-            finally
+            else
             {
-                handler?.Dispose();
+                var httpClientHandler = new HttpClientHandler
+                {
+                    Credentials = credCache,
+                    MaxConnectionsPerServer = 2,
+                };
+
+                if (httpClientHandler.SupportsAutomaticDecompression)
+                {
+                    httpClientHandler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                }
+                return httpClientHandler;
             }
         }
 
@@ -407,6 +374,30 @@ namespace Hspi.Camera
             return uri;
         }
 
+        private async Task DownloadRecordedVideo(RecordedVideo video, string path)
+        {
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Downloading {video.Name}"));
+
+            Uri uri = CreateUri(@"/ISAPI/ContentMgmt/download");
+
+            StringBuilder stringBuilder = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings()
+            {
+                OmitXmlDeclaration = true,
+            };
+
+            using (XmlWriter writer = XmlWriter.Create(stringBuilder, settings))
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("downloadRequest");
+                writer.WriteElementString("playbackURI", video.RstpUri.ToString());
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+            }
+
+            await DownloadToFile(path, uri, "mp4", HttpMethod.Get, stringBuilder.ToString()).ConfigureAwait(false);
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Finished downloading {video.Name}"));
+        }
         private async Task DownloadSnapshotWithDelay(int channel, TimeSpan delay)
         {
             await Task.Delay(delay).ConfigureAwait(false);
@@ -545,19 +536,18 @@ namespace Hspi.Camera
             await Updates.EnqueueAsync(alarm, Token).ConfigureAwait(false);
         }
 
-        private async Task EnqueueAlarmStreamConnectedInfo(bool connected)
-        {
-            var alarmStreamConnectedInfo = new AlarmStreamConnectedInfo(connected);
-            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm Stream Connected:{alarmStreamConnectedInfo.Connected}"));
-            await Updates.EnqueueAsync(alarmStreamConnectedInfo, Token).ConfigureAwait(false);
-        }
-
         private async Task Enqueue(CameraProperty cameraInfo, [AllowNull]string value)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Property:{cameraInfo.Name} Value:{value ?? string.Empty}"));
             await Updates.EnqueueAsync(new CameraPropertyInfo(cameraInfo, value), Token).ConfigureAwait(false);
         }
 
+        private async Task EnqueueAlarmStreamConnectedInfo(bool connected)
+        {
+            var alarmStreamConnectedInfo = new AlarmStreamConnectedInfo(connected);
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm Stream Connected:{alarmStreamConnectedInfo.Connected}"));
+            await Updates.EnqueueAsync(alarmStreamConnectedInfo, Token).ConfigureAwait(false);
+        }
         private async Task FetchProperties()
         {
             while (!Token.IsCancellationRequested)
@@ -834,14 +824,21 @@ namespace Hspi.Camera
 
         public const int Track2 = 201;
 
-        private static readonly XmlPathData EndTimeXPath = new XmlPathData("*[local-name()='timeSpan']/*[local-name()='endTime']");
-
-        private static readonly Regex eventTypeRegex = new Regex(@"<eventType>(.*?)<\/eventType>",
-                                                                 RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private class AlarmData
+        {
+            public int channelId = 0;
+            public Stopwatch lastReceived = new Stopwatch();
+            public Stopwatch lastUpdated = new Stopwatch();
+            public bool state = false;
+        }
 
         private static readonly Regex channelTypeRegex = new Regex(@"<channelID>(.*?)<\/channelID>",
                                                                  RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
+        private static readonly XmlPathData EndTimeXPath = new XmlPathData("*[local-name()='timeSpan']/*[local-name()='endTime']");
+
+        private static readonly Regex eventTypeRegex = new Regex(@"<eventType>(.*?)<\/eventType>",
+                                                                 RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly XmlPathData PlaybackURIXPath = new XmlPathData("*[local-name()='mediaSegmentDescriptor']/*[local-name()='playbackURI']");
 
         private static readonly XmlPathData SelectTrackIdXPath = new XmlPathData("*[local-name()='trackID']");
@@ -860,19 +857,10 @@ namespace Hspi.Camera
         private readonly HttpClient defaultHttpClient;
 
         private readonly AsyncAutoResetEvent downloadEvent = new AsyncAutoResetEvent();
-
+        private readonly HttpMessageHandler handler;
         private readonly Dictionary<string, List<CameraProperty>> propertiesGroups;
 
         private readonly CancellationTokenSource sourceToken;
-
-        private class AlarmData
-        {
-            public int channelId = 0;
-            public Stopwatch lastReceived = new Stopwatch();
-            public Stopwatch lastUpdated = new Stopwatch();
-            public bool state = false;
-        }
-
         #region IDisposable Support
 
         public void Dispose()
@@ -882,6 +870,7 @@ namespace Hspi.Camera
                 sourceToken.Cancel();
                 defaultHttpClient.Dispose();
                 sourceToken.Dispose();
+                handler.Dispose();
                 disposedValue = true;
             }
         }
