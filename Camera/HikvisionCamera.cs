@@ -353,7 +353,7 @@ namespace Hspi.Camera
             HttpMessageHandler handler = null;
             try
             {
-#pragma warning disable CA2000 // Dispose objects before losing scope
+#pragma warning disable CA2000 // Dispose objects before losing scope , handler does it
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     var winHttpHandler = new WinHttpHandler
@@ -458,7 +458,7 @@ namespace Hspi.Camera
 
                     using (var downloadStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                     {
-                        const int DownloadBufferSize = 512 * 1024;
+                        const int DownloadBufferSize = 1024 * 1024;
                         await downloadStream.CopyToAsync(stream, DownloadBufferSize, Token).ConfigureAwait(false);
                     }
 
@@ -717,8 +717,8 @@ namespace Hspi.Camera
                         using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
                         {
                             using (var response = await SendToClient(httpRequestMessage,
-                                                                    client: client,
-                                                                    completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                                                                     client: client,
+                                                                     completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                             {
                                 await EnqueueAlarmStreamConnectedInfo(true).ConfigureAwait(false);
 

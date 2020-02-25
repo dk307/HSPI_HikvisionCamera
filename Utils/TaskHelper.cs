@@ -22,7 +22,7 @@ namespace Hspi.Utils
 
         public static void StartAsyncWithErrorChecking(string taskName, Func<Task> taskAction, CancellationToken token)
         {
-            var task = Task.Factory.StartNew(() => RunInLoop(taskName, taskAction, token), token,
+            _ = Task.Factory.StartNew(() => RunInLoop(taskName, taskAction, token), token,
                                          TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach,
                                          TaskScheduler.Current);
         }
