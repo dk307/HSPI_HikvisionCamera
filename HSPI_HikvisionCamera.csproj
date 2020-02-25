@@ -76,6 +76,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -197,8 +198,8 @@
     <PackageReference Include="NullGuard.Fody">
       <Version>2.2.0</Version>
     </PackageReference>
-    <PackageReference Include="System.Net.Http">
-      <Version>4.3.4</Version>
+    <PackageReference Include="System.Net.Http.WinHttpHandler">
+      <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -211,8 +212,14 @@
       <InputAssemblies Include="$(OutputPath)\Nito.AsyncEx.Tasks.dll" />
       <InputAssemblies Include="$(OutputPath)\Nito.Collections.Deque.dll" />
       <InputAssemblies Include="$(OutputPath)\Nito.Disposables.dll" />
+      <InputAssemblies Include="$(OutputPath)\System.Buffers.dll" />
+      <InputAssemblies Include="$(OutputPath)\System.Memory.dll" />
+      <InputAssemblies Include="$(OutputPath)\System.Net.Http.WinHttpHandler.dll" />
+      <InputAssemblies Include="$(OutputPath)\System.Numerics.Vectors.dll" />
+      <InputAssemblies Include="$(OutputPath)\System.Runtime.CompilerServices.Unsafe.dll" />
       <InputAssemblies Include="$(OutputPath)\System.Collections.Immutable.dll" />
       <InputAssemblies Include="$(OutputPath)\MimeTypesMap.dll" />
+      <InputAssemblies Include="$(OutputPath)\System.Diagnostics.DiagnosticSource.dll" />
     </ItemGroup>
     <Message Importance="high" Text="Executing ILMerge in $(ProjectDir)..." />
     <Exec WorkingDirectory="$(ProjectDir)" Command="&quot;$(ILMergeConsolePath)&quot; /ndebug /target:winexe /out:@(MainAssembly) /internalize /targetplatform:v4 @(InputAssemblies->'&quot;%(FullPath)&quot;', ' ')" />

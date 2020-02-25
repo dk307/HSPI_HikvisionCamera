@@ -354,10 +354,19 @@ namespace Hspi.Camera
             try
             {
 #pragma warning disable CA2000 // Dispose objects before losing scope , handler does it
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    var winHttpHandler = new WinHttpHandler
+                    {
+                        ServerCredentials = credCache,
+                    };
+                    handler = winHttpHandler;
+                }
+                else
+                {
                     var httpClientHandler = new HttpClientHandler
                     {
                         Credentials = credCache,
-                        MaxConnectionsPerServer = 4,
                     };
 
                     if (httpClientHandler.SupportsAutomaticDecompression)
@@ -365,8 +374,9 @@ namespace Hspi.Camera
                         httpClientHandler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                     }
                     handler = httpClientHandler;
+                }
 #pragma warning restore CA2000 // Dispose objects before losing scope
-                
+
                 var httpClient = new HttpClient(handler, true)
                 {
                     Timeout = TimeSpan.FromSeconds(120)
@@ -441,7 +451,7 @@ namespace Hspi.Camera
                 {
                     string mediaType = response.Content.Headers?.ContentType?.MediaType;
 
-                    if (mediaType == null)
+                    if ((mediaType == null))
                     {
                         throw new Exception(Invariant($"[{CameraSettings.Name}]Invalid Data for {uri} :{mediaType ?? string.Empty}"));
                     }
