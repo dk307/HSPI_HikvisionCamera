@@ -327,7 +327,6 @@ namespace Hspi.Camera
                 Timeout = TimeSpan.FromSeconds(120)
             };
 
-            httpClient.DefaultRequestHeaders.ConnectionClose = true;
             return httpClient;
         }
 
