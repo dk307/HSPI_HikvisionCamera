@@ -353,7 +353,7 @@ namespace Hspi.Camera
                 var httpClientHandler = new HttpClientHandler
                 {
                     Credentials = credCache,
-                    MaxConnectionsPerServer = 2,
+                    MaxConnectionsPerServer = 4,
                 };
 
                 if (httpClientHandler.SupportsAutomaticDecompression)
