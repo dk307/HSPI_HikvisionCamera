@@ -163,7 +163,7 @@ namespace Hspi.Camera
 
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
             {
-                using (var response = await SendToClient(httpRequestMessage).ConfigureAwait(false))
+                using (var response = await SendToCamera(httpRequestMessage).ConfigureAwait(false))
                 {
                     var xmlDocument = await GetXMLDocumentFromResponse(response).ConfigureAwait(false);
 
@@ -181,7 +181,7 @@ namespace Hspi.Camera
 
                     using (HttpRequestMessage httpRequestMessage1 = new HttpRequestMessage(HttpMethod.Put, uri))
                     {
-                        await SendToClient(httpRequestMessage1, xmlDocument.OuterXml).ConfigureAwait(false);
+                        await SendToCamera(httpRequestMessage1, xmlDocument.OuterXml).ConfigureAwait(false);
                     }
                     await FetchPropertiesForCommonUri(uri, new CameraProperty[] { cameraProperty }).ConfigureAwait(false);
                 }
@@ -326,6 +326,8 @@ namespace Hspi.Camera
             {
                 Timeout = TimeSpan.FromSeconds(120)
             };
+
+            httpClient.DefaultRequestHeaders.ConnectionClose = true;
             return httpClient;
         }
 
@@ -443,7 +445,7 @@ namespace Hspi.Camera
         {
             using (var httpRequestMessage = new HttpRequestMessage(httpMethod, uri))
             {
-                using (var response = await SendToClient(httpRequestMessage, data,
+                using (var response = await SendToCamera(httpRequestMessage, data,
                                                          HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                 {
                     string mediaType = response.Content.Headers?.ContentType?.MediaType;
@@ -574,7 +576,7 @@ namespace Hspi.Camera
         {
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
             {
-                HttpResponseMessage response = await SendToClient(httpRequestMessage).ConfigureAwait(false);
+                HttpResponseMessage response = await SendToCamera(httpRequestMessage).ConfigureAwait(false);
                 response = response.EnsureSuccessStatusCode();
 
                 XmlDocument xmlDocument = await GetXMLDocumentFromResponse(response).ConfigureAwait(false);
@@ -673,10 +675,10 @@ namespace Hspi.Camera
                                                      string content = null,
                                                      HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
-            return await SendToClient(httpRequestMessage, content, completionOption).ConfigureAwait(false);
+            return await SendToCamera(httpRequestMessage, content, completionOption).ConfigureAwait(false);
         }
 
-        private async Task<HttpResponseMessage> SendToClient(HttpRequestMessage httpRequestMessage,
+        private async Task<HttpResponseMessage> SendToCamera(HttpRequestMessage httpRequestMessage,
                                                             string content = null,
                                                             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
                                                             HttpClient client = null)
@@ -712,7 +714,7 @@ namespace Hspi.Camera
                         client.Timeout = Timeout.InfiniteTimeSpan;
                         using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
                         {
-                            using (var response = await SendToClient(httpRequestMessage,
+                            using (var response = await SendToCamera(httpRequestMessage,
                                                                      client: client,
                                                                      completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                             {
