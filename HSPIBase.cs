@@ -73,7 +73,6 @@ namespace Hspi
             [AllowNull]string user,
             int userRights) => Enums.ConfigDevicePostReturn.DoneAndCancel;
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "apiVersion")]
         public void Connect(string serverAddress, int serverPort)
         {
             Trace.WriteLine(Invariant($"Connecting to {serverAddress}"));
@@ -253,7 +252,6 @@ namespace Hspi
             shutdownWaitEvent.WaitOne();
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", MessageId = "hsTraceListener")]
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

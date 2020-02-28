@@ -24,7 +24,8 @@ namespace Hspi
             rootDeviceData = new DeviceRootDeviceManager(cameraSettings, this.HS, cancelTokenSource.Token);
             camera = new HikvisionCamera(CameraSettings, cancelTokenSource.Token);
 
-            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Process Updates"), ProcessUpdates, cancelTokenSource.Token);
+            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Process Updates"), 
+                                                   ProcessUpdates, cancelTokenSource.Token);
         }
 
         public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval, int channel)
@@ -76,6 +77,7 @@ namespace Hspi
                 cancelTokenSource.Cancel();
                 DisposeConnector();
                 cancelTokenSource.Dispose();
+                camera.Dispose();
 
                 disposedValue = true;
             }

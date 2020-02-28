@@ -64,7 +64,7 @@ namespace Hspi.DeviceData
                 }
             }
 
-            await deviceData.HandleCommand(HS, camera, cancellationToken, stringValue, value, control);
+            await deviceData.HandleCommand(HS, camera, stringValue, value, control, cancellationToken).ConfigureAwait(false);
         }
 
         public bool HasDevice(int deviceId)

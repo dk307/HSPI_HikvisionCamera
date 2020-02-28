@@ -87,11 +87,11 @@ namespace Hspi.DeviceData
         }
 
         public override Task HandleCommand(IHSApplication HS,
-                                           HikvisionCamera camera,
-                                           CancellationToken token,
-                                           [AllowNull]string stringValue,
-                                           double value,
-                                           ePairControlUse control)
+            HikvisionCamera camera,
+            [AllowNull]string stringValue,
+            double value,
+            ePairControlUse control,
+            CancellationToken token)
         {
             return camera.Put(Property, stringValue ?? string.Empty);
         }

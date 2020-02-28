@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 
 namespace Hspi
 {
@@ -15,6 +16,7 @@ namespace Hspi
         /// <summary>
         /// The images path root for devices
         /// </summary>
-        public static readonly string HSImagesPathRoot = Path.Combine(Path.DirectorySeparatorChar.ToString(), "images", "HomeSeer", "status");
+        public static readonly string HSImagesPathRoot =
+            Path.Combine(Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), "images", "HomeSeer", "status");
     }
 }

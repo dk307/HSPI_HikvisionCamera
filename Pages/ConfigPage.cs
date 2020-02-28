@@ -161,13 +161,12 @@ namespace Hspi.Pages
             var b = new clsJQuery.jqButton(name, label, PageName, false)
             {
                 id = NameToIdWithPrefix(name),
-                url = Invariant($"/{pageUrl}?{PageTypeId}={HttpUtility.UrlEncode(type.ToString())}&{RecordId}={HttpUtility.UrlEncode(id ?? string.Empty)}"),
+                url = Invariant($"/{pageUrl}?{PageTypeId}={HttpUtility.UrlEncode(type.ToString(CultureInfo.InvariantCulture))}&{RecordId}={HttpUtility.UrlEncode(id ?? string.Empty)}"),
             };
 
             return b.Build();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         private string BuildAddNewCameraPropertyWebPageBody([AllowNull]CameraProperty cameraProperties)
         {
             string id = cameraProperties?.Id ?? Guid.NewGuid().ToString();
@@ -219,7 +218,6 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         private string BuildAddNewCameraWebPageBody([AllowNull]CameraSettings cameraSettings)
         {
             TimeSpan DefaultAlarmCancelInterval = TimeSpan.FromSeconds(30);
@@ -290,7 +288,7 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
-        private string BuildCamerasPropertiesTab(NameValueCollection parts)
+        private string BuildCamerasPropertiesTab()
         {
             StringBuilder stb = new StringBuilder();
 
@@ -356,7 +354,7 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
-        private string BuildCamerasTab(NameValueCollection parts)
+        private string BuildCamerasTab()
         {
             StringBuilder stb = new StringBuilder();
 
@@ -423,12 +421,14 @@ namespace Hspi.Pages
         /// Builds the web page body for the configuration page.
         /// The page has separate forms so that only the data in the appropriate form is returned when a button is pressed.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "System.Int32.TryParse(System.String,System.Int32@)")]
         private string BuildDefaultWebPageBody(NameValueCollection parts)
         {
             UsesJqTabs = true;
             string tab = parts[TabId] ?? "0";
-            int.TryParse(tab, out int defaultTab);
+            if (!int.TryParse(tab, out int defaultTab))
+            {
+                defaultTab = 0;
+            }
 
             int i = 0;
             StringBuilder stb = new StringBuilder();
@@ -446,7 +446,7 @@ namespace Hspi.Pages
             {
                 tabTitle = "Cameras",
                 tabDIVID = Invariant($"tabs{i++}"),
-                tabContent = BuildCamerasTab(parts)
+                tabContent = BuildCamerasTab()
             };
             tabs.tabs.Add(tab2);
 
@@ -454,7 +454,7 @@ namespace Hspi.Pages
             {
                 tabTitle = "Camera Properties",
                 tabDIVID = Invariant($"tabs{i++}"),
-                tabContent = BuildCamerasPropertiesTab(parts)
+                tabContent = BuildCamerasPropertiesTab()
             };
             tabs.tabs.Add(tab3);
 
@@ -570,7 +570,7 @@ namespace Hspi.Pages
 
                     var data = new CameraSettings(id,
                                                   cameraName,
-                                                  cameraHost.AbsoluteUri.ToString(),
+                                                  cameraHost.AbsoluteUri.ToString(CultureInfo.InvariantCulture),
                                                   userId,
                                                   password,
                                                   TimeSpan.FromSeconds(alarmCancelInterval),
@@ -586,7 +586,6 @@ namespace Hspi.Pages
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "path")]
         private void HandleCameraPropertyPostBack(NameValueCollection parts, string form)
         {
             if (form == NameToIdWithPrefix(DeleteCameraProperty))
@@ -688,7 +687,6 @@ namespace Hspi.Pages
         private const string DeleteCamera = "DeleteCamera";
         private const string DeleteCameraProperty = "DeleteCameraProperty";
         private const string ErrorDivId = "message_id";
-        private const string IdPrefix = "id_";
         private const string SaveCamera = "SaveCamera";
         private const string SaveCameraProperty = "SaveCameraProperty";
         private const string SaveErrorDivId = "SaveErrorDivId";
