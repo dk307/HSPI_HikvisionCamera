@@ -1,12 +1,15 @@
-﻿using NullGuard;
+﻿using Hspi.DeviceData;
+using Hspi.DeviceData.Hikvision.Isapi;
+using NullGuard;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
 
-namespace Hspi.Camera
+namespace Hspi.Camera.Onvif
 {
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
-    internal class CameraSettings : IEquatable<CameraSettings>
+    internal class CameraSettings : ICameraSettings, IEquatable<CameraSettings>
     {
         public CameraSettings(string id,
                               string name,
@@ -14,10 +17,7 @@ namespace Hspi.Camera
                               string login,
                               string password,
                               in TimeSpan alarmCancelInterval,
-                              ImmutableDictionary<string, CameraProperty> periodicFetchedProperties,
-                              in TimeSpan cameraPropertiesRefreshInterval,
-                              string snapshotDownloadDirectory,
-                              string videoDownloadDirectory)
+                              string snapshotDownloadDirectory)
         {
             Id = id;
             Name = name;
@@ -31,16 +31,18 @@ namespace Hspi.Camera
             VideoDownloadDirectory = videoDownloadDirectory;
         }
 
-        public ImmutableDictionary<string, CameraProperty> PeriodicFetchedCameraProperties { get; }
+        public string CameraHost { get; }
         public TimeSpan CameraPropertiesRefreshInterval { get; }
+        public string Id { get; }
+        public string Name { get; }
+        public ImmutableDictionary<string, CameraProperty> PeriodicFetchedCameraProperties { get; }
         public string SnapshotDownloadDirectory { get; }
         public string VideoDownloadDirectory { get; }
-        public string Name { get; }
-        public readonly TimeSpan AlarmCancelInterval;
-        public readonly string CameraHost;
-        public readonly string Id;
-        public readonly string Login;
-        public readonly string Password;
+
+        public ICamera CreateCamera(CancellationToken shutdownDownToken)
+        {
+            return new HikvisionIdapiCamera(this, shutdownDownToken);
+        }
 
         public bool Equals(CameraSettings other)
         {
@@ -85,6 +87,37 @@ namespace Hspi.Camera
             }
         }
 
+        public bool Equals(ICameraSettings other)
+        {
+            var otherCameraSetting = other as CameraSettings;
+            return otherCameraSetting == null ? false : Equals(otherCameraSetting);
+        }
+
+        public DeviceDataBase GetDevice(DeviceIdentifier deviceIdentifier)
+        {
+            switch (deviceIdentifier.DeviceType)
+            {
+                case DeviceType.HikvisionISAPIRoot:
+                    return new RootDeviceData();
+
+                case DeviceType.HikvisionISAPICameraProperty:
+                    if (PeriodicFetchedCameraProperties.TryGetValue(deviceIdentifier.DeviceSubTypeId, out var cameraProperty))
+                    {
+                        return new CameraPropertyDeviceData(cameraProperty);
+                    }
+                    return null;
+
+                case DeviceType.HikvisionISAPIAlarm:
+                    return new AlarmDeviceData(deviceIdentifier.DeviceSubTypeId);
+
+                case DeviceType.HikvisionISAPIAlarmStreamConnected:
+                    return new AlarmConnectedDeviceData();
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         public override int GetHashCode()
         {
             return PeriodicFetchedCameraProperties.GetHashCode() ^
@@ -98,5 +131,19 @@ namespace Hspi.Camera
                    Login.GetHashCode() ^
                    Password.GetHashCode();
         }
+
+        public DeviceDataBase GetRootDevice()
+        {
+            return new RootDeviceData();
+        }
+
+        public DeviceIdentifier GetRootDeviceIdentifier()
+        {
+            return new DeviceIdentifier(Id, DeviceType.HikvisionISAPIRoot, "Root");
+        }
+
+        public readonly TimeSpan AlarmCancelInterval;
+        public readonly string Login;
+        public readonly string Password;
     }
 }

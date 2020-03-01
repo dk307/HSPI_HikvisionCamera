@@ -15,27 +15,27 @@ namespace Hspi
     internal sealed class CameraManager : IDisposable
     {
         public CameraManager(IHSApplication HS,
-                            CameraSettings cameraSettings,
-                            CancellationToken shutdownDownToken)
+                             ICameraSettings cameraSettings,
+                             CancellationToken shutdownDownToken)
         {
             this.HS = HS;
             CameraSettings = cameraSettings;
             cancelTokenSource = new CombinedCancelToken(shutdownDownToken);
             rootDeviceData = new DeviceRootDeviceManager(cameraSettings, this.HS, cancelTokenSource.Token);
-            camera = new HikvisionCamera(CameraSettings, cancelTokenSource.Token);
+            camera = cameraSettings.CreateCamera(shutdownDownToken);
 
-            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Process Updates"), 
+            TaskHelper.StartAsyncWithErrorChecking(Invariant($"{cameraSettings.Name} Process Updates"),
                                                    ProcessUpdates, cancelTokenSource.Token);
         }
 
-        public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval, int channel)
+        public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval)
         {
-            await camera.DownloadContinuousSnapshots(totalTimeSpan, interval, channel).ConfigureAwait(false);
+            await camera.DownloadContinuousSnapshots(totalTimeSpan, interval).ConfigureAwait(false);
         }
 
         public async Task HandleCommand(DeviceIdentifier deviceIdentifier, string stringValue, double value, ePairControlUse control)
         {
-            if (deviceIdentifier.DeviceId != CameraSettings.Id)
+            if (deviceIdentifier.CameraId != CameraSettings.Id)
             {
                 throw new ArgumentException("Invalid Device Identifier", nameof(deviceIdentifier));
             }
@@ -50,10 +50,7 @@ namespace Hspi
 
         private void DisposeConnector()
         {
-            if (camera != null)
-            {
-                camera.Dispose();
-            }
+            camera?.Dispose();
         }
 
         private async Task ProcessUpdates()
@@ -67,7 +64,7 @@ namespace Hspi
 
         #region IDisposable Support
 
-        public CameraSettings CameraSettings { get; }
+        public ICameraSettings CameraSettings { get; }
 
         public void Dispose()
         {
@@ -87,7 +84,7 @@ namespace Hspi
 
         #endregion IDisposable Support
 
-        private readonly HikvisionCamera camera;
+        private readonly ICamera camera;
         private readonly CombinedCancelToken cancelTokenSource;
         private readonly IHSApplication HS;
         private readonly DeviceRootDeviceManager rootDeviceData;

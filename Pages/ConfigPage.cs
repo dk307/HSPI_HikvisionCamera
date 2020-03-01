@@ -1,5 +1,6 @@
 using HomeSeerAPI;
-using Hspi.Camera;
+using Hspi.Camera.Hikvision.Isapi;
+using Hspi.Utils;
 using NullGuard;
 using Scheduler;
 using System;
@@ -32,10 +33,12 @@ namespace Hspi.Pages
         protected enum PageType
         {
             Default,
-            AddCamera,
-            EditCamera,
-            AddCameraProperty,
-            EditCameraProperty,
+            AddHikvisionIsapiCamera,
+            EditHikvisionIsapiCamera,
+            AddHikvisionIsapiCameraProperty,
+            EditHikvisionIsapiCameraProperty,
+            AddOnvifCamera,
+            EditOnvifCamera,
         };
 
         /// <summary>
@@ -113,31 +116,45 @@ namespace Hspi.Pages
 
             switch (pageType)
             {
-                case PageType.EditCamera:
-                case PageType.AddCamera:
+                case PageType.EditHikvisionIsapiCamera:
+                case PageType.AddHikvisionIsapiCamera:
                     {
                         stb.Append(HS.GetPageHeader(Name, "Configuration", string.Empty, string.Empty, false, false));
                         stb.Append(PageBuilderAndMenu.clsPageBuilder.DivStart("pluginpage", string.Empty));
-                        pluginConfig.Cameras.TryGetValue(parts[RecordId], out var camera);
-                        stb.Append(BuildAddNewCameraWebPageBody(camera));
+                        pluginConfig.HikvisionIsapiCameras.TryGetValue(parts[RecordId], out var camera);
+                        stb.Append(BuildAddNewHikvisionIsapiCameraWebPageBody(camera));
                         stb.Append(PageBuilderAndMenu.clsPageBuilder.DivEnd());
                         AddBody(stb.ToString());
                         AddFooter(HS.GetPageFooter());
                         break;
                     }
 
-                case PageType.EditCameraProperty:
-                case PageType.AddCameraProperty:
+                case PageType.AddOnvifCamera:
+                case PageType.EditOnvifCamera:
                     {
                         stb.Append(HS.GetPageHeader(Name, "Configuration", string.Empty, string.Empty, false, false));
                         stb.Append(PageBuilderAndMenu.clsPageBuilder.DivStart("pluginpage", string.Empty));
-                        pluginConfig.CameraProperties.TryGetValue(parts[RecordId], out var cameraProperty);
+                        pluginConfig.HikvisionIsapiCameras.TryGetValue(parts[RecordId], out var camera);
+                        stb.Append(BuildAddNewHikvisionIsapiCameraWebPageBody(camera));
+                        stb.Append(PageBuilderAndMenu.clsPageBuilder.DivEnd());
+                        AddBody(stb.ToString());
+                        AddFooter(HS.GetPageFooter());
+                        break;
+                    }
+
+                case PageType.EditHikvisionIsapiCameraProperty:
+                case PageType.AddHikvisionIsapiCameraProperty:
+                    {
+                        stb.Append(HS.GetPageHeader(Name, "Configuration", string.Empty, string.Empty, false, false));
+                        stb.Append(PageBuilderAndMenu.clsPageBuilder.DivStart("pluginpage", string.Empty));
+                        pluginConfig.HikvisionIsapiCameraProperties.TryGetValue(parts[RecordId], out var cameraProperty);
                         stb.Append(BuildAddNewCameraPropertyWebPageBody(cameraProperty));
                         stb.Append(PageBuilderAndMenu.clsPageBuilder.DivEnd());
                         AddBody(stb.ToString());
                         AddFooter(HS.GetPageFooter());
                         break;
                     }
+
 
                 default:
                 case PageType.Default:
@@ -218,7 +235,7 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
-        private string BuildAddNewCameraWebPageBody([AllowNull]CameraSettings cameraSettings)
+        private string BuildAddNewHikvisionIsapiCameraWebPageBody([AllowNull]CameraSettings cameraSettings)
         {
             TimeSpan DefaultAlarmCancelInterval = TimeSpan.FromSeconds(30);
             TimeSpan DefaultCameraPropertiesRefreshInterval = TimeSpan.FromSeconds(60);
@@ -288,7 +305,7 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
-        private string BuildCamerasPropertiesTab()
+        private string BuildHikvsionISAPICamerasPropertiesTab()
         {
             StringBuilder stb = new StringBuilder();
 
@@ -310,7 +327,7 @@ namespace Hspi.Pages
             stb.Append(@"</tr></thead>");
             stb.Append(@"<tbody>");
 
-            foreach (var pair in pluginConfig.CameraProperties)
+            foreach (var pair in pluginConfig.HikvisionIsapiCameraProperties)
             {
                 var id = pair.Key;
                 var cameraProperty = pair.Value;
@@ -320,7 +337,7 @@ namespace Hspi.Pages
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.UrlPath)}</td>"));
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.XPathForGet.Path.Expression)}</td>"));
                 stb.Append("<td class='tablecell'>");
-                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", PageType.EditCameraProperty, id: id));
+                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", PageType.EditHikvisionIsapiCameraProperty, id: id));
                 stb.Append("</td></tr>");
             }
             stb.Append(@"</tbody>");
@@ -344,7 +361,7 @@ namespace Hspi.Pages
                                 });");
             stb.AppendLine("</script>");
 
-            stb.Append(Invariant($"<tr><td>{PageTypeButton("Add New Camera Property", "Add New Camera Property", PageType.AddCameraProperty)}</td><td></td></tr>"));
+            stb.Append(Invariant($"<tr><td>{PageTypeButton("Add New Camera Property", "Add New Camera Property", PageType.AddHikvisionIsapiCameraProperty)}</td><td></td></tr>"));
 
             stb.Append(Invariant($"<tr><td></td></tr>"));
             stb.Append(@"<tr height='5'><td></td></tr>");
@@ -375,7 +392,7 @@ namespace Hspi.Pages
             stb.Append(@"</tr></thead>");
             stb.Append(@"<tbody>");
 
-            foreach (var pair in pluginConfig.Cameras)
+            foreach (var pair in pluginConfig.AllCameras)
             {
                 var id = pair.Key;
                 var device = pair.Value;
@@ -384,7 +401,7 @@ namespace Hspi.Pages
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(device.Name)}</td>"));
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(device.CameraHost)}</td>"));
                 stb.Append("<td class='tablecell'>");
-                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", PageType.EditCamera, id: id));
+                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", PageType.EditHikvisionIsapiCamera, id: id));
                 stb.Append("</td></tr>");
             }
             stb.Append(@"</tbody>");
@@ -407,7 +424,10 @@ namespace Hspi.Pages
                                 });");
             stb.AppendLine("</script>");
 
-            stb.Append(Invariant($"<tr><td>{PageTypeButton("Add New Camera", "Add New Camera", PageType.AddCamera)}</td><td></td></tr>"));
+            stb.Append(Invariant($"<tr><td colspan=2>"));
+            stb.Append(Invariant($"{PageTypeButton("Add New Hikvision ISAPI Camera", "Add New Hikvision ISAPI Camera", PageType.AddHikvisionIsapiCamera)}"));
+            stb.Append(Invariant($"&nbsp;{PageTypeButton("Add ONVIF Camera", "Add ONVIF Camera", PageType.AddOnvifCamera)}"));
+            stb.Append(Invariant($"</td></tr>"));
 
             stb.Append(Invariant($"<tr><td></td></tr>"));
             stb.Append(@"<tr height='5'><td></td></tr>");
@@ -452,9 +472,9 @@ namespace Hspi.Pages
 
             var tab3 = new clsJQuery.Tab
             {
-                tabTitle = "Camera Properties",
+                tabTitle = "ISAPI Properties",
                 tabDIVID = Invariant($"tabs{i++}"),
-                tabContent = BuildCamerasPropertiesTab()
+                tabContent = BuildHikvsionISAPICamerasPropertiesTab()
             };
             tabs.tabs.Add(tab3);
 
@@ -503,7 +523,7 @@ namespace Hspi.Pages
         {
             if (form == NameToIdWithPrefix(DeleteCamera))
             {
-                pluginConfig.RemoveCamera(parts[RecordId]);
+                pluginConfig.RemoveHikvisionIsapiCamera(parts[RecordId]);
                 pluginConfig.FireConfigChanged();
                 divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
             }
@@ -574,12 +594,12 @@ namespace Hspi.Pages
                                                   userId,
                                                   password,
                                                   TimeSpan.FromSeconds(alarmCancelInterval),
-                                                  pluginConfig.CameraProperties,
+                                                  pluginConfig.HikvisionIsapiCameraProperties,
                                                   TimeSpan.FromSeconds(propertiesRefreshInterval),
                                                   snapshotDirectory,
                                                   videoDownloadDirectory);
 
-                    pluginConfig.AddCamera(data);
+                    pluginConfig.AddHikvisionIsapiCamera(data);
                     pluginConfig.FireConfigChanged();
                     divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
                 }
@@ -590,7 +610,7 @@ namespace Hspi.Pages
         {
             if (form == NameToIdWithPrefix(DeleteCameraProperty))
             {
-                pluginConfig.RemoveCameraProperty(parts[RecordId]);
+                pluginConfig.RemoveHikvisionIsapiCameraProperty(parts[RecordId]);
                 pluginConfig.FireConfigChanged();
                 divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
             }
@@ -650,7 +670,7 @@ namespace Hspi.Pages
                                                   cameraPropertyXPath,
                                                   stringValues.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToImmutableSortedSet());
 
-                    pluginConfig.AddCameraProperty(data);
+                    pluginConfig.AddHikvisionIsapiCameraProperty(data);
                     pluginConfig.FireConfigChanged();
                     divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
                 }

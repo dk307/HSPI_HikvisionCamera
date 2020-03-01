@@ -82,21 +82,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CameraManager.cs" />
-    <Compile Include="Camera\AlarmInfo.cs" />
-    <Compile Include="Camera\AlarmStreamConnectedInfo.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\AlarmInfo.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\AlarmStreamConnectedInfo.cs" />
     <Compile Include="Camera\CameraContruct.cs" />
-    <Compile Include="Camera\CameraProperty.cs" />
-    <Compile Include="Camera\CameraPropertyInfo.cs" />
-    <Compile Include="Camera\CameraSettings.cs" />
-    <Compile Include="Camera\HikvisionCamera.cs" />
-    <Compile Include="Camera\RecordedVideo.cs" />
-    <Compile Include="Camera\XmlPathData.cs" />
-    <Compile Include="DeviceData\AlarmConnectedDeviceData.cs" />
-    <Compile Include="DeviceData\CameraPropertyDeviceData.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\CameraProperty.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\CameraPropertyInfo.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\CameraSettings.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\HikvisionIdapiCamera.cs" />
+    <Compile Include="Camera\ICamera.cs" />
+    <Compile Include="Camera\ICameraSettings.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\RecordedVideo.cs" />
+    <Compile Include="Camera\Onvif\CameraSettings.cs" />
+    <Compile Include="Utils\XmlPathData.cs" />
+    <Compile Include="DeviceData\Hikvision\Isapi\AlarmConnectedDeviceData.cs" />
+    <Compile Include="DeviceData\Hikvision\Isapi\CameraPropertyDeviceData.cs" />
     <Compile Include="DeviceData\DeviceType.cs" />
     <Compile Include="DeviceData\OnOffDeviceData.cs" />
-    <Compile Include="DeviceData\RootDeviceData.cs" />
-    <Compile Include="DeviceData\AlarmDeviceData.cs" />
+    <Compile Include="DeviceData\Hikvision\Isapi\RootDeviceData.cs" />
+    <Compile Include="DeviceData\Hikvision\Isapi\AlarmDeviceData.cs" />
     <Compile Include="Pages\ActionPage.cs" />
     <Compile Include="Pages\TakeSnapshotAction.cs" />
     <Compile Include="PluginActions.cs" />
@@ -202,6 +205,7 @@
       <Version>4.7.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- ILMerge -->
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">

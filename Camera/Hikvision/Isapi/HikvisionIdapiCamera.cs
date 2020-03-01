@@ -20,17 +20,18 @@ using System.Xml.XPath;
 
 using static System.FormattableString;
 
-namespace Hspi.Camera
+namespace Hspi.Camera.Hikvision.Isapi
 {
     // Based on
     // https://down.dipol.com.pl/Cctv/-Hikvision-/isapi/HIKVISION%20ISAPI_2.6-IPMD%20Service.pdf
 
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
-    internal sealed class HikvisionCamera : IDisposable
+    internal sealed class HikvisionIdapiCamera : ICamera, IDisposable
     {
-        public HikvisionCamera(CameraSettings cameraSettings,
+        public HikvisionIdapiCamera(CameraSettings cameraSettings,
                                CancellationToken shutdown)
         {
+            Updates = new AsyncProducerConsumerQueue<ICameraContruct>();
             CameraSettings = cameraSettings;
             sourceToken = CancellationTokenSource.CreateLinkedTokenSource(shutdown);
             propertiesGroups = CreatePropertyGroup(cameraSettings.PeriodicFetchedCameraProperties);
@@ -46,7 +47,7 @@ namespace Hspi.Camera
 
         public CameraSettings CameraSettings { get; }
         private CancellationToken Token => sourceToken.Token;
-        public AsyncProducerConsumerQueue<ICameraContruct> Updates { get; } = new AsyncProducerConsumerQueue<ICameraContruct>();
+        public AsyncProducerConsumerQueue<ICameraContruct> Updates { get; }
 
         public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval,
                                                       int channel)
@@ -399,6 +400,7 @@ namespace Hspi.Camera
             await DownloadToFile(path, uri, "mp4", HttpMethod.Get, stringBuilder.ToString()).ConfigureAwait(false);
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Finished downloading {video.Name}"));
         }
+
         private async Task DownloadSnapshotWithDelay(int channel, TimeSpan delay)
         {
             await Task.Delay(delay).ConfigureAwait(false);
@@ -549,6 +551,7 @@ namespace Hspi.Camera
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm Stream Connected:{alarmStreamConnectedInfo.Connected}"));
             await Updates.EnqueueAsync(alarmStreamConnectedInfo, Token).ConfigureAwait(false);
         }
+
         private async Task FetchProperties()
         {
             while (!Token.IsCancellationRequested)
@@ -840,6 +843,7 @@ namespace Hspi.Camera
 
         private static readonly Regex eventTypeRegex = new Regex(@"<eventType>(.*?)<\/eventType>",
                                                                  RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         private static readonly XmlPathData PlaybackURIXPath = new XmlPathData("*[local-name()='mediaSegmentDescriptor']/*[local-name()='playbackURI']");
 
         private static readonly XmlPathData SelectTrackIdXPath = new XmlPathData("*[local-name()='trackID']");
@@ -862,6 +866,7 @@ namespace Hspi.Camera
         private readonly Dictionary<string, List<CameraProperty>> propertiesGroups;
 
         private readonly CancellationTokenSource sourceToken;
+
         #region IDisposable Support
 
         public void Dispose()
@@ -874,6 +879,11 @@ namespace Hspi.Camera
                 handler.Dispose();
                 disposedValue = true;
             }
+        }
+
+        public Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval)
+        {
+            return DownloadContinuousSnapshots(totalTimeSpan, interval, Track1);
         }
 
         private bool disposedValue = false; // To detect redundant calls

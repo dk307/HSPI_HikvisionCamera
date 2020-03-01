@@ -1,9 +1,8 @@
 ﻿using Hspi.DeviceData;
 using NullGuard;
 
-namespace Hspi.Camera
+namespace Hspi.Camera.Hikvision.Isapi
 {
-
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal class AlarmInfo : ICameraContruct
     {
@@ -24,11 +23,11 @@ namespace Hspi.Camera
         public string AlarmType { get; }
         public int ChannelID { get; }
 
-        public DeviceType DeviceType => DeviceType.Alarm;
+        public DeviceType DeviceType => DeviceType.HikvisionISAPIAlarm;
 
         public string Id => AlarmReadableName(AlarmType);
 
-        public string Value =>  !Active ? OnOffDeviceData.OffValueString: OnOffDeviceData.OnValueString;
+        public string Value => !Active ? OnOffDeviceData.OffValueString : OnOffDeviceData.OnValueString;
 
         private static string AlarmReadableName(string alarmType)
         {

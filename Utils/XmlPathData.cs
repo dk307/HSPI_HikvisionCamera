@@ -2,7 +2,7 @@
 using System;
 using System.Xml.XPath;
 
-namespace Hspi.Camera
+namespace Hspi.Utils
 {
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     public sealed class XmlPathData

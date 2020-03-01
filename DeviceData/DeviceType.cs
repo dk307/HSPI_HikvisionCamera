@@ -1,10 +1,19 @@
-﻿namespace Hspi.DeviceData
+﻿using System.ComponentModel;
+
+namespace Hspi.DeviceData
 {
     internal enum DeviceType
     {
-        Root = 0,
-        CameraProperty = 1,
-        Alarm = 2,
-        AlarmStreamConnected = 3,
+        [Description("Root")]
+        HikvisionISAPIRoot,
+
+        [Description("CameraProperty")]
+        HikvisionISAPICameraProperty,
+
+        [Description("Alarm")]
+        HikvisionISAPIAlarm,
+
+        [Description("AlarmStreamConnected")]
+        HikvisionISAPIAlarmStreamConnected,
     }
 }

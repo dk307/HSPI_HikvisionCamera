@@ -33,6 +33,7 @@ namespace Hspi.DeviceData
 
         public virtual string HSDeviceTypeString => Invariant($"{PluginData.PlugInName} {DeviceType} Device");
 
+        public abstract bool IsRootDevice { get; }
         public int RefId { get; set; } = 0;
 
         public abstract bool StatusDevice { get; }
@@ -45,7 +46,7 @@ namespace Hspi.DeviceData
         public abstract IList<VSVGPairs.VSPair> StatusPairs { get; }
 
         public virtual Task HandleCommand(IHSApplication HS,
-                                          HikvisionCamera camera,
+                                          ICamera camera,
                                           string stringValue,
                                           double value,
                                           ePairControlUse control,
@@ -54,18 +55,16 @@ namespace Hspi.DeviceData
             return Task.CompletedTask;
         }
 
-        public virtual void SetOnDeviceCreateData(IHSApplication HS, CameraSettings cameraSettings, int refId)
+        public virtual void OnPlugInLoad(IHSApplication HS, ICameraSettings cameraSettings)
+        {
+        }
+
+        public virtual void SetOnDeviceCreateData(IHSApplication HS, ICameraSettings cameraSettings, int refId)
         {
             HS.SetDeviceValueByRef(refId, 0D, false);
             HS.set_DeviceInvalidValue(refId, true);
         }
-
-        public virtual void OnPlugInLoad(IHSApplication HS, CameraSettings cameraSettings)
-        {
-        }
-
         public abstract void Update(IHSApplication HS, string deviceValue);
-
         protected void UpdateDeviceData(IHSApplication HS, double data)
         {
             HS.set_DeviceInvalidValue(RefId, false);

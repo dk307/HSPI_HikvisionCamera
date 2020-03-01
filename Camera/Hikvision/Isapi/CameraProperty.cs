@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using Hspi.Utils;
 using NullGuard;
+using System;
+using System.Collections.Immutable;
 
-namespace Hspi.Camera
+namespace Hspi.Camera.Hikvision.Isapi
 {
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal class CameraProperty : IEquatable<CameraProperty>

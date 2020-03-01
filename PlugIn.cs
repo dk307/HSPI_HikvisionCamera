@@ -60,10 +60,10 @@ namespace Hspi
                 lock (connectorManagerLock)
                 {
                     // This returns a new copy every time
-                    var currentDevices = pluginConfig.Cameras;
+                    var currentDevices = pluginConfig.AllCameras;
 
                     // Update changed or new
-                    foreach (var device in pluginConfig.Cameras)
+                    foreach (var device in pluginConfig.AllCameras)
                     {
                         if (connectorManager.TryGetValue(device.Key, out var oldConnector))
                         {
@@ -148,7 +148,7 @@ namespace Hspi
 
                     lock (connectorManagerLock)
                     {
-                        if (connectorManager.TryGetValue(deviceIdentifier.DeviceId, out var connector))
+                        if (connectorManager.TryGetValue(deviceIdentifier.CameraId, out var connector))
                         {
                             connector.HandleCommand(deviceIdentifier,
                                                     control.Label,
@@ -182,9 +182,9 @@ namespace Hspi
 
                 if (deviceIdentifier != null)
                 {
-                    foreach (var camera in pluginConfig.Cameras)
+                    foreach (var camera in pluginConfig.HikvisionIsapiCameras)
                     {
-                        if (camera.Key == deviceIdentifier.DeviceId)
+                        if (camera.Key == deviceIdentifier.CameraId)
                         {
                             StringBuilder stb = new StringBuilder();
 

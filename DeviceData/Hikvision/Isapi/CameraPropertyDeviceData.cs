@@ -1,22 +1,25 @@
 ﻿using HomeSeerAPI;
 using Hspi.Camera;
+using Hspi.Camera.Hikvision.Isapi;
 using NullGuard;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Hspi.DeviceData
+namespace Hspi.DeviceData.Hikvision.Isapi
 {
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
-    internal class CameraPropertyDeviceData : DeviceDataBase
+    internal sealed class CameraPropertyDeviceData : DeviceDataBase
     {
         public CameraPropertyDeviceData(CameraProperty property)
-            : base(DeviceType.CameraProperty, property.Id)
+            : base(DeviceType.HikvisionISAPICameraProperty, property.Id)
         {
             Property = property;
         }
 
+        public override string DefaultName => Property.Name;
+        public override bool IsRootDevice => false;
         public override bool StatusDevice => false;
 
         public override IList<VSVGPairs.VSPair> StatusPairs
@@ -46,8 +49,16 @@ namespace Hspi.DeviceData
         }
 
         internal CameraProperty Property { get; }
-
-        public override string DefaultName => Property.Name;
+        public override Task HandleCommand(IHSApplication HS,
+            ICamera camera,
+            [AllowNull]string stringValue,
+            double value,
+            ePairControlUse control,
+            CancellationToken token)
+        {
+            var hikVisionCamera = (HikvisionIdapiCamera)camera;
+            return hikVisionCamera.Put(Property, stringValue ?? string.Empty);
+        }
 
         public override void Update(IHSApplication HS, [AllowNull]string deviceValue)
         {
@@ -84,16 +95,6 @@ namespace Hspi.DeviceData
 
                 UpdateDeviceData(HS, deviceValue, doubleValue);
             }
-        }
-
-        public override Task HandleCommand(IHSApplication HS,
-            HikvisionCamera camera,
-            [AllowNull]string stringValue,
-            double value,
-            ePairControlUse control,
-            CancellationToken token)
-        {
-            return camera.Put(Property, stringValue ?? string.Empty);
         }
     }
 }

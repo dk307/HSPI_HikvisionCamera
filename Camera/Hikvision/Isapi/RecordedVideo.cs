@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 
-namespace Hspi.Camera
+namespace Hspi.Camera.Hikvision.Isapi
 {
     internal readonly struct RecordedVideo
     {

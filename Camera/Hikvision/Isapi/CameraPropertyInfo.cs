@@ -1,8 +1,7 @@
 ﻿using Hspi.DeviceData;
 using NullGuard;
-using System;
 
-namespace Hspi.Camera
+namespace Hspi.Camera.Hikvision.Isapi
 {
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal class CameraPropertyInfo : ICameraContruct
@@ -13,7 +12,7 @@ namespace Hspi.Camera
             Value = value;
         }
 
-        public DeviceType DeviceType => DeviceType.CameraProperty;
+        public DeviceType DeviceType => DeviceType.HikvisionISAPICameraProperty;
         public string Id => Property.Id;
         public CameraProperty Property { get; }
         public string Value { get; }
