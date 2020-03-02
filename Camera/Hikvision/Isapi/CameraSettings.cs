@@ -42,7 +42,7 @@ namespace Hspi.Camera.Hikvision.Isapi
         public string SnapshotDownloadDirectory { get; }
         public string VideoDownloadDirectory { get; }
 
-        public ICamera CreateCamera(CancellationToken shutdownDownToken)
+        public CameraBase CreateCamera(CancellationToken shutdownDownToken)
         {
             return new HikvisionIdapiCamera(this, shutdownDownToken);
         }
@@ -72,7 +72,7 @@ namespace Hspi.Camera.Hikvision.Isapi
             return same;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals([AllowNull]object obj)
         {
             if (obj == null)
             {

@@ -15,5 +15,11 @@ namespace Hspi.DeviceData
 
         [Description("AlarmStreamConnected")]
         HikvisionISAPIAlarmStreamConnected,
+
+        [Description("OnvifRoot")]
+        OnvifRoot,
+
+        [Description("OnvifEvent")]
+        OnvifEvent,
     }
 }

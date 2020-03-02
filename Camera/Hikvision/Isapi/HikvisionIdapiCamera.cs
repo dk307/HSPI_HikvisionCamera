@@ -22,18 +22,18 @@ using static System.FormattableString;
 
 namespace Hspi.Camera.Hikvision.Isapi
 {
+
     // Based on
     // https://down.dipol.com.pl/Cctv/-Hikvision-/isapi/HIKVISION%20ISAPI_2.6-IPMD%20Service.pdf
 
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
-    internal sealed class HikvisionIdapiCamera : ICamera, IDisposable
+    internal sealed class HikvisionIdapiCamera : CameraBase
     {
         public HikvisionIdapiCamera(CameraSettings cameraSettings,
-                               CancellationToken shutdown)
+                                    CancellationToken shutdown) :
+            base(shutdown)
         {
-            Updates = new AsyncProducerConsumerQueue<ICameraContruct>();
             CameraSettings = cameraSettings;
-            sourceToken = CancellationTokenSource.CreateLinkedTokenSource(shutdown);
             propertiesGroups = CreatePropertyGroup(cameraSettings.PeriodicFetchedCameraProperties);
 
             handler = CreateHttpHandler();
@@ -46,25 +46,10 @@ namespace Hspi.Camera.Hikvision.Isapi
         }
 
         public CameraSettings CameraSettings { get; }
-        private CancellationToken Token => sourceToken.Token;
-        public AsyncProducerConsumerQueue<ICameraContruct> Updates { get; }
 
-        public async Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval,
-                                                      int channel)
+        public override Task<string> DownloadSnapshot()
         {
-            var tasks = new List<Task>
-            {
-                DownloadSnapshot(channel)
-            };
-
-            TimeSpan delay = interval;
-            while (delay < totalTimeSpan)
-            {
-                tasks.Add(DownloadSnapshotWithDelay(channel, delay));
-                delay = delay.Add(interval);
-            }
-
-            await Task.WhenAll(tasks).ConfigureAwait(false);
+            return DownloadSnapshot(Track1);
         }
 
         public async Task<string> DownloadSnapshot(int channel)
@@ -399,12 +384,6 @@ namespace Hspi.Camera.Hikvision.Isapi
 
             await DownloadToFile(path, uri, "mp4", HttpMethod.Get, stringBuilder.ToString()).ConfigureAwait(false);
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Finished downloading {video.Name}"));
-        }
-
-        private async Task DownloadSnapshotWithDelay(int channel, TimeSpan delay)
-        {
-            await Task.Delay(delay).ConfigureAwait(false);
-            await DownloadSnapshot(channel).ConfigureAwait(false);
         }
 
         private async Task<string> DownloadToFile(string path, Uri uri,
@@ -865,28 +844,16 @@ namespace Hspi.Camera.Hikvision.Isapi
         private readonly HttpMessageHandler handler;
         private readonly Dictionary<string, List<CameraProperty>> propertiesGroups;
 
-        private readonly CancellationTokenSource sourceToken;
-
         #region IDisposable Support
 
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (disposing)
             {
-                sourceToken.Cancel();
                 defaultHttpClient.Dispose();
-                sourceToken.Dispose();
                 handler.Dispose();
-                disposedValue = true;
             }
         }
-
-        public Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval)
-        {
-            return DownloadContinuousSnapshots(totalTimeSpan, interval, Track1);
-        }
-
-        private bool disposedValue = false; // To detect redundant calls
 
         #endregion IDisposable Support
     }

@@ -128,7 +128,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
             }
         }
         public override Task HandleCommand(IHSApplication HS,
-                                           ICamera baseCamera,
+                                           CameraBase baseCamera,
                                            string stringValue,
                                            double value,
                                            ePairControlUse control,

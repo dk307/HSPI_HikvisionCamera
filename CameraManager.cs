@@ -84,7 +84,7 @@ namespace Hspi
 
         #endregion IDisposable Support
 
-        private readonly ICamera camera;
+        private readonly CameraBase camera;
         private readonly CombinedCancelToken cancelTokenSource;
         private readonly IHSApplication HS;
         private readonly DeviceRootDeviceManager rootDeviceData;

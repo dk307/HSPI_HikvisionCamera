@@ -47,7 +47,7 @@ namespace Hspi.DeviceData
             }
         }
 
-        public async Task HandleCommand(DeviceIdentifier deviceIdentifier, ICamera camera, string stringValue, double value, ePairControlUse control)
+        public async Task HandleCommand(DeviceIdentifier deviceIdentifier, CameraBase camera, string stringValue, double value, ePairControlUse control)
         {
             if (deviceIdentifier.CameraId != CameraSettings.Id)
             {

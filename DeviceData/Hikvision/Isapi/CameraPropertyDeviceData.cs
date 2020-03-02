@@ -50,7 +50,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
 
         internal CameraProperty Property { get; }
         public override Task HandleCommand(IHSApplication HS,
-            ICamera camera,
+            CameraBase camera,
             [AllowNull]string stringValue,
             double value,
             ePairControlUse control,

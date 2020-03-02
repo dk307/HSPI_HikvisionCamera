@@ -9,7 +9,7 @@ namespace Hspi.Camera
         string CameraHost { get; }
         string Id { get; }
         string Name { get; }
-        ICamera CreateCamera(CancellationToken shutdownDownToken);
+        CameraBase CreateCamera(CancellationToken shutdownDownToken);
 
         DeviceDataBase GetDevice(DeviceIdentifier deviceIdentifier);
 

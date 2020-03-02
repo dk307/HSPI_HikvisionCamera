@@ -25,23 +25,18 @@ namespace Hspi.Camera.Onvif
             Login = login;
             Password = password;
             AlarmCancelInterval = alarmCancelInterval;
-            PeriodicFetchedCameraProperties = periodicFetchedProperties;
-            CameraPropertiesRefreshInterval = cameraPropertiesRefreshInterval;
             SnapshotDownloadDirectory = snapshotDownloadDirectory;
-            VideoDownloadDirectory = videoDownloadDirectory;
         }
 
         public string CameraHost { get; }
-        public TimeSpan CameraPropertiesRefreshInterval { get; }
         public string Id { get; }
         public string Name { get; }
-        public ImmutableDictionary<string, CameraProperty> PeriodicFetchedCameraProperties { get; }
         public string SnapshotDownloadDirectory { get; }
-        public string VideoDownloadDirectory { get; }
 
-        public ICamera CreateCamera(CancellationToken shutdownDownToken)
+        public CameraBase CreateCamera(CancellationToken shutdownDownToken)
         {
-            return new HikvisionIdapiCamera(this, shutdownDownToken);
+            throw new NotImplementedException();
+            //return new HikvisionIdapiCamera(this, shutdownDownToken);
         }
 
         public bool Equals(CameraSettings other)
@@ -55,21 +50,12 @@ namespace Hspi.Camera.Onvif
                    other.Password == Password &&
                    other.CameraHost == CameraHost &&
                    other.AlarmCancelInterval == AlarmCancelInterval &&
-                   other.CameraPropertiesRefreshInterval == CameraPropertiesRefreshInterval &&
-                   other.SnapshotDownloadDirectory == SnapshotDownloadDirectory &&
-                   other.VideoDownloadDirectory == VideoDownloadDirectory;
-
-            if (same)
-            {
-                var firstNotSecond = PeriodicFetchedCameraProperties.Except(other.PeriodicFetchedCameraProperties).ToList();
-                var secondNotFirst = other.PeriodicFetchedCameraProperties.Except(PeriodicFetchedCameraProperties).ToList();
-                same = firstNotSecond.Count == 0 && secondNotFirst.Count == 0;
-            }
+                   other.SnapshotDownloadDirectory == SnapshotDownloadDirectory;
 
             return same;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals([AllowNull]object obj)
         {
             if (obj == null)
             {
@@ -97,21 +83,15 @@ namespace Hspi.Camera.Onvif
         {
             switch (deviceIdentifier.DeviceType)
             {
-                case DeviceType.HikvisionISAPIRoot:
-                    return new RootDeviceData();
+                //case DeviceType.HikvisionISAPIRoot:
+                //    return new RootDeviceData();
 
-                case DeviceType.HikvisionISAPICameraProperty:
-                    if (PeriodicFetchedCameraProperties.TryGetValue(deviceIdentifier.DeviceSubTypeId, out var cameraProperty))
-                    {
-                        return new CameraPropertyDeviceData(cameraProperty);
-                    }
-                    return null;
+ 
+                //case DeviceType.HikvisionISAPIAlarm:
+                //    return new AlarmDeviceData(deviceIdentifier.DeviceSubTypeId);
 
-                case DeviceType.HikvisionISAPIAlarm:
-                    return new AlarmDeviceData(deviceIdentifier.DeviceSubTypeId);
-
-                case DeviceType.HikvisionISAPIAlarmStreamConnected:
-                    return new AlarmConnectedDeviceData();
+                //case DeviceType.HikvisionISAPIAlarmStreamConnected:
+                //    return new AlarmConnectedDeviceData();
 
                 default:
                     throw new NotImplementedException();
@@ -120,10 +100,7 @@ namespace Hspi.Camera.Onvif
 
         public override int GetHashCode()
         {
-            return PeriodicFetchedCameraProperties.GetHashCode() ^
-                   CameraPropertiesRefreshInterval.GetHashCode() ^
-                   SnapshotDownloadDirectory.GetHashCode() ^
-                   VideoDownloadDirectory.GetHashCode() ^
+            return SnapshotDownloadDirectory.GetHashCode() ^
                    Name.GetHashCode() ^
                    AlarmCancelInterval.GetHashCode() ^
                    CameraHost.GetHashCode() ^

@@ -46,7 +46,7 @@ namespace Hspi.DeviceData
         public abstract IList<VSVGPairs.VSPair> StatusPairs { get; }
 
         public virtual Task HandleCommand(IHSApplication HS,
-                                          ICamera camera,
+                                          CameraBase camera,
                                           string stringValue,
                                           double value,
                                           ePairControlUse control,
