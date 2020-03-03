@@ -2,8 +2,6 @@
 using Hspi.DeviceData.Hikvision.Isapi;
 using NullGuard;
 using System;
-using System.Collections.Immutable;
-using System.Linq;
 using System.Threading;
 
 namespace Hspi.Camera.Onvif
@@ -35,8 +33,7 @@ namespace Hspi.Camera.Onvif
 
         public CameraBase CreateCamera(CancellationToken shutdownDownToken)
         {
-            throw new NotImplementedException();
-            //return new HikvisionIdapiCamera(this, shutdownDownToken);
+            return new OnvifCamera(this, shutdownDownToken);
         }
 
         public bool Equals(CameraSettings other)
@@ -83,10 +80,14 @@ namespace Hspi.Camera.Onvif
         {
             switch (deviceIdentifier.DeviceType)
             {
+                case DeviceType.OnvifRoot:
+                    break;
+                case DeviceType.OnvifEvent:
+                    break;
                 //case DeviceType.HikvisionISAPIRoot:
                 //    return new RootDeviceData();
 
- 
+
                 //case DeviceType.HikvisionISAPIAlarm:
                 //    return new AlarmDeviceData(deviceIdentifier.DeviceSubTypeId);
 
@@ -116,7 +117,7 @@ namespace Hspi.Camera.Onvif
 
         public DeviceIdentifier GetRootDeviceIdentifier()
         {
-            return new DeviceIdentifier(Id, DeviceType.HikvisionISAPIRoot, "Root");
+            return new DeviceIdentifier(Id, DeviceType.OnvifRoot, "Root");
         }
 
         public readonly TimeSpan AlarmCancelInterval;

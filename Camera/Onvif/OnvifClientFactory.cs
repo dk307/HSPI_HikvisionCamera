@@ -28,7 +28,7 @@ namespace Hspi.Camera.Onvif
             CustomBinding customBinding = CreateCustomBinding(connectionParameters.ConnectionTimeout,
                                                               connectionParameters.Credentials,
                                                               messageEncodingVersion);
-            var factory = new ChannelFactory<TService>(customBinding);
+            ChannelFactory<TService> factory = new ChannelFactory<TService>(customBinding);
 
             var clientInspector = new CustomMessageInspector();
 

@@ -4,20 +4,11 @@ using NullGuard;
 namespace Hspi.Camera.Hikvision.Isapi
 {
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
-    internal sealed class AlarmStreamConnectedInfo : ICameraContruct
+    internal sealed class AlarmStreamConnectedInfo : OnOffCameraContruct
     {
-        public AlarmStreamConnectedInfo(bool connected)
+        public AlarmStreamConnectedInfo(bool active) :
+            base("Alarm Streem Connected", DeviceType.HikvisionISAPIAlarmStreamConnected, active)
         {
-            Connected = connected;
         }
-
-        public bool Connected { get; }
-
-        public DeviceType DeviceType => DeviceType.HikvisionISAPIAlarmStreamConnected;
-
-        public string Value => !Connected ? OnOffDeviceData.OffValueString : OnOffDeviceData.OnValueString;
-
-        public string Id => "Alarm Streem Connected";
-
     };
 }

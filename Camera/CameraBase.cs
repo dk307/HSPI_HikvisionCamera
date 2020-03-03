@@ -19,31 +19,10 @@ namespace Hspi.Camera
         protected CancellationToken Token => sourceToken.Token;
         public AsyncProducerConsumerQueue<ICameraContruct> Updates { get; }
 
-        public Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval)
-        {
-            var tasks = new List<Task>
-            {
-                DownloadSnapshot()
-            };
+        public abstract Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval);
 
-            TimeSpan delay = interval;
-            while (delay < totalTimeSpan)
-            {
-                tasks.Add(DownloadSnapshotWithDelay(delay));
-                delay = delay.Add(interval);
-            }
-
-            return Task.WhenAll(tasks);
-        }
-
-        public abstract Task<string> DownloadSnapshot();
-
-        private async Task DownloadSnapshotWithDelay(TimeSpan delay)
-        {
-            await Task.Delay(delay).ConfigureAwait(false);
-            await DownloadSnapshot().ConfigureAwait(false);
-        }
         protected readonly CancellationTokenSource sourceToken;
+
         #region IDisposable Support
 
         // This code added to correctly implement the disposable pattern.
@@ -68,6 +47,7 @@ namespace Hspi.Camera
         }
 
         private bool disposedValue = false; // To detect redundant calls
+
         #endregion IDisposable Support
     }
 }

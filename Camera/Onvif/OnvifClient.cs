@@ -7,7 +7,6 @@ using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading;
@@ -16,7 +15,7 @@ using DateTime = System.DateTime;
 
 namespace Hspi.Camera.Onvif
 {
-    public sealed class OnvifClient : IDisposable
+    internal sealed class OnvifClient
     {
         public OnvifClient(ConnectionParameters connectionParameters, TimeSpan subscriptionTerminationTime)
         {
@@ -29,77 +28,85 @@ namespace Hspi.Camera.Onvif
             deviceServicePath = connectionParameters.ConnectionUri.AbsolutePath;
 
             if (deviceServicePath == "/")
+            {
                 deviceServicePath = DefaultDeviceServicePath;
+            }
         }
+
+        public event EventHandler<DeviceEvent> EventReceived;
 
         public ConnectionParameters ConnectionParameters { get; }
 
-        public AsyncProducerConsumerQueue<NotificationMessageHolderType> DeviceEvents { get; }
-                                                    = new AsyncProducerConsumerQueue<NotificationMessageHolderType>();
         public async Task ConnectAsync(CancellationToken cancellationToken)
         {
-            DateTime deviceTime = await GetDeviceTimeAsync().ConfigureAwait(false);
-
-            if (!string.IsNullOrEmpty(ConnectionParameters.Credentials.UserName))
+            using (var writerLock = await instanceLock.WriterLockAsync(cancellationToken).ConfigureAwait(false))
             {
-                byte[] nonceBytes = new byte[20];
-                var random = new Random();
-                random.NextBytes(nonceBytes);
+                DateTime deviceTime = await GetDeviceTimeAsync().ConfigureAwait(false);
 
-                var token = new SecurityToken(deviceTime, nonceBytes);
+                if (!string.IsNullOrEmpty(ConnectionParameters.Credentials.UserName))
+                {
+                    byte[] nonceBytes = new byte[20];
+                    var random = new Random();
+                    random.NextBytes(nonceBytes);
 
-                onvifClientFactory.SetSecurityToken(token);
-            }
+                    var token = new SecurityToken(deviceTime, nonceBytes);
 
-            cancellationToken.ThrowIfCancellationRequested();
+                    onvifClientFactory.SetSecurityToken(token);
+                }
 
-            _deviceCapabilities = await GetDeviceCapabilitiesAsync().ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
 
-            if (_deviceCapabilities.Events == null || !_deviceCapabilities.Events.WSPullPointSupport)
-            {
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
-                throw new Exception("Device doesn't support pull point subscription");
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
+                deviceCapabilities = await GetDeviceCapabilitiesAsync().ConfigureAwait(false);
             }
         }
 
-        public void Dispose()
+        
+
+        public async Task<Uri> GetSnapshotUri(CancellationToken cancellationToken)
         {
+            using (var readerLock = await instanceLock.ReaderLockAsync(cancellationToken).ConfigureAwait(false))
+            {
+                var deviceCapabilitiesUri = new Uri(deviceCapabilities.Media.XAddr);
+                var media = onvifClientFactory.CreateClient<Media>(deviceCapabilitiesUri, ConnectionParameters, MessageVersion.Soap12);
+
+                var profileResponse = await media.GetProfilesAsync(new GetProfilesRequest()).ConfigureAwait(false);
+
+                var profile = profileResponse.Profiles.First(x => x.Name == "mainStream") ?? profileResponse.Profiles.FirstOrDefault();
+
+                if (profile == null)
+                {
+                    throw new Exception("No Onvif profile found");
+                }
+
+                var snapshotUriResponse = await media.GetSnapshotUriAsync(profile.token).ConfigureAwait(false);
+
+                return new Uri(snapshotUriResponse.Uri);
+            }
         }
 
-        public async Task<string> Reboot()
+        public async Task<string> Reboot(CancellationToken cancellationToken)
         {
-            var device = CreateDeviceClient();
-            return await device.SystemRebootAsync().ConfigureAwait(false);
+            using (var readerLock = await instanceLock.ReaderLockAsync(cancellationToken).ConfigureAwait(false))
+            {
+                var device = CreateDeviceClient();
+                return await device.SystemRebootAsync().ConfigureAwait(false);
+            }
         }
 
         public async Task ReceiveAsync(CancellationToken cancellationToken)
         {
-            var eventServiceUri = new Uri(_deviceCapabilities.Events.XAddr);
-            EndpointAddress endPointAddress = await GetSubscriptionEndPointAddress(eventServiceUri).ConfigureAwait(false);
-            await PullPointAsync(endPointAddress, cancellationToken).ConfigureAwait(false);
-        }
-
-        public async Task TakeSnapshot()
-        {
-            var deviceCapabilitiesUri = new Uri(_deviceCapabilities.Media.XAddr);
-            var media = onvifClientFactory.CreateClient<Media>(deviceCapabilitiesUri, ConnectionParameters, MessageVersion.Soap12);
-
-            var profileResponse = await media.GetProfilesAsync(new GetProfilesRequest()).ConfigureAwait(false);
-
-            var profile = profileResponse.Profiles.First(x => x.Name == "mainStream") ?? profileResponse.Profiles.FirstOrDefault();
-
-            if (profile == null)
+            using (var readerLock = await instanceLock.ReaderLockAsync(cancellationToken).ConfigureAwait(false))
             {
-                throw new Exception("No Onvif profile found");
+                if (deviceCapabilities.Events == null || !deviceCapabilities.Events.WSPullPointSupport)
+                {
+                    throw new Exception("Device doesn't support pull point subscription");
+                }
+
+                var eventServiceUri = new Uri(deviceCapabilities.Events.XAddr);
+                EndpointAddress endPointAddress = await GetSubscriptionEndPointAddress(eventServiceUri).ConfigureAwait(false);
+                await PullPointAsync(endPointAddress, cancellationToken).ConfigureAwait(false);
             }
-
-            var snapshotUriResponse = await media.GetSnapshotUriAsync(profile.token).ConfigureAwait(false);
-
-            Uri snapShotUri = new Uri(snapshotUriResponse.Uri);
         }
-
- 
         private static bool IsTimeOver(int previousTicks, int interval)
         {
             if (Math.Abs(Environment.TickCount - previousTicks) > interval)
@@ -175,11 +182,11 @@ namespace Hspi.Camera.Onvif
             var endPointAddress = new EndpointAddress(seviceUri, adressHeaders.ToArray());
             return endPointAddress;
         }
-
         private string GetTerminationTime()
         {
             return FormattableString.Invariant($"PT{(int)subscriptionTerminationTime.TotalSeconds}S");
         }
+
         private async Task PullPointAsync(EndpointAddress endPointAddress, CancellationToken cancellationToken)
         {
             var pullPointSubscriptionClient = onvifClientFactory.CreateClient<PullPointSubscription>(endPointAddress, ConnectionParameters,
@@ -187,7 +194,7 @@ namespace Hspi.Camera.Onvif
             var subscriptionManagerClient = onvifClientFactory.CreateClient<SubscriptionManager>(endPointAddress, ConnectionParameters,
                 MessageVersion.Soap12WSAddressing10);
 
-            var pullRequest = new PullMessagesRequest("PT10S", 1024, null);
+            var pullRequest = new PullMessagesRequest("PT5S", 1024, null);
 
             int renewIntervalMs = (int)(subscriptionTerminationTime.TotalMilliseconds / 2);
             int lastTimeRenewMade = Environment.TickCount;
@@ -198,7 +205,7 @@ namespace Hspi.Camera.Onvif
 
                 foreach (var messageHolder in response.NotificationMessage)
                 {
-                    await DeviceEvents.EnqueueAsync(messageHolder, cancellationToken).ConfigureAwait(false);
+                    EventReceived(this, new DeviceEvent(messageHolder));
                 }
 
                 if (IsTimeOver(lastTimeRenewMade, renewIntervalMs))
@@ -211,10 +218,12 @@ namespace Hspi.Camera.Onvif
 
             await subscriptionManagerClient.UnsubscribeAsync(new UnsubscribeRequest(new Unsubscribe())).ConfigureAwait(false);
         }
+
         private const string DefaultDeviceServicePath = "/onvif/device_service";
         private readonly string deviceServicePath;
         private readonly OnvifClientFactory onvifClientFactory = new OnvifClientFactory();
         private readonly TimeSpan subscriptionTerminationTime;
-        private Hspi.Onvif.Contracts.DeviceManagement.Capabilities _deviceCapabilities;
+        private Hspi.Onvif.Contracts.DeviceManagement.Capabilities deviceCapabilities;
+        private Nito.AsyncEx.AsyncReaderWriterLock instanceLock = new AsyncReaderWriterLock();
     }
 }
