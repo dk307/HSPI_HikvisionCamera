@@ -1,5 +1,5 @@
 ﻿using Hspi.DeviceData;
-using Hspi.DeviceData.Hikvision.Isapi;
+using Hspi.DeviceData.Onvif;
 using NullGuard;
 using System;
 using System.Threading;
@@ -81,18 +81,10 @@ namespace Hspi.Camera.Onvif
             switch (deviceIdentifier.DeviceType)
             {
                 case DeviceType.OnvifRoot:
-                    break;
+                    return new RootDeviceData();
+
                 case DeviceType.OnvifEvent:
-                    break;
-                //case DeviceType.HikvisionISAPIRoot:
-                //    return new RootDeviceData();
-
-
-                //case DeviceType.HikvisionISAPIAlarm:
-                //    return new AlarmDeviceData(deviceIdentifier.DeviceSubTypeId);
-
-                //case DeviceType.HikvisionISAPIAlarmStreamConnected:
-                //    return new AlarmConnectedDeviceData();
+                    return new OnvifEventData(deviceIdentifier.DeviceSubTypeId);
 
                 default:
                     throw new NotImplementedException();

@@ -127,13 +127,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DeviceData\Hikvision\Isapi\AlarmDeviceData.cs" />
+    <Compile Include="DeviceData\Onvif\RootDeviceData.cs" />
+    <Compile Include="DeviceData\RootDeviceDataBase.cs" />
     <Compile Include="Utils\XmlPathData.cs" />
     <Compile Include="DeviceData\Hikvision\Isapi\AlarmConnectedDeviceData.cs" />
     <Compile Include="DeviceData\Hikvision\Isapi\CameraPropertyDeviceData.cs" />
     <Compile Include="DeviceData\DeviceType.cs" />
     <Compile Include="DeviceData\OnOffDeviceData.cs" />
     <Compile Include="DeviceData\Hikvision\Isapi\RootDeviceData.cs" />
-    <Compile Include="DeviceData\Hikvision\Isapi\AlarmDeviceData.cs" />
+    <Compile Include="DeviceData\Onvif\OnvifEventData.cs" />
     <Compile Include="Pages\ActionPage.cs" />
     <Compile Include="Pages\TakeSnapshotAction.cs" />
     <Compile Include="PluginActions.cs" />
@@ -829,9 +832,7 @@
     <WCFMetadataStorage Include="Connected Services\Onvif.Contracts.Event\" />
     <WCFMetadataStorage Include="Connected Services\Onvif.Contracts.Media\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DeviceData\Onvif\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- ILMerge -->
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">

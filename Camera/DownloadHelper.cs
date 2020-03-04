@@ -23,10 +23,11 @@ namespace Hspi.Camera
             this.cancellationToken = cancellationToken;
         }
 
-        public async Task<string> DownloadToFile(string path, Uri uri,
-                                                  [AllowNull]string extension,
-                                                  HttpMethod httpMethod,
-                                                  [AllowNull]string data)
+        public async Task<string> DownloadToFile(string path,
+                                                 Uri uri,
+                                                 HttpMethod httpMethod,
+                                                 [AllowNull]string extension,
+                                                 [AllowNull]string data)
         {
             string tempPath = Path.ChangeExtension(path, "tmp");
             try

@@ -14,7 +14,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
     /// </summary>
     /// <seealso cref="Hspi.DeviceDataBase" />
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
-    internal sealed class RootDeviceData : DeviceDataBase
+    internal sealed class RootDeviceData : RootDeviceDataBase
     {
         public RootDeviceData() : base(DeviceType.HikvisionISAPIRoot, "Root")
         {
@@ -35,12 +35,8 @@ namespace Hspi.DeviceData.Hikvision.Isapi
             Poll,
         };
 
-        public override string DefaultName => "Root";
-        public override IList<VSVGPairs.VGPair> GraphicsPairs => new List<VSVGPairs.VGPair>();
         public override int HSDeviceType => (int)DeviceTypeInfo_m.DeviceTypeInfo.eDeviceType_Plugin.Root;
         public override string HSDeviceTypeString => Invariant($"{PluginData.PlugInName} Root Device");
-        public override bool IsRootDevice => true;
-        public override bool StatusDevice => false;
 
         public override IList<VSVGPairs.VSPair> StatusPairs
         {
@@ -127,6 +123,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
                 return pairs;
             }
         }
+
         public override Task HandleCommand(IHSApplication HS,
                                            CameraBase baseCamera,
                                            string stringValue,
@@ -163,10 +160,10 @@ namespace Hspi.DeviceData.Hikvision.Isapi
                     return camera.StopRecording(HikvisionIdapiCamera.Track2);
 
                 case Commands.TakeSnapshotTrack1:
-                    return TakeSnapshot(HS, camera, HikvisionIdapiCamera.Track1);
+                    return TakeSnapshot(camera, HikvisionIdapiCamera.Track1);
 
                 case Commands.TakeSnapshotTrack2:
-                    return TakeSnapshot(HS, camera, HikvisionIdapiCamera.Track2);
+                    return TakeSnapshot(camera, HikvisionIdapiCamera.Track2);
 
                 case Commands.Poll:
                     return camera.RefreshProperties();
@@ -177,42 +174,11 @@ namespace Hspi.DeviceData.Hikvision.Isapi
 
         public override void OnPlugInLoad(IHSApplication HS, ICameraSettings cameraSettings)
         {
-            for (int i = 1; i <= TotalGlobalVars; i++)
-            {
-                HS.CreateVar(GetGlobalVarName(cameraSettings, i));
-            }
         }
 
-        public override void SetOnDeviceCreateData(IHSApplication HS, ICameraSettings cameraSettings, int refID)
-        {
-            HS.set_DeviceInvalidValue(refID, false);
-            HS.SetDeviceString(refID, "Root", false);
-        }
-
-        public override void Update(IHSApplication HS, string deviceValue) => throw new System.NotImplementedException();
-
-        private static string GetGlobalVarName(ICameraSettings camera, int pos)
-        {
-            return Invariant($"{camera.Name.Replace(' ', '_')}_snapshot{pos}");
-        }
-
-        private void SetGlobalVar(IHSApplication HS, HikvisionIdapiCamera camera, string path)
-        {
-            HS.SaveVar(GetGlobalVarName(camera.CameraSettings, lastGlobalVar++), path);
-
-            if (lastGlobalVar > TotalGlobalVars)
-            {
-                lastGlobalVar = 1;
-            }
-        }
-
-        private async Task TakeSnapshot(IHSApplication HS, HikvisionIdapiCamera camera, int track)
+        private async Task TakeSnapshot(HikvisionIdapiCamera camera, int track)
         {
             string path = await camera.DownloadSnapshot(track).ConfigureAwait(false);
-            SetGlobalVar(HS, camera, path);
         }
-
-        private const int TotalGlobalVars = 3;
-        private int lastGlobalVar = 1;
     }
 }

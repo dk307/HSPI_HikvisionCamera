@@ -68,7 +68,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                                        DateTimeOffset.Now.ToString("yyyy-MM-dd--HH-mm-ss-ff", CultureInfo.InvariantCulture));
             Uri uri = CreateUri(Invariant($"/ISAPI/Streaming/channels/{channel}/picture"));
 
-            return await downloadHelper.DownloadToFile(path, uri, null, HttpMethod.Get, null).ConfigureAwait(false);
+            return await downloadHelper.DownloadToFile(path, uri, HttpMethod.Get, null, null).ConfigureAwait(false);
         }
 
         public async Task<IList<RecordedVideo>> GetRecording(int maxResults, int searchResultPostion, DateTimeOffset? filterStartTime, DateTimeOffset? filterEndTime)
@@ -364,7 +364,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                 writer.WriteEndDocument();
             }
 
-            await downloadHelper.DownloadToFile(path, uri, "mp4", HttpMethod.Get, stringBuilder.ToString()).ConfigureAwait(false);
+            await downloadHelper.DownloadToFile(path, uri, HttpMethod.Get, "mp4", stringBuilder.ToString()).ConfigureAwait(false);
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Finished downloading {video.Name}"));
         }
 

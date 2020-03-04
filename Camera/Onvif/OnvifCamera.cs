@@ -52,7 +52,7 @@ namespace Hspi.Camera.Onvif
             string path = Path.Combine(CameraSettings.SnapshotDownloadDirectory,
                                        DateTimeOffset.Now.ToString("yyyy-MM-dd--HH-mm-ss-ff", CultureInfo.InvariantCulture));
 
-            return await downloadHelper.DownloadToFile(path, downloadUri, null, HttpMethod.Get, null).ConfigureAwait(false);
+            return await downloadHelper.DownloadToFile(path, downloadUri, HttpMethod.Get, null, null).ConfigureAwait(false);
         }
 
         public async Task<Uri> GetSnapshotUri()
