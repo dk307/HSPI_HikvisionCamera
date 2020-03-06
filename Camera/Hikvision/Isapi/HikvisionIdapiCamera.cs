@@ -310,7 +310,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                 var winHttpHandler = new WinHttpHandler
                 {
                     ServerCredentials = credCache,
-                    MaxConnectionsPerServer = 2,
+                    MaxConnectionsPerServer = 4,
                     AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
                 };
 
@@ -441,7 +441,7 @@ namespace Hspi.Camera.Hikvision.Isapi
         }
         private async Task Enqueue(OnOffCameraContruct alarm)
         {
-            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm:{alarm.Id} Enabled:{alarm.Active}"));
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm:{alarm.Id} Active:{alarm.Active}"));
             await Updates.EnqueueAsync(alarm, Token).ConfigureAwait(false);
         }
 
@@ -587,8 +587,8 @@ namespace Hspi.Camera.Hikvision.Isapi
                         using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
                         {
                             using (var response = await downloadHelper.SendToCamera(httpRequestMessage,
-                                                                     client: client,
-                                                                     completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                                                                                    client: client,
+                                                                                    completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                             {
                                 await EnqueueAlarmStreamConnectedInfo(true).ConfigureAwait(false);
 

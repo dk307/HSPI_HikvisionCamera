@@ -130,6 +130,7 @@
     <Compile Include="DeviceData\Hikvision\Isapi\AlarmDeviceData.cs" />
     <Compile Include="DeviceData\Onvif\RootDeviceData.cs" />
     <Compile Include="DeviceData\RootDeviceDataBase.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Utils\XmlPathData.cs" />
     <Compile Include="DeviceData\Hikvision\Isapi\AlarmConnectedDeviceData.cs" />
     <Compile Include="DeviceData\Hikvision\Isapi\CameraPropertyDeviceData.cs" />

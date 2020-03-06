@@ -178,7 +178,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
 
         private async Task TakeSnapshot(HikvisionIdapiCamera camera, int track)
         {
-            string path = await camera.DownloadSnapshot(track).ConfigureAwait(false);
+            await camera.DownloadSnapshot(track).ConfigureAwait(false);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Hspi.DeviceData;
 using NullGuard;
-
+using System.Globalization;
+using System.Linq;
 using static System.FormattableString;
 
 namespace Hspi.Camera.Hikvision.Isapi
@@ -9,7 +10,7 @@ namespace Hspi.Camera.Hikvision.Isapi
     internal sealed class AlarmInfo : OnOffCameraContruct
     {
         public AlarmInfo(string alarmType, int channelID, bool active) :
-            base(Invariant($"{AlarmReadableName(alarmType)}_{channelID}"), DeviceType.HikvisionISAPIAlarm, active)
+            base(Invariant($"Channel {channelID} - {AlarmReadableName(alarmType)}"), DeviceType.HikvisionISAPIAlarm, active)
         {
             if (string.IsNullOrWhiteSpace(alarmType))
             {
@@ -31,7 +32,17 @@ namespace Hspi.Camera.Hikvision.Isapi
                     return "Motion Detection";
 
                 default:
-                    return alarmType;
+                    return FirstCharToUpper(alarmType, CultureInfo.InvariantCulture);
+            }
+        }
+
+        private static string FirstCharToUpper(string input, CultureInfo culture)
+        {
+            switch (input)
+            {
+                case null: return null;
+                case "": return string.Empty;
+                default: return input.First().ToString(culture).ToUpper(culture) + input.Substring(1);
             }
         }
     };
