@@ -92,6 +92,11 @@ namespace Hspi.Camera.Onvif
             }
         }
 
+        public Task TakeSnapshot()
+        {
+            return TakeSnapshotImpl();
+        }
+
         private async Task ClearOnvifClient()
         {
             using (_ = await onvifClientLock.LockAsync(Token).ConfigureAwait(false))
@@ -105,6 +110,7 @@ namespace Hspi.Camera.Onvif
             var info = (OnvifEventInfo)cameraContruct;
             return new OnvifEventInfo(info.Id, state);
         }
+
         private HttpClient CreateHttpClient()
         {
             var credCache = new CredentialCache();
@@ -138,10 +144,18 @@ namespace Hspi.Camera.Onvif
             await helper.Initialize().ConfigureAwait(false);
             await helper.DownloadContinuousSnapshots(totalTimeSpan, interval).ConfigureAwait(false);
         }
+
         private async Task Enqueue(OnOffCameraContruct onvifEvent)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Event:{onvifEvent.Id} Enabled:{onvifEvent.Active}"));
             await Updates.EnqueueAsync(onvifEvent, Token).ConfigureAwait(false);
+        }
+
+        private async Task EnqueueEventsListeningInfo(bool connected)
+        {
+            var eventListening = new EventsListeningInfo(connected);
+            Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Event Streem Listening:{eventListening.Active}"));
+            await Updates.EnqueueAsync(eventListening, Token).ConfigureAwait(false);
         }
 
         private async Task<OnvifClient> GetOnvifClient()
@@ -172,6 +186,7 @@ namespace Hspi.Camera.Onvif
                 throw;
             }
         }
+
         private async void OnvifClient_EventReceived(object sender, DeviceEvent deviceEvent)
         {
             bool? valueAsBoolean = deviceEvent.ValueAsBoolean;
@@ -187,8 +202,10 @@ namespace Hspi.Camera.Onvif
             OnvifClient onvifClient = null;
             try
             {
+                await EnqueueEventsListeningInfo(false).ConfigureAwait(false);
                 onvifClient = await GetOnvifClient().ConfigureAwait(false);
                 onvifClient.EventReceived += OnvifClient_EventReceived;
+                await EnqueueEventsListeningInfo(true).ConfigureAwait(false);
                 await onvifClient.ReceiveAsync(Token).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -197,6 +214,7 @@ namespace Hspi.Camera.Onvif
                 {
                     await ClearOnvifClient().ConfigureAwait(false);
                 }
+                throw;
             }
             finally
             {
@@ -204,8 +222,26 @@ namespace Hspi.Camera.Onvif
                 {
                     onvifClient.EventReceived -= OnvifClient_EventReceived;
                 }
+                await EnqueueEventsListeningInfo(false).ConfigureAwait(false);
             }
         }
+        private async Task TakeSnapshotImpl()
+        {
+            try
+            {
+                var onvifClient = await GetOnvifClient().ConfigureAwait(false);
+                var snapshotUri = await onvifClient.GetSnapshotUri(Token).ConfigureAwait(false);
+                await DownloadSnapshot(snapshotUri).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                if (!ex.IsCancelException())
+                {
+                    await ClearOnvifClient().ConfigureAwait(false);
+                }
+            }
+        }
+
         private readonly AlarmProcessingHelper alarmProcessingHelper;
         private readonly HttpClient defaultHttpClient;
         private readonly DownloadHelper downloadHelper;

@@ -86,6 +86,9 @@ namespace Hspi.Camera.Onvif
                 case DeviceType.OnvifEvent:
                     return new OnvifEventData(deviceIdentifier.DeviceSubTypeId);
 
+                case DeviceType.OnvifEventListening:
+                    return new EventsListeningDeviceData();
+
                 default:
                     throw new NotImplementedException();
             }

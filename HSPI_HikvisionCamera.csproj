@@ -87,6 +87,7 @@
     <Compile Include="Camera\DownloadHelper.cs" />
     <Compile Include="Camera\AlarmProcessingHelper.cs" />
     <Compile Include="Camera\OnOffCameraContruct.cs" />
+    <Compile Include="Camera\Onvif\EventsListeningInfo.cs" />
     <Compile Include="Camera\Onvif\OnvifEventInfo.cs" />
     <Compile Include="Camera\Onvif\DeviceEvent.cs" />
     <Compile Include="Camera\Onvif\OnvifSnapshotsHelper.cs" />
@@ -98,8 +99,8 @@
     <Compile Include="Camera\Hikvision\Isapi\CameraProperty.cs" />
     <Compile Include="Camera\Hikvision\Isapi\CameraPropertyInfo.cs" />
     <Compile Include="Camera\Hikvision\Isapi\CameraSettings.cs" />
-    <Compile Include="Camera\Hikvision\Isapi\HikvisionIdapiCamera.cs" />
-    <Compile Include="Camera\Hikvision\Isapi\HikvisionIdapiSnapshotsHelper.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\HikvisionIsapiCamera.cs" />
+    <Compile Include="Camera\Hikvision\Isapi\HikvisionIsapiSnapshotsHelper.cs" />
     <Compile Include="Camera\ICameraSettings.cs" />
     <Compile Include="Camera\Hikvision\Isapi\RecordedVideo.cs" />
     <Compile Include="Camera\Onvif\Behaviour\CustomAddressHeader.cs" />
@@ -128,11 +129,12 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="DeviceData\Hikvision\Isapi\AlarmDeviceData.cs" />
+    <Compile Include="DeviceData\Hikvision\Isapi\AlarmConnectedDeviceData.cs" />
     <Compile Include="DeviceData\Onvif\RootDeviceData.cs" />
     <Compile Include="DeviceData\RootDeviceDataBase.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Utils\XmlPathData.cs" />
-    <Compile Include="DeviceData\Hikvision\Isapi\AlarmConnectedDeviceData.cs" />
+    <Compile Include="DeviceData\Onvif\EventsListeningDeviceData.cs" />
     <Compile Include="DeviceData\Hikvision\Isapi\CameraPropertyDeviceData.cs" />
     <Compile Include="DeviceData\DeviceType.cs" />
     <Compile Include="DeviceData\OnOffDeviceData.cs" />

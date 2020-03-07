@@ -59,7 +59,7 @@ namespace Hspi.Camera.Onvif
             {
                 int halfLength = length / 2 - 1;
                 return value.Substring(0, halfLength) +
-                       ".." +
+                       "__" +
                        value.Substring(value.Length - halfLength, halfLength);
             }
             return value;
@@ -152,11 +152,11 @@ namespace Hspi.Camera.Onvif
         private static readonly XPathExpression dataSelector
                             = XPathExpression.Compile("*[local-name()='Data']/*[local-name()='SimpleItem']");
 
-        private static readonly XPathExpression sourceSelector
-                            = XPathExpression.Compile("*[local-name()='Source']/*[local-name()='SimpleItem']");
-
 #pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms
-        private static HashAlgorithm hashCreator = MD5.Create();
+        private static readonly HashAlgorithm hashCreator = MD5.Create();
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
+
+        private static readonly XPathExpression sourceSelector
+                                    = XPathExpression.Compile("*[local-name()='Source']/*[local-name()='SimpleItem']");
     }
 }

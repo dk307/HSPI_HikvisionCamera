@@ -26,9 +26,9 @@ namespace Hspi.Camera.Hikvision.Isapi
     // https://down.dipol.com.pl/Cctv/-Hikvision-/isapi/HIKVISION%20ISAPI_2.6-IPMD%20Service.pdf
 
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
-    internal sealed class HikvisionIdapiCamera : CameraBase
+    internal sealed class HikvisionIsapiCamera : CameraBase
     {
-        public HikvisionIdapiCamera(CameraSettings cameraSettings,
+        public HikvisionIsapiCamera(CameraSettings cameraSettings,
                                     CancellationToken shutdown) :
             base(shutdown)
         {
@@ -53,7 +53,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
         public override Task DownloadContinuousSnapshots(TimeSpan totalTimeSpan, TimeSpan interval)
         {
-            var helper = new HikvisionIdapiSnapshotsHelper(this, Token);
+            var helper = new HikvisionIsapiSnapshotsHelper(this, Token);
             return helper.DownloadContinuousSnapshots(totalTimeSpan, interval);
         }
 

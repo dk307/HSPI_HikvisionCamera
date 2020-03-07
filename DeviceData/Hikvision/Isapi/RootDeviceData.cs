@@ -131,7 +131,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
                                            ePairControlUse control,
                                            CancellationToken token)
         {
-            var camera = (HikvisionIdapiCamera)baseCamera;
+            var camera = (HikvisionIsapiCamera)baseCamera;
             switch ((Commands)value)
             {
                 case Commands.DownloadVideos:
@@ -142,28 +142,28 @@ namespace Hspi.DeviceData.Hikvision.Isapi
                     return camera.Reboot();
 
                 case Commands.RequestKeyFrameTrack1:
-                    return camera.RequestKeyFrame(HikvisionIdapiCamera.Track1);
+                    return camera.RequestKeyFrame(HikvisionIsapiCamera.Track1);
 
                 case Commands.RequestKeyFrameTrack2:
-                    return camera.RequestKeyFrame(HikvisionIdapiCamera.Track2);
+                    return camera.RequestKeyFrame(HikvisionIsapiCamera.Track2);
 
                 case Commands.StartRecordingTrack1:
-                    return camera.StartRecording(HikvisionIdapiCamera.Track1);
+                    return camera.StartRecording(HikvisionIsapiCamera.Track1);
 
                 case Commands.StartRecordingTrack2:
-                    return camera.StartRecording(HikvisionIdapiCamera.Track2);
+                    return camera.StartRecording(HikvisionIsapiCamera.Track2);
 
                 case Commands.StopRecordingTrack1:
-                    return camera.StopRecording(HikvisionIdapiCamera.Track1);
+                    return camera.StopRecording(HikvisionIsapiCamera.Track1);
 
                 case Commands.StopRecordingTrack2:
-                    return camera.StopRecording(HikvisionIdapiCamera.Track2);
+                    return camera.StopRecording(HikvisionIsapiCamera.Track2);
 
                 case Commands.TakeSnapshotTrack1:
-                    return TakeSnapshot(camera, HikvisionIdapiCamera.Track1);
+                    return TakeSnapshot(camera, HikvisionIsapiCamera.Track1);
 
                 case Commands.TakeSnapshotTrack2:
-                    return TakeSnapshot(camera, HikvisionIdapiCamera.Track2);
+                    return TakeSnapshot(camera, HikvisionIsapiCamera.Track2);
 
                 case Commands.Poll:
                     return camera.RefreshProperties();
@@ -176,7 +176,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
         {
         }
 
-        private async Task TakeSnapshot(HikvisionIdapiCamera camera, int track)
+        private async Task TakeSnapshot(HikvisionIsapiCamera camera, int track)
         {
             await camera.DownloadSnapshot(track).ConfigureAwait(false);
         }

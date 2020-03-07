@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace Hspi.Camera.Hikvision.Isapi
 {
-    internal sealed class HikvisionIdapiSnapshotsHelper : SnapshotsHelper
+    internal sealed class HikvisionIsapiSnapshotsHelper : SnapshotsHelper
     {
-        public HikvisionIdapiSnapshotsHelper(HikvisionIdapiCamera hikvisionIdapiCamera,
+        public HikvisionIsapiSnapshotsHelper(HikvisionIsapiCamera hikvisionIdapiCamera,
                                                                CancellationToken cancellationToken) :
             base(cancellationToken)
         {
@@ -14,9 +14,9 @@ namespace Hspi.Camera.Hikvision.Isapi
 
         public override Task<string> DownloadSnapshot()
         {
-            return hikvisionIdapiCamera.DownloadSnapshot(HikvisionIdapiCamera.Track1);
+            return hikvisionIdapiCamera.DownloadSnapshot(HikvisionIsapiCamera.Track1);
         }
 
-        private readonly HikvisionIdapiCamera hikvisionIdapiCamera;
+        private readonly HikvisionIsapiCamera hikvisionIdapiCamera;
     }
 }

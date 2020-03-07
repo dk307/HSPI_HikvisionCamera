@@ -11,30 +11,31 @@ namespace Hspi.DeviceData
     {
         public DeviceIdentifier(string cameraId, DeviceType deviceType, string deviceSubTypeId)
         {
-            CameraId = cameraId;
+            CameraId = RemoveAddressSeperator(cameraId);
             DeviceType = deviceType;
-            DeviceSubTypeId = deviceSubTypeId;
+            DeviceSubTypeId = RemoveAddressSeperator(deviceSubTypeId);
         }
 
         public string Address
         {
             get
             {
-                string deviceTypeString = EnumHelper.GetDescription(DeviceType);
+                string deviceTypeString = RemoveAddressSeperator(EnumHelper.GetDescription(DeviceType));
                 return Invariant($"{CreateDeviceIdSpecficAddress(CameraId)}{AddressSeparator}{deviceTypeString}{AddressSeparator}{DeviceSubTypeId}");
             }
         }
 
         public string CameraId { get; }
 
-        public DeviceType DeviceType { get; }
-
         public string DeviceSubTypeId { get; }
+
+        public DeviceType DeviceType { get; }
 
         public static string CreateDeviceIdSpecficAddress(string cameraId)
         {
-            return Invariant($"{PluginData.PlugInName}{AddressSeparator}{cameraId}");
+            return Invariant($"{RemoveAddressSeperator(PluginData.PlugInName)}{AddressSeparator}{RemoveAddressSeperator(cameraId)}");
         }
+
         public static DeviceIdentifier Identify(DeviceClass hsDevice)
         {
             var childAddress = hsDevice.get_Address(null);
@@ -75,6 +76,11 @@ namespace Hspi.DeviceData
             }
 
             return deviceType;
+        }
+
+        private static string RemoveAddressSeperator(string value)
+        {
+            return value.Replace(AddressSeparator, '_');
         }
 
         private const char AddressSeparator = '.';

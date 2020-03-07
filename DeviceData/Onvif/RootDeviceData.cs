@@ -9,7 +9,6 @@ using static System.FormattableString;
 
 namespace Hspi.DeviceData.Onvif
 {
-
     /// <summary>
     ///  Base class for Root Devices
     /// </summary>
@@ -23,7 +22,8 @@ namespace Hspi.DeviceData.Onvif
 
         private enum Commands
         {
-            Reboot,
+            Reboot = 0,
+            TakeSnapshot = 1,
         };
 
         public override string HSDeviceTypeString => Invariant($"{PluginData.PlugInName} Onvif Root Device");
@@ -38,6 +38,13 @@ namespace Hspi.DeviceData.Onvif
                     PairType = VSVGPairs.VSVGPairType.SingleValue,
                     Value = (double)Commands.Reboot,
                     Status = "Reboot",
+                    Render = Enums.CAPIControlType.Button,
+                });
+                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                {
+                    PairType = VSVGPairs.VSVGPairType.SingleValue,
+                    Value = (double)Commands.TakeSnapshot,
+                    Status = "TakeSnapshot",
                     Render = Enums.CAPIControlType.Button,
                 });
                 return pairs;
@@ -56,6 +63,8 @@ namespace Hspi.DeviceData.Onvif
             {
                 case Commands.Reboot:
                     return camera.Reboot();
+                case Commands.TakeSnapshot:
+                    return camera.TakeSnapshot();
             }
 
             return Task.CompletedTask;

@@ -17,6 +17,7 @@ namespace Hspi.Camera
                                      Func<OnOffCameraContruct, Task> enqueue,
                                      CancellationToken cancellationToken)
         {
+            this.cameraName = cameraName;
             this.alarmCancelInterval = alarmCancelInterval;
             this.deviceStateUpdateInterval = alarmCancelInterval.Add(new TimeSpan(0, 0, 5));
             this.cloneWithDifferentState = cloneWithDifferentState;
@@ -53,16 +54,16 @@ namespace Hspi.Camera
                     alarmData.state = true;
                     alarmData.CameraContruct = alarm;
                     alarmData.lastReceived.Restart();
+                    Trace.WriteLine($"[{cameraName}]New alarm {alarmData.CameraContruct.Id}");
                 }
                 else
                 {
                     // do not send alarm here as need to honor interval
                 }
 
+
                 if (sendNow)
                 {
-                    Trace.WriteLine("New");
-
                     await SendAlarm(alarm, alarmData).ConfigureAwait(false);
                 }
             }
@@ -79,11 +80,11 @@ namespace Hspi.Camera
                     {
                         if (alarmData.lastReceived.Elapsed >= alarmCancelInterval)
                         {
+                            Trace.WriteLine($"[{cameraName}]Expiring {alarmData.CameraContruct.Id} as {alarmData.lastReceived.Elapsed} passed");
                             // send a alarm over event on expiry
                             alarmData.state = false;
                             alarmData.lastReceived.Reset();
 
-                            Trace.WriteLine("Expiring");
                             await SendAlarm(cloneWithDifferentState(alarmData.CameraContruct, false),
                                             alarmData).ConfigureAwait(false);
                         }
@@ -91,7 +92,6 @@ namespace Hspi.Camera
 
                     if (alarmData.state)
                     {
-                        Trace.WriteLine("Updating");
                         await SendAlarmWithThrottling(alarmData).ConfigureAwait(false);
                     }
                 }
@@ -117,6 +117,7 @@ namespace Hspi.Camera
         {
             if (alarmData.lastUpdated.Elapsed >= deviceStateUpdateInterval)
             {
+                Trace.WriteLine($"[{cameraName}]Refreshing alarm {alarmData.CameraContruct.Id} in HS as {alarmData.lastUpdated.Elapsed} passed");
                 await SendAlarm(alarmData.CameraContruct, alarmData).ConfigureAwait(false);
             }
         }
@@ -134,6 +135,7 @@ namespace Hspi.Camera
             public bool state = false;
         }
 
+        private readonly string cameraName;
         private readonly TimeSpan alarmCancelInterval;
         private readonly Dictionary<string, AlarmData> alarmsData = new Dictionary<string, AlarmData>();
         private readonly AsyncLock alarmTimersLock = new AsyncLock();

@@ -21,5 +21,8 @@ namespace Hspi.DeviceData
 
         [Description("OnvifEvent")]
         OnvifEvent,
+
+        [Description("OnvifEventListening")]
+        OnvifEventListening,
     }
 }

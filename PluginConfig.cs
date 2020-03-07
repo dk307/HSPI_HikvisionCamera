@@ -111,6 +111,17 @@ namespace Hspi
             }
         }
 
+        public ImmutableDictionary<string, Camera.Onvif.CameraSettings> OnvifCameras
+        {
+            get
+            {
+                using (var scopedLock = configLock.ReaderLock())
+                {
+                    return onvifCameras.ToImmutableDictionary();
+                }
+            }
+        }
+
         public void AddHikvisionIsapiCamera(Camera.Hikvision.Isapi.CameraSettings device)
         {
             using (var scopedLock = configLock.WriterLock())

@@ -56,7 +56,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
             ePairControlUse control,
             CancellationToken token)
         {
-            var hikVisionCamera = (HikvisionIdapiCamera)camera;
+            var hikVisionCamera = (HikvisionIsapiCamera)camera;
             return hikVisionCamera.Put(Property, stringValue ?? string.Empty);
         }
 

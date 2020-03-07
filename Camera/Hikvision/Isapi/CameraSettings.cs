@@ -44,7 +44,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
         public CameraBase CreateCamera(CancellationToken shutdownDownToken)
         {
-            return new HikvisionIdapiCamera(this, shutdownDownToken);
+            return new HikvisionIsapiCamera(this, shutdownDownToken);
         }
 
         public bool Equals(CameraSettings other)
