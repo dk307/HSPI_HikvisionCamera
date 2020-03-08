@@ -224,6 +224,6 @@ namespace Hspi.Camera.Onvif
         private readonly OnvifClientFactory onvifClientFactory = new OnvifClientFactory();
         private readonly TimeSpan subscriptionTerminationTime;
         private Hspi.Onvif.Contracts.DeviceManagement.Capabilities deviceCapabilities;
-        private Nito.AsyncEx.AsyncReaderWriterLock instanceLock = new AsyncReaderWriterLock();
+        private AsyncReaderWriterLock instanceLock = new AsyncReaderWriterLock();
     }
 }

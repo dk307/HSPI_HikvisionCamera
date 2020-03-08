@@ -404,7 +404,21 @@ namespace Hspi.Pages
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(device.Name)}</td>"));
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(device.CameraHost)}</td>"));
                 stb.Append("<td class='tablecell'>");
-                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", PageType.EditHikvisionIsapiCamera, id: id));
+
+                PageType editType;
+                switch (pair.Value)
+                {
+                    case HikCameraSetting hikCameraSetting:
+                        editType = PageType.EditHikvisionIsapiCamera;
+                        break;
+                    case OnvifCameraSetting onvifCancelCamera:
+                        editType = PageType.EditOnvifCamera;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", editType, id: id));
                 stb.Append("</td></tr>");
             }
             stb.Append(@"</tbody>");

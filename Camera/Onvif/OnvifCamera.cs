@@ -199,30 +199,36 @@ namespace Hspi.Camera.Onvif
 
         private async Task ReceiveEvents()
         {
-            OnvifClient onvifClient = null;
-            try
+
+            while (Token.IsCancellationRequested)
             {
-                await EnqueueEventsListeningInfo(false).ConfigureAwait(false);
-                onvifClient = await GetOnvifClient().ConfigureAwait(false);
-                onvifClient.EventReceived += OnvifClient_EventReceived;
-                await EnqueueEventsListeningInfo(true).ConfigureAwait(false);
-                await onvifClient.ReceiveAsync(Token).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                if (!ex.IsCancelException())
+                OnvifClient onvifClient = null;
+                try
                 {
-                    await ClearOnvifClient().ConfigureAwait(false);
+                    await EnqueueEventsListeningInfo(false).ConfigureAwait(false);
+                    onvifClient = await GetOnvifClient().ConfigureAwait(false);
+                    onvifClient.EventReceived += OnvifClient_EventReceived;
+                    await EnqueueEventsListeningInfo(true).ConfigureAwait(false);
+                    await onvifClient.ReceiveAsync(Token).ConfigureAwait(false);
                 }
-                throw;
-            }
-            finally
-            {
-                if (onvifClient != null)
+                catch (Exception ex)
                 {
-                    onvifClient.EventReceived -= OnvifClient_EventReceived;
+                    if (!ex.IsCancelException())
+                    {
+                        await ClearOnvifClient().ConfigureAwait(false);
+                    }
+
+                    await Task.Delay(1000).ConfigureAwait(false);
+                    throw;
                 }
-                await EnqueueEventsListeningInfo(false).ConfigureAwait(false);
+                finally
+                {
+                    if (onvifClient != null)
+                    {
+                        onvifClient.EventReceived -= OnvifClient_EventReceived;
+                    }
+                    await EnqueueEventsListeningInfo(false).ConfigureAwait(false);
+                }
             }
         }
         private async Task TakeSnapshotImpl()
