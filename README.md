@@ -9,6 +9,14 @@ It can:
 * Listens to alarm stream
 * Take snapshots
 * Download videos from camera 
+* Reboot
+
+In addition to Hikvision camera, it also supports general Onvif cameras with limited functionality.
+
+It can:
+* Listen to events
+* Reboot
+* Take snapshots
 
 Compatibility
 ------------
