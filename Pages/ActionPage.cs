@@ -76,7 +76,7 @@ namespace Hspi.Pages
             var action = ObjectSerialize.DeSerializeFromBytes(actionInfo.DataIn) as TakeSnapshotAction;
 
             var cameras = new NameValueCollection();
-            foreach (var camera in pluginConfig.Cameras)
+            foreach (var camera in pluginConfig.AllCameras)
             {
                 cameras.Add(camera.Key, camera.Value.Name);
             }

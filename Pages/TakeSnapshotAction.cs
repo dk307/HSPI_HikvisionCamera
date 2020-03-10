@@ -3,7 +3,7 @@
 namespace Hspi.Pages
 {
     [Serializable]
-    internal class TakeSnapshotAction
+    internal sealed class TakeSnapshotAction
     {
         public bool IsValid()
         {

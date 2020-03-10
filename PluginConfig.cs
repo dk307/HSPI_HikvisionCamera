@@ -1,16 +1,19 @@
 ﻿using HomeSeerAPI;
 using Hspi.Camera;
+using Hspi.Utils;
 using Nito.AsyncEx;
+using NullGuard;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using static System.FormattableString;
-using NullGuard;
-using System.Collections.Immutable;
-using Hspi.Utils;
+using CameraProperty = Hspi.Camera.Hikvision.Isapi.CameraProperty;
+using HikCameraSetting = Hspi.Camera.Hikvision.Isapi.CameraSettings;
+using OnvifCameraSetting = Hspi.Camera.Onvif.CameraSettings;
 
 namespace Hspi
 {
@@ -30,90 +33,32 @@ namespace Hspi
 
             debugLogging = GetValue(nameof(debugLogging), false);
 
-            LoadCameraProperties();
-            LoadCameras();
-        }
-
-        private void LoadCameraProperties()
-        {
-            string cameraPropertiesIdsConcatString = GetValue(CameraPropertyIds, string.Empty);
-            var cameraPropertiesIds = cameraPropertiesIdsConcatString.Split(cameraIdsSeparator);
-
-            foreach (var cameraPropertyId in cameraPropertiesIds)
-            {
-                if (string.IsNullOrWhiteSpace(cameraPropertyId))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    cameraProperties.Add(cameraPropertyId, new CameraProperty(cameraPropertyId,
-                             GetValue(nameof(CameraProperty.Name), string.Empty, cameraPropertyId),
-                             GetValue(nameof(CameraProperty.UrlPath), string.Empty, cameraPropertyId),
-                             GetValue(nameof(CameraProperty.XPathForGet.Path.Expression), string.Empty, cameraPropertyId),
-                             ObjectSerialize.DeSerializeToObject<List<string>>(GetValue(nameof(CameraProperty.StringValues), string.Empty, cameraPropertyId))?.ToImmutableSortedSet()));
-                }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(Invariant($"Failed to read config for {cameraPropertyId} with {ExceptionHelper.GetFullMessage(ex)}"));
-                }
-            }
-        }
-
-        private void LoadCameras()
-        {
-            string cameraIdsConcatString = GetValue(CameraIds, string.Empty);
-            var cameraIds = cameraIdsConcatString.Split(cameraIdsSeparator);
-
-            var periodicFetchedProperties = cameraProperties.ToImmutableDictionary();
-            foreach (var cameraId in cameraIds)
-            {
-                if (string.IsNullOrWhiteSpace(cameraId))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    devices.Add(cameraId, new CameraSettings(cameraId,
-                                GetValue(nameof(CameraSettings.Name), string.Empty, cameraId),
-                                GetValue(nameof(CameraSettings.CameraHost), string.Empty, cameraId),
-                                GetValue(nameof(CameraSettings.Login), string.Empty, cameraId),
-                                HS.DecryptString(GetValue(nameof(CameraSettings.Password), string.Empty, cameraId), nameof(CameraSettings.Password)),
-                                GetTimeSpanValue(nameof(CameraSettings.AlarmCancelInterval), TimeSpan.Zero, cameraId),
-                                periodicFetchedProperties,
-                                GetTimeSpanValue(nameof(CameraSettings.CameraPropertiesRefreshInterval), TimeSpan.Zero, cameraId),
-                                GetValue(nameof(CameraSettings.SnapshotDownloadDirectory), string.Empty, cameraId),
-                                GetValue(nameof(CameraSettings.VideoDownloadDirectory), string.Empty, cameraId)));
-                }
-                catch (Exception ex)
-                {
-                    Trace.TraceError(Invariant($"Failed to read config for {cameraId} with {ExceptionHelper.GetFullMessage(ex)}"));
-                }
-            }
+            LoadHikvisionIsapiCameraProperties();
+            LoadHikvisionIsapiCameras();
+            LoadOnvifCameras();
         }
 
         public event EventHandler<EventArgs> ConfigChanged;
 
-        public ImmutableDictionary<string, CameraSettings> Cameras
+        public ImmutableDictionary<string, ICameraSettings> AllCameras
         {
             get
             {
                 using (var scopedLock = configLock.ReaderLock())
                 {
-                    return devices.ToImmutableDictionary();
-                }
-            }
-        }
+                    var allCameras = new Dictionary<string, ICameraSettings>();
 
-        public ImmutableDictionary<string, CameraProperty> CameraProperties
-        {
-            get
-            {
-                using (var scopedLock = configLock.ReaderLock())
-                {
-                    return cameraProperties.ToImmutableDictionary();
+                    foreach (var camera in hikvisionIsapiCameras)
+                    {
+                        allCameras.Add(camera.Key, camera.Value);
+                    }
+
+                    foreach (var camera in onvifCameras)
+                    {
+                        allCameras.Add(camera.Key, camera.Value);
+                    }
+
+                    return allCameras.ToImmutableDictionary();
                 }
             }
         }
@@ -144,11 +89,44 @@ namespace Hspi
             }
         }
 
-        public void AddCamera(CameraSettings device)
+        public ImmutableDictionary<string, CameraProperty> HikvisionIsapiCameraProperties
+        {
+            get
+            {
+                using (var scopedLock = configLock.ReaderLock())
+                {
+                    return hikvisionIsapiCameraProperties.ToImmutableDictionary();
+                }
+            }
+        }
+
+        public ImmutableDictionary<string, Camera.Hikvision.Isapi.CameraSettings> HikvisionIsapiCameras
+        {
+            get
+            {
+                using (var scopedLock = configLock.ReaderLock())
+                {
+                    return hikvisionIsapiCameras.ToImmutableDictionary();
+                }
+            }
+        }
+
+        public ImmutableDictionary<string, Camera.Onvif.CameraSettings> OnvifCameras
+        {
+            get
+            {
+                using (var scopedLock = configLock.ReaderLock())
+                {
+                    return onvifCameras.ToImmutableDictionary();
+                }
+            }
+        }
+
+        public void AddHikvisionIsapiCamera(Camera.Hikvision.Isapi.CameraSettings device)
         {
             using (var scopedLock = configLock.WriterLock())
             {
-                devices[device.Id] = device;
+                hikvisionIsapiCameras[device.Id] = device;
 
                 SetValue(nameof(device.Name), device.Name, device.Id);
                 SetValue(nameof(device.CameraHost), device.CameraHost, device.Id);
@@ -159,25 +137,42 @@ namespace Hspi
                 SetValue(nameof(device.SnapshotDownloadDirectory), device.SnapshotDownloadDirectory, device.Id);
                 SetValue(nameof(device.VideoDownloadDirectory), device.VideoDownloadDirectory, device.Id);
 
-                SetValue(CameraIds, devices.Keys.Aggregate((x, y) => x + cameraIdsSeparator + y));
+                SetValue(HikvisionIsapiCameraIds, hikvisionIsapiCameras.Keys.Aggregate((x, y) => x + idsSeparator + y));
             }
         }
 
-        public void AddCameraProperty(CameraProperty cameraProperty)
+        public void AddHikvisionIsapiCameraProperty(CameraProperty cameraProperty)
         {
             using (var scopedLock = configLock.WriterLock())
             {
-                cameraProperties[cameraProperty.Id] = cameraProperty;
+                hikvisionIsapiCameraProperties[cameraProperty.Id] = cameraProperty;
 
                 SetValue(nameof(cameraProperty.Name), cameraProperty.Name, cameraProperty.Id);
                 SetValue(nameof(cameraProperty.StringValues), ObjectSerialize.SerializeToString(cameraProperty.StringValues.ToList()), cameraProperty.Id);
                 SetValue(nameof(cameraProperty.UrlPath), cameraProperty.UrlPath, cameraProperty.Id);
                 SetValue(nameof(cameraProperty.XPathForGet.Path.Expression), cameraProperty.XPathForGet.Path.Expression, cameraProperty.Id);
 
-                SetValue(CameraPropertyIds, cameraProperties.Keys.Aggregate((x, y) => x + CameraPropertyIdsSeparator + y));
+                SetValue(HikvisionIsapiCameraPropertyIds, hikvisionIsapiCameraProperties.Keys.Aggregate((x, y) => x + HikvisionIsapiCameraPropertyIdsSeparator + y));
 
                 //  recreate cameras
-                RecreateCameras();
+                RecreateHikvisionIsapiCameras();
+            }
+        }
+
+        public void AddOnvifCamera(OnvifCameraSetting device)
+        {
+            using (var scopedLock = configLock.WriterLock())
+            {
+                onvifCameras[device.Id] = device;
+
+                SetValue(nameof(device.Name), device.Name, device.Id);
+                SetValue(nameof(device.CameraHost), device.CameraHost, device.Id);
+                SetValue(nameof(device.Login), device.Login, device.Id);
+                SetValue(nameof(device.Password), HS.EncryptString(device.Password, nameof(device.Password)), device.Id);
+                SetValue(nameof(device.AlarmCancelInterval), (long)device.AlarmCancelInterval.TotalSeconds, device.Id);
+                SetValue(nameof(device.SnapshotDownloadDirectory), device.SnapshotDownloadDirectory, device.Id);
+
+                SetValue(OnvifCameraIds, onvifCameras.Keys.Aggregate((x, y) => x + idsSeparator + y));
             }
         }
 
@@ -193,61 +188,57 @@ namespace Hspi
             }
         }
 
-        public void RemoveCamera(string cameraId)
+        public void RemoveHikvisionIsapiCamera(string cameraId)
         {
             using (var scopedLock = configLock.WriterLock())
             {
-                devices.Remove(cameraId);
-                if (devices.Count > 0)
+                hikvisionIsapiCameras.Remove(cameraId);
+                if (hikvisionIsapiCameras.Count > 0)
                 {
-                    SetValue(CameraIds, devices.Keys.Aggregate((x, y) => x + cameraIdsSeparator + y));
+                    SetValue(HikvisionIsapiCameraIds, hikvisionIsapiCameras.Keys.Aggregate((x, y) => x + idsSeparator + y));
                 }
                 else
                 {
-                    SetValue(CameraIds, string.Empty);
+                    SetValue(HikvisionIsapiCameraIds, string.Empty);
                 }
                 HS.ClearINISection(cameraId, FileName);
             }
         }
 
-        public void RemoveCameraProperty(string cameraPropertyId)
+        public void RemoveOnvifCamera(string cameraId)
         {
             using (var scopedLock = configLock.WriterLock())
             {
-                cameraProperties.Remove(cameraPropertyId);
-                if (devices.Count > 0)
+                onvifCameras.Remove(cameraId);
+                if (onvifCameras.Count > 0)
                 {
-                    SetValue(CameraPropertyIds, cameraProperties.Keys.Aggregate((x, y) => x + CameraPropertyIdsSeparator + y));
+                    SetValue(OnvifCameraIds, onvifCameras.Keys.Aggregate((x, y) => x + idsSeparator + y));
                 }
                 else
                 {
-                    SetValue(CameraPropertyIds, string.Empty);
+                    SetValue(OnvifCameraIds, string.Empty);
+                }
+                HS.ClearINISection(cameraId, FileName);
+            }
+        }
+
+        public void RemoveHikvisionIsapiCameraProperty(string cameraPropertyId)
+        {
+            using (var scopedLock = configLock.WriterLock())
+            {
+                hikvisionIsapiCameraProperties.Remove(cameraPropertyId);
+                if (hikvisionIsapiCameras.Count > 0)
+                {
+                    SetValue(HikvisionIsapiCameraPropertyIds, hikvisionIsapiCameraProperties.Keys.Aggregate((x, y) => x + HikvisionIsapiCameraPropertyIdsSeparator + y));
+                }
+                else
+                {
+                    SetValue(HikvisionIsapiCameraPropertyIds, string.Empty);
                 }
                 HS.ClearINISection(cameraPropertyId, FileName);
 
                 //  recreate cameras
-                RecreateCameras();
-            }
-        }
-
-        private void RecreateCameras()
-        {
-            var copyCameras = devices.ToImmutableList();
-            devices.Clear();
-
-            var periodicFetchedProperties = cameraProperties.ToImmutableDictionary();
-            foreach (var camera in copyCameras)
-            {
-                devices.Add(camera.Key, new CameraSettings(camera.Value.Id,
-                                                           camera.Value.Name,
-                                                           camera.Value.CameraHost,
-                                                           camera.Value.Login,
-                                                           camera.Value.Password,
-                                                           camera.Value.AlarmCancelInterval,
-                                                           periodicFetchedProperties,
-                                                           camera.Value.CameraPropertiesRefreshInterval,
-                                                           camera.Value.SnapshotDownloadDirectory,
-                                                           camera.Value.VideoDownloadDirectory));
+                RecreateHikvisionIsapiCameras();
             }
         }
 
@@ -281,6 +272,116 @@ namespace Hspi
             return defaultValue;
         }
 
+        private void LoadHikvisionIsapiCameraProperties()
+        {
+            string cameraPropertiesIdsConcatString = GetValue(HikvisionIsapiCameraPropertyIds, string.Empty);
+            var cameraPropertiesIds = cameraPropertiesIdsConcatString.Split(idsSeparator);
+
+            foreach (var cameraPropertyId in cameraPropertiesIds)
+            {
+                if (string.IsNullOrWhiteSpace(cameraPropertyId))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    hikvisionIsapiCameraProperties.Add(cameraPropertyId, new CameraProperty(cameraPropertyId,
+                                                                              GetValue(nameof(CameraProperty.Name), string.Empty, cameraPropertyId),
+                                                                              GetValue(nameof(CameraProperty.UrlPath), string.Empty, cameraPropertyId),
+                                                                              GetValue(nameof(CameraProperty.XPathForGet.Path.Expression), string.Empty, cameraPropertyId),
+                                                                              ObjectSerialize.DeSerializeToObject<List<string>>(GetValue(nameof(CameraProperty.StringValues), string.Empty, cameraPropertyId))?.ToImmutableSortedSet()));
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(Invariant($"Failed to read config for {cameraPropertyId} with {ExceptionHelper.GetFullMessage(ex)}"));
+                }
+            }
+        }
+
+        private void LoadHikvisionIsapiCameras()
+        {
+            string cameraIdsConcatString = GetValue(HikvisionIsapiCameraIds, string.Empty);
+            var cameraIds = cameraIdsConcatString.Split(idsSeparator);
+
+            var periodicFetchedProperties = hikvisionIsapiCameraProperties.ToImmutableDictionary();
+            foreach (var cameraId in cameraIds)
+            {
+                if (string.IsNullOrWhiteSpace(cameraId))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    hikvisionIsapiCameras.Add(cameraId, new HikCameraSetting(cameraId,
+                                GetValue(nameof(HikCameraSetting.Name), string.Empty, cameraId),
+                                GetValue(nameof(HikCameraSetting.CameraHost), string.Empty, cameraId),
+                                GetValue(nameof(HikCameraSetting.Login), string.Empty, cameraId),
+                                HS.DecryptString(GetValue(nameof(HikCameraSetting.Password), string.Empty, cameraId), nameof(HikCameraSetting.Password)),
+                                GetTimeSpanValue(nameof(HikCameraSetting.AlarmCancelInterval), TimeSpan.Zero, cameraId),
+                                periodicFetchedProperties,
+                                GetTimeSpanValue(nameof(HikCameraSetting.CameraPropertiesRefreshInterval), TimeSpan.Zero, cameraId),
+                                GetValue(nameof(HikCameraSetting.SnapshotDownloadDirectory), string.Empty, cameraId),
+                                GetValue(nameof(HikCameraSetting.VideoDownloadDirectory), string.Empty, cameraId)));
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(Invariant($"Failed to read config for {cameraId} with {ExceptionHelper.GetFullMessage(ex)}"));
+                }
+            }
+        }
+
+        private void LoadOnvifCameras()
+        {
+            string cameraIdsConcatString = GetValue(OnvifCameraIds, string.Empty);
+            var cameraIds = cameraIdsConcatString.Split(idsSeparator);
+
+            foreach (var cameraId in cameraIds)
+            {
+                if (string.IsNullOrWhiteSpace(cameraId))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    onvifCameras.Add(cameraId, new OnvifCameraSetting(cameraId,
+                                GetValue(nameof(OnvifCameraSetting.Name), string.Empty, cameraId),
+                                GetValue(nameof(OnvifCameraSetting.CameraHost), string.Empty, cameraId),
+                                GetValue(nameof(OnvifCameraSetting.Login), string.Empty, cameraId),
+                                HS.DecryptString(GetValue(nameof(OnvifCameraSetting.Password), string.Empty, cameraId), nameof(HikCameraSetting.Password)),
+                                GetTimeSpanValue(nameof(OnvifCameraSetting.AlarmCancelInterval), TimeSpan.Zero, cameraId),
+                                GetValue(nameof(OnvifCameraSetting.SnapshotDownloadDirectory), string.Empty, cameraId)));
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(Invariant($"Failed to read config for {cameraId} with {ExceptionHelper.GetFullMessage(ex)}"));
+                }
+            }
+        }
+
+        private void RecreateHikvisionIsapiCameras()
+        {
+            var copyCameras = hikvisionIsapiCameras.ToImmutableList();
+            hikvisionIsapiCameras.Clear();
+
+            var periodicFetchedProperties = hikvisionIsapiCameraProperties.ToImmutableDictionary();
+            foreach (var camera in copyCameras)
+            {
+                hikvisionIsapiCameras.Add(camera.Key, new HikCameraSetting(camera.Value.Id,
+                                                           camera.Value.Name,
+                                                           camera.Value.CameraHost,
+                                                           camera.Value.Login,
+                                                           camera.Value.Password,
+                                                           camera.Value.AlarmCancelInterval,
+                                                           periodicFetchedProperties,
+                                                           camera.Value.CameraPropertiesRefreshInterval,
+                                                           camera.Value.SnapshotDownloadDirectory,
+                                                           camera.Value.VideoDownloadDirectory));
+            }
+        }
+
         private void SetValue<T>(string key, T value)
         {
             SetValue<T>(key, value, DefaultSection);
@@ -292,17 +393,19 @@ namespace Hspi
             HS.SaveINISetting(section, key, stringValue, FileName);
         }
 
-        private const string CameraPropertyIds = "CameraPropertyIds";
-        private const char CameraPropertyIdsSeparator = '|';
         private const string DebugLoggingKey = "DebugLogging";
         private const string DefaultSection = "Settings";
-        private const string CameraIds = "CameraIds";
-        private const char cameraIdsSeparator = '|';
+        private const string HikvisionIsapiCameraIds = "CameraIds";
+        private const string HikvisionIsapiCameraPropertyIds = "CameraPropertyIds";
+        private const char HikvisionIsapiCameraPropertyIdsSeparator = '|';
+        private const char idsSeparator = '|';
+        private const string OnvifCameraIds = "OnvifCameraIds";
         private readonly static string FileName = Invariant($"{Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location)}.ini");
-        private readonly Dictionary<string, CameraProperty> cameraProperties = new Dictionary<string, CameraProperty>();
         private readonly AsyncReaderWriterLock configLock = new AsyncReaderWriterLock();
-        private readonly Dictionary<string, CameraSettings> devices = new Dictionary<string, CameraSettings>();
+        private readonly Dictionary<string, CameraProperty> hikvisionIsapiCameraProperties = new Dictionary<string, CameraProperty>();
+        private readonly Dictionary<string, HikCameraSetting> hikvisionIsapiCameras = new Dictionary<string, HikCameraSetting>();
         private readonly IHSApplication HS;
+        private readonly Dictionary<string, OnvifCameraSetting> onvifCameras = new Dictionary<string, OnvifCameraSetting>();
         private bool debugLogging;
     };
 }

@@ -1,11 +1,10 @@
 ﻿using HomeSeerAPI;
-using Hspi.Camera;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Hspi.DeviceData
 {
-    internal class OnOffDeviceData : DeviceDataBase
+    internal abstract class OnOffDeviceData : DeviceDataBase
     {
         public OnOffDeviceData(DeviceType deviceType, string deviceTypeId) : base(deviceType, deviceTypeId)
         {
@@ -63,7 +62,6 @@ namespace Hspi.DeviceData
                 return pairs;
             }
         }
-
         public override void Update(IHSApplication HS, string deviceValue)
         {
             if (deviceValue == OffValueString)
@@ -76,10 +74,9 @@ namespace Hspi.DeviceData
             }
         }
 
-        private const int OffValue = 0;
-        private const int OnValue = 100;
-
         public const string OffValueString = "Off";
         public const string OnValueString = "On";
+        private const int OffValue = 0;
+        private const int OnValue = 100;
     }
 }

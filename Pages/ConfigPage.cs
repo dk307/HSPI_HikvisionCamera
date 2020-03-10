@@ -1,5 +1,5 @@
 using HomeSeerAPI;
-using Hspi.Camera;
+using Hspi.Utils;
 using NullGuard;
 using Scheduler;
 using System;
@@ -10,6 +10,9 @@ using System.IO;
 using System.Text;
 using System.Web;
 using static System.FormattableString;
+using CameraProperty = Hspi.Camera.Hikvision.Isapi.CameraProperty;
+using HikCameraSetting = Hspi.Camera.Hikvision.Isapi.CameraSettings;
+using OnvifCameraSetting = Hspi.Camera.Onvif.CameraSettings;
 
 namespace Hspi.Pages
 {
@@ -32,10 +35,12 @@ namespace Hspi.Pages
         protected enum PageType
         {
             Default,
-            AddCamera,
-            EditCamera,
-            AddCameraProperty,
-            EditCameraProperty,
+            AddHikvisionIsapiCamera,
+            EditHikvisionIsapiCamera,
+            AddHikvisionIsapiCameraProperty,
+            EditHikvisionIsapiCameraProperty,
+            AddOnvifCamera,
+            EditOnvifCamera,
         };
 
         /// <summary>
@@ -91,15 +96,21 @@ namespace Hspi.Pages
             {
                 HandleSaveMainSettingPostBack(parts);
             }
-            else if ((form == NameToIdWithPrefix(DeleteCamera)) ||
-                     (form == NameToIdWithPrefix(CancelCamera)) ||
-                     (form == NameToIdWithPrefix(SaveCamera)))
+            else if ((form == NameToIdWithPrefix(HikDeleteCamera)) ||
+                     (form == NameToIdWithPrefix(HikCancelCamera)) ||
+                     (form == NameToIdWithPrefix(HikSaveCamera)))
             {
-                HandleCameraPostBack(parts, form);
+                HandleHikCameraPostBack(parts, form);
             }
-            else if ((form == NameToIdWithPrefix(DeleteCameraProperty)) ||
-                     (form == NameToIdWithPrefix(CancelCameraProperty)) ||
-                     (form == NameToIdWithPrefix(SaveCameraProperty)))
+            else if ((form == NameToIdWithPrefix(OnvifDeleteCamera)) ||
+                     (form == NameToIdWithPrefix(OnvifCancelCamera)) ||
+                     (form == NameToIdWithPrefix(OnvifSaveCamera)))
+            {
+                HandleOnvifCameraPostBack(parts, form);
+            }
+            else if ((form == NameToIdWithPrefix(HikDeleteCameraProperty)) ||
+                     (form == NameToIdWithPrefix(HikCancelCameraProperty)) ||
+                     (form == NameToIdWithPrefix(HikSaveCameraProperty)))
             {
                 HandleCameraPropertyPostBack(parts, form);
             }
@@ -113,25 +124,38 @@ namespace Hspi.Pages
 
             switch (pageType)
             {
-                case PageType.EditCamera:
-                case PageType.AddCamera:
+                case PageType.EditHikvisionIsapiCamera:
+                case PageType.AddHikvisionIsapiCamera:
                     {
                         stb.Append(HS.GetPageHeader(Name, "Configuration", string.Empty, string.Empty, false, false));
                         stb.Append(PageBuilderAndMenu.clsPageBuilder.DivStart("pluginpage", string.Empty));
-                        pluginConfig.Cameras.TryGetValue(parts[RecordId], out var camera);
-                        stb.Append(BuildAddNewCameraWebPageBody(camera));
+                        pluginConfig.HikvisionIsapiCameras.TryGetValue(parts[RecordId], out var camera);
+                        stb.Append(BuildAddNewHikvisionIsapiCameraWebPageBody(camera));
                         stb.Append(PageBuilderAndMenu.clsPageBuilder.DivEnd());
                         AddBody(stb.ToString());
                         AddFooter(HS.GetPageFooter());
                         break;
                     }
 
-                case PageType.EditCameraProperty:
-                case PageType.AddCameraProperty:
+                case PageType.AddOnvifCamera:
+                case PageType.EditOnvifCamera:
                     {
                         stb.Append(HS.GetPageHeader(Name, "Configuration", string.Empty, string.Empty, false, false));
                         stb.Append(PageBuilderAndMenu.clsPageBuilder.DivStart("pluginpage", string.Empty));
-                        pluginConfig.CameraProperties.TryGetValue(parts[RecordId], out var cameraProperty);
+                        pluginConfig.OnvifCameras.TryGetValue(parts[RecordId], out var camera);
+                        stb.Append(BuildAddNewOnvifCameraWebPageBody(camera));
+                        stb.Append(PageBuilderAndMenu.clsPageBuilder.DivEnd());
+                        AddBody(stb.ToString());
+                        AddFooter(HS.GetPageFooter());
+                        break;
+                    }
+
+                case PageType.EditHikvisionIsapiCameraProperty:
+                case PageType.AddHikvisionIsapiCameraProperty:
+                    {
+                        stb.Append(HS.GetPageHeader(Name, "Configuration", string.Empty, string.Empty, false, false));
+                        stb.Append(PageBuilderAndMenu.clsPageBuilder.DivStart("pluginpage", string.Empty));
+                        pluginConfig.HikvisionIsapiCameraProperties.TryGetValue(parts[RecordId], out var cameraProperty);
                         stb.Append(BuildAddNewCameraPropertyWebPageBody(cameraProperty));
                         stb.Append(PageBuilderAndMenu.clsPageBuilder.DivEnd());
                         AddBody(stb.ToString());
@@ -201,14 +225,14 @@ namespace Hspi.Pages
             stb.Append("</td></tr>");
 
             stb.Append(Invariant($"<tr><td colspan=2>{HtmlTextBox(RecordId, id, type: "hidden")}<div id='{SaveErrorDivId}' style='color:Red'></div></td><td></td></tr>"));
-            stb.Append(Invariant($"<tr><td colspan=2>{FormPageButton(SaveCameraProperty, buttonLabel)}"));
+            stb.Append(Invariant($"<tr><td colspan=2>{FormPageButton(HikSaveCameraProperty, buttonLabel)}"));
 
             if (cameraProperties != null)
             {
-                stb.Append(FormPageButton(DeleteCameraProperty, "Delete"));
+                stb.Append(FormPageButton(OnvifDeleteCameraProperty, "Delete"));
             }
 
-            stb.Append(FormPageButton(CancelCameraProperty, "Cancel"));
+            stb.Append(FormPageButton(OnvifCancelCameraProperty, "Cancel"));
             stb.Append(Invariant($"</td></tr>"));
             stb.Append("<tr height='5'><td colspan=2></td></tr>");
             stb.Append(@"</table>");
@@ -218,7 +242,7 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
-        private string BuildAddNewCameraWebPageBody([AllowNull]CameraSettings cameraSettings)
+        private string BuildAddNewHikvisionIsapiCameraWebPageBody([AllowNull]HikCameraSetting cameraSettings)
         {
             TimeSpan DefaultAlarmCancelInterval = TimeSpan.FromSeconds(30);
             TimeSpan DefaultCameraPropertiesRefreshInterval = TimeSpan.FromSeconds(60);
@@ -246,39 +270,39 @@ namespace Hspi.Pages
             stb.Append(Invariant($"<tr><td class='tableheader' colspan=2>{header}</td></tr>"));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>Name:</td><td class='tablecell'>"));
-            stb.Append(HtmlTextBox(nameof(CameraSettings.Name), name));
+            stb.Append(HtmlTextBox(nameof(HikCameraSetting.Name), name));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>Camera:</td><td class='tablecell'>"));
-            stb.Append(HtmlTextBox(nameof(CameraSettings.CameraHost), hostName, size: 75));
+            stb.Append(HtmlTextBox(nameof(HikCameraSetting.CameraHost), hostName, size: 75));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>User:</td><td class='tablecell'>"));
-            stb.Append(HtmlTextBox(nameof(CameraSettings.Login), userId));
+            stb.Append(HtmlTextBox(nameof(HikCameraSetting.Login), userId));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>Password:</td><td class='tablecell'>"));
-            stb.Append(HtmlTextBox(nameof(CameraSettings.Password), password, type: "password"));
+            stb.Append(HtmlTextBox(nameof(HikCameraSetting.Password), password, type: "password"));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>Alarm Cancel Interval(seconds):</td><td class='tablecell'>"));
-            stb.Append(HtmlTextBox(nameof(CameraSettings.AlarmCancelInterval), alarmCancelInterval));
+            stb.Append(HtmlTextBox(nameof(HikCameraSetting.AlarmCancelInterval), alarmCancelInterval));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>Properties Refresh Interval(seconds):</td><td class='tablecell'>"));
-            stb.Append(HtmlTextBox(nameof(CameraSettings.CameraPropertiesRefreshInterval), propertiesRefreshInterval));
+            stb.Append(HtmlTextBox(nameof(HikCameraSetting.CameraPropertiesRefreshInterval), propertiesRefreshInterval));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>Snapshot download directory:</td><td class='tablecell'>"));
-            stb.Append(HtmlTextBox(nameof(CameraSettings.SnapshotDownloadDirectory), snapshotDownloadDirectory));
+            stb.Append(HtmlTextBox(nameof(HikCameraSetting.SnapshotDownloadDirectory), snapshotDownloadDirectory));
             stb.Append("</td></tr>");
             stb.Append(Invariant($"<tr><td class='tablecell'>Video download directory:</td><td class='tablecell'>"));
-            stb.Append(HtmlTextBox(nameof(CameraSettings.VideoDownloadDirectory), videoDownloadDirectory));
+            stb.Append(HtmlTextBox(nameof(HikCameraSetting.VideoDownloadDirectory), videoDownloadDirectory));
             stb.Append("</td></tr>");
 
             stb.Append(Invariant($"<tr><td colspan=2>{HtmlTextBox(RecordId, id, type: "hidden")}<div id='{SaveErrorDivId}' style='color:Red'></div></td><td></td></tr>"));
-            stb.Append(Invariant($"<tr><td colspan=2>{FormPageButton(SaveCamera, buttonLabel)}"));
+            stb.Append(Invariant($"<tr><td colspan=2>{FormPageButton(HikSaveCamera, buttonLabel)}"));
 
             if (cameraSettings != null)
             {
-                stb.Append(FormPageButton(DeleteCamera, "Delete"));
+                stb.Append(FormPageButton(HikDeleteCamera, "Delete"));
             }
 
-            stb.Append(FormPageButton(CancelCamera, "Cancel"));
+            stb.Append(FormPageButton(HikCancelCamera, "Cancel"));
             stb.Append(Invariant($"</td></tr>"));
             stb.Append("<tr height='5'><td colspan=2></td></tr>");
             stb.Append(@"</table>");
@@ -288,68 +312,64 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
-        private string BuildCamerasPropertiesTab()
+        private string BuildAddNewOnvifCameraWebPageBody([AllowNull]OnvifCameraSetting cameraSettings)
         {
+            TimeSpan DefaultAlarmCancelInterval = TimeSpan.FromSeconds(30);
+            TimeSpan DefaultCameraPropertiesRefreshInterval = TimeSpan.FromSeconds(60);
+
+            string id = cameraSettings?.Id ?? Guid.NewGuid().ToString();
+            string name = cameraSettings?.Name ?? string.Empty;
+            string hostName = cameraSettings?.CameraHost ?? @"http://";
+            string userId = cameraSettings?.Login ?? string.Empty;
+            string password = cameraSettings?.Password ?? string.Empty;
+            string alarmCancelInterval = (cameraSettings?.AlarmCancelInterval ?? DefaultAlarmCancelInterval).TotalSeconds.ToString(CultureInfo.InvariantCulture);
+            string snapshotDownloadDirectory = cameraSettings?.SnapshotDownloadDirectory ?? string.Empty;
+
+            string buttonLabel = cameraSettings != null ? "Save" : "Add";
+            string header = cameraSettings != null ? "Edit Camera" : "Add New Camera";
+
             StringBuilder stb = new StringBuilder();
 
-            IncludeResourceCSS(stb, "jquery.dataTables.css");
-            IncludeResourceScript(stb, "jquery.dataTables.min.js");
+            stb.Append(PageBuilderAndMenu.clsPageBuilder.FormStart("ftmCameraChange", "IdChange", "Post"));
 
             stb.Append(@"<div>");
             stb.Append(@"<table class='full_width_table'>");
-            stb.Append("<tr><td>");
+            stb.Append("<tr height='5'><td></td><td></td></tr>");
+            stb.Append(Invariant($"<tr><td class='tableheader' colspan=2>{header}</td></tr>"));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>Name:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(OnvifCameraSetting.Name), name));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>Camera:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(OnvifCameraSetting.CameraHost), hostName, size: 75));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>User:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(OnvifCameraSetting.Login), userId));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>Password:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(OnvifCameraSetting.Password), password, type: "password"));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>Alarm Cancel Interval(seconds):</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(OnvifCameraSetting.AlarmCancelInterval), alarmCancelInterval));
+            stb.Append("</td></tr>");
+            stb.Append(Invariant($"<tr><td class='tablecell'>Snapshot download directory:</td><td class='tablecell'>"));
+            stb.Append(HtmlTextBox(nameof(OnvifCameraSetting.SnapshotDownloadDirectory), snapshotDownloadDirectory));
+            stb.Append("</td></tr>");
 
-            stb.Append("<table id=\"cameraPropertyTable\" class=\"cell-border compact\" style=\"width:100%\">");
-            stb.Append(@"<thead><tr>");
+            stb.Append(Invariant($"<tr><td colspan=2>{HtmlTextBox(RecordId, id, type: "hidden")}<div id='{SaveErrorDivId}' style='color:Red'></div></td><td></td></tr>"));
+            stb.Append(Invariant($"<tr><td colspan=2>{FormPageButton(OnvifSaveCamera, buttonLabel)}"));
 
-            stb.Append(Invariant($"<th>Name</th>"));
-            stb.Append(Invariant($"<th>UrlPath</th>"));
-            stb.Append(Invariant($"<th>XPath</th>"));
-            stb.Append(Invariant($"<th></th>"));
-
-            stb.Append(@"</tr></thead>");
-            stb.Append(@"<tbody>");
-
-            foreach (var pair in pluginConfig.CameraProperties)
+            if (cameraSettings != null)
             {
-                var id = pair.Key;
-                var cameraProperty = pair.Value;
-
-                stb.Append(@"<tr>");
-                stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.Name)}</td>"));
-                stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.UrlPath)}</td>"));
-                stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.XPathForGet.Path.Expression)}</td>"));
-                stb.Append("<td class='tablecell'>");
-                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", PageType.EditCameraProperty, id: id));
-                stb.Append("</td></tr>");
+                stb.Append(FormPageButton(OnvifDeleteCamera, "Delete"));
             }
-            stb.Append(@"</tbody>");
-            stb.Append(@"</table>");
 
-            stb.AppendLine("<script type='text/javascript'>");
-            stb.AppendLine(@"$(document).ready(function() {");
-            stb.AppendLine(@"$('#cameraPropertyTable').DataTable({
-                                       'pageLength':10,
-                                        'order': [],
-                                        'columnDefs': [
-                                            { 'className': 'dt-left', 'targets': '_all'}
-                                        ],
-                                        'columns': [
-                                            null,
-                                            null,
-                                            null,
-                                            { 'orderable': false }
-                                          ]
-                                    });
-                                });");
-            stb.AppendLine("</script>");
-
-            stb.Append(Invariant($"<tr><td>{PageTypeButton("Add New Camera Property", "Add New Camera Property", PageType.AddCameraProperty)}</td><td></td></tr>"));
-
-            stb.Append(Invariant($"<tr><td></td></tr>"));
-            stb.Append(@"<tr height='5'><td></td></tr>");
+            stb.Append(FormPageButton(OnvifCancelCamera, "Cancel"));
+            stb.Append(Invariant($"</td></tr>"));
+            stb.Append("<tr height='5'><td colspan=2></td></tr>");
             stb.Append(@"</table>");
             stb.Append(@"</div>");
+            stb.Append(PageBuilderAndMenu.clsPageBuilder.FormEnd());
 
             return stb.ToString();
         }
@@ -375,7 +395,7 @@ namespace Hspi.Pages
             stb.Append(@"</tr></thead>");
             stb.Append(@"<tbody>");
 
-            foreach (var pair in pluginConfig.Cameras)
+            foreach (var pair in pluginConfig.AllCameras)
             {
                 var id = pair.Key;
                 var device = pair.Value;
@@ -384,7 +404,21 @@ namespace Hspi.Pages
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(device.Name)}</td>"));
                 stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(device.CameraHost)}</td>"));
                 stb.Append("<td class='tablecell'>");
-                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", PageType.EditCamera, id: id));
+
+                PageType editType;
+                switch (pair.Value)
+                {
+                    case HikCameraSetting hikCameraSetting:
+                        editType = PageType.EditHikvisionIsapiCamera;
+                        break;
+                    case OnvifCameraSetting onvifCancelCamera:
+                        editType = PageType.EditOnvifCamera;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", editType, id: id));
                 stb.Append("</td></tr>");
             }
             stb.Append(@"</tbody>");
@@ -407,7 +441,10 @@ namespace Hspi.Pages
                                 });");
             stb.AppendLine("</script>");
 
-            stb.Append(Invariant($"<tr><td>{PageTypeButton("Add New Camera", "Add New Camera", PageType.AddCamera)}</td><td></td></tr>"));
+            stb.Append(Invariant($"<tr><td colspan=2>"));
+            stb.Append(Invariant($"{PageTypeButton("Add New Hikvision ISAPI Camera", "Add New Hikvision ISAPI Camera", PageType.AddHikvisionIsapiCamera)}"));
+            stb.Append(Invariant($"&nbsp;{PageTypeButton("Add ONVIF Camera", "Add ONVIF Camera", PageType.AddOnvifCamera)}"));
+            stb.Append(Invariant($"</td></tr>"));
 
             stb.Append(Invariant($"<tr><td></td></tr>"));
             stb.Append(@"<tr height='5'><td></td></tr>");
@@ -452,9 +489,9 @@ namespace Hspi.Pages
 
             var tab3 = new clsJQuery.Tab
             {
-                tabTitle = "Camera Properties",
+                tabTitle = "ISAPI Properties",
                 tabDIVID = Invariant($"tabs{i++}"),
-                tabContent = BuildCamerasPropertiesTab()
+                tabContent = BuildHikvsionISAPICamerasPropertiesTab()
             };
             tabs.tabs.Add(tab3);
 
@@ -479,6 +516,72 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
+        private string BuildHikvsionISAPICamerasPropertiesTab()
+        {
+            StringBuilder stb = new StringBuilder();
+
+            IncludeResourceCSS(stb, "jquery.dataTables.css");
+            IncludeResourceScript(stb, "jquery.dataTables.min.js");
+
+            stb.Append(@"<div>");
+            stb.Append(@"<table class='full_width_table'>");
+            stb.Append("<tr><td>");
+
+            stb.Append("<table id=\"cameraPropertyTable\" class=\"cell-border compact\" style=\"width:100%\">");
+            stb.Append(@"<thead><tr>");
+
+            stb.Append(Invariant($"<th>Name</th>"));
+            stb.Append(Invariant($"<th>UrlPath</th>"));
+            stb.Append(Invariant($"<th>XPath</th>"));
+            stb.Append(Invariant($"<th></th>"));
+
+            stb.Append(@"</tr></thead>");
+            stb.Append(@"<tbody>");
+
+            foreach (var pair in pluginConfig.HikvisionIsapiCameraProperties)
+            {
+                var id = pair.Key;
+                var cameraProperty = pair.Value;
+
+                stb.Append(@"<tr>");
+                stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.Name)}</td>"));
+                stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.UrlPath)}</td>"));
+                stb.Append(Invariant($"<td class='tablecell'>{HtmlEncode(cameraProperty.XPathForGet.Path.Expression)}</td>"));
+                stb.Append("<td class='tablecell'>");
+                stb.Append(PageTypeButton(Invariant($"Edit{id}"), "Edit", PageType.EditHikvisionIsapiCameraProperty, id: id));
+                stb.Append("</td></tr>");
+            }
+            stb.Append(@"</tbody>");
+            stb.Append(@"</table>");
+
+            stb.AppendLine("<script type='text/javascript'>");
+            stb.AppendLine(@"$(document).ready(function() {");
+            stb.AppendLine(@"$('#cameraPropertyTable').DataTable({
+                                       'pageLength':10,
+                                        'order': [],
+                                        'columnDefs': [
+                                            { 'className': 'dt-left', 'targets': '_all'}
+                                        ],
+                                        'columns': [
+                                            null,
+                                            null,
+                                            null,
+                                            { 'orderable': false }
+                                          ]
+                                    });
+                                });");
+            stb.AppendLine("</script>");
+
+            stb.Append(Invariant($"<tr><td>{PageTypeButton("Add New Camera Property", "Add New Camera Property", PageType.AddHikvisionIsapiCameraProperty)}</td><td></td></tr>"));
+
+            stb.Append(Invariant($"<tr><td></td></tr>"));
+            stb.Append(@"<tr height='5'><td></td></tr>");
+            stb.Append(@"</table>");
+            stb.Append(@"</div>");
+
+            return stb.ToString();
+        }
+
         private string BuildMainSettingTab()
         {
             StringBuilder stb = new StringBuilder();
@@ -499,106 +602,19 @@ namespace Hspi.Pages
             return stb.ToString();
         }
 
-        private void HandleCameraPostBack(NameValueCollection parts, string form)
-        {
-            if (form == NameToIdWithPrefix(DeleteCamera))
-            {
-                pluginConfig.RemoveCamera(parts[RecordId]);
-                pluginConfig.FireConfigChanged();
-                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
-            }
-            else if (form == NameToIdWithPrefix(CancelCamera))
-            {
-                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
-            }
-            else if (form == NameToIdWithPrefix(SaveCamera))
-            {
-                StringBuilder results = new StringBuilder();
-                string cameraName = parts[nameof(CameraSettings.Name)];
-                if (string.IsNullOrWhiteSpace(cameraName))
-                {
-                    results.AppendLine("Camera Name is empty.<br>");
-                }
-
-                string userId = parts[nameof(CameraSettings.Login)];
-                string password = parts[nameof(CameraSettings.Password)];
-
-                string cameraHostString = parts[nameof(CameraSettings.CameraHost)];
-                if (!Uri.TryCreate(cameraHostString, UriKind.Absolute, out var cameraHost))
-                {
-                    results.AppendLine("Camera address is not valid.<br>");
-                }
-
-                var alarmCancelIntervalString = parts[nameof(CameraSettings.AlarmCancelInterval)];
-                if (!long.TryParse(alarmCancelIntervalString, NumberStyles.Any, CultureInfo.InvariantCulture, out var alarmCancelInterval) ||
-                    alarmCancelInterval < 0)
-                {
-                    results.AppendLine("Alarm cancel interval is not valid.<br>");
-                }
-
-                var propertiesRefreshIntervalString = parts[nameof(CameraSettings.CameraPropertiesRefreshInterval)];
-                if (!long.TryParse(propertiesRefreshIntervalString, NumberStyles.Any, CultureInfo.InvariantCulture, out var propertiesRefreshInterval) ||
-                    alarmCancelInterval < 0)
-                {
-                    results.AppendLine("Properties refresh interval is not valid.<br>");
-                }
-
-                var snapshotDirectory = parts[nameof(CameraSettings.SnapshotDownloadDirectory)];
-                if (!Directory.Exists(snapshotDirectory))
-                {
-                    results.AppendLine("Snapshot directory is not valid.<br>");
-                }
-
-                var videoDownloadDirectory = parts[nameof(CameraSettings.VideoDownloadDirectory)];
-                if (!Directory.Exists(videoDownloadDirectory))
-                {
-                    results.AppendLine("Video download directory is not valid.<br>");
-                }
-
-                if (results.Length > 0)
-                {
-                    divToUpdate.Add(SaveErrorDivId, results.ToString());
-                }
-                else
-                {
-                    string id = parts[RecordId];
-
-                    if (string.IsNullOrWhiteSpace(id))
-                    {
-                        id = System.Guid.NewGuid().ToString();
-                    }
-
-                    var data = new CameraSettings(id,
-                                                  cameraName,
-                                                  cameraHost.AbsoluteUri.ToString(CultureInfo.InvariantCulture),
-                                                  userId,
-                                                  password,
-                                                  TimeSpan.FromSeconds(alarmCancelInterval),
-                                                  pluginConfig.CameraProperties,
-                                                  TimeSpan.FromSeconds(propertiesRefreshInterval),
-                                                  snapshotDirectory,
-                                                  videoDownloadDirectory);
-
-                    pluginConfig.AddCamera(data);
-                    pluginConfig.FireConfigChanged();
-                    divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
-                }
-            }
-        }
-
         private void HandleCameraPropertyPostBack(NameValueCollection parts, string form)
         {
-            if (form == NameToIdWithPrefix(DeleteCameraProperty))
+            if (form == NameToIdWithPrefix(HikDeleteCameraProperty))
             {
-                pluginConfig.RemoveCameraProperty(parts[RecordId]);
+                pluginConfig.RemoveHikvisionIsapiCameraProperty(parts[RecordId]);
                 pluginConfig.FireConfigChanged();
                 divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
             }
-            else if (form == NameToIdWithPrefix(CancelCameraProperty))
+            else if (form == NameToIdWithPrefix(HikCancelCameraProperty))
             {
                 divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
             }
-            else if (form == NameToIdWithPrefix(SaveCameraProperty))
+            else if (form == NameToIdWithPrefix(HikSaveCameraProperty))
             {
                 StringBuilder results = new StringBuilder();
                 string cameraPropertyName = parts[nameof(CameraProperty.Name)];
@@ -650,13 +666,173 @@ namespace Hspi.Pages
                                                   cameraPropertyXPath,
                                                   stringValues.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToImmutableSortedSet());
 
-                    pluginConfig.AddCameraProperty(data);
+                    pluginConfig.AddHikvisionIsapiCameraProperty(data);
                     pluginConfig.FireConfigChanged();
                     divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
                 }
             }
         }
 
+        private void HandleHikCameraPostBack(NameValueCollection parts, string form)
+        {
+            if (form == NameToIdWithPrefix(HikDeleteCamera))
+            {
+                pluginConfig.RemoveHikvisionIsapiCamera(parts[RecordId]);
+                pluginConfig.FireConfigChanged();
+                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+            }
+            else if (form == NameToIdWithPrefix(HikCancelCamera))
+            {
+                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+            }
+            else if (form == NameToIdWithPrefix(HikSaveCamera))
+            {
+                StringBuilder results = new StringBuilder();
+                string cameraName = parts[nameof(HikCameraSetting.Name)];
+                if (string.IsNullOrWhiteSpace(cameraName))
+                {
+                    results.AppendLine("Camera Name is empty.<br>");
+                }
+
+                string userId = parts[nameof(HikCameraSetting.Login)];
+                string password = parts[nameof(HikCameraSetting.Password)];
+
+                string cameraHostString = parts[nameof(HikCameraSetting.CameraHost)];
+                if (!Uri.TryCreate(cameraHostString, UriKind.Absolute, out var cameraHost))
+                {
+                    results.AppendLine("Camera address is not valid.<br>");
+                }
+
+                var alarmCancelIntervalString = parts[nameof(HikCameraSetting.AlarmCancelInterval)];
+                if (!long.TryParse(alarmCancelIntervalString, NumberStyles.Any, CultureInfo.InvariantCulture, out var alarmCancelInterval) ||
+                    alarmCancelInterval < 0)
+                {
+                    results.AppendLine("Alarm cancel interval is not valid.<br>");
+                }
+
+                var propertiesRefreshIntervalString = parts[nameof(HikCameraSetting.CameraPropertiesRefreshInterval)];
+                if (!long.TryParse(propertiesRefreshIntervalString, NumberStyles.Any, CultureInfo.InvariantCulture, out var propertiesRefreshInterval) ||
+                    alarmCancelInterval < 0)
+                {
+                    results.AppendLine("Properties refresh interval is not valid.<br>");
+                }
+
+                var snapshotDirectory = parts[nameof(HikCameraSetting.SnapshotDownloadDirectory)];
+                if (!Directory.Exists(snapshotDirectory))
+                {
+                    results.AppendLine("Snapshot directory is not valid.<br>");
+                }
+
+                var videoDownloadDirectory = parts[nameof(HikCameraSetting.VideoDownloadDirectory)];
+                if (!Directory.Exists(videoDownloadDirectory))
+                {
+                    results.AppendLine("Video download directory is not valid.<br>");
+                }
+
+                if (results.Length > 0)
+                {
+                    divToUpdate.Add(SaveErrorDivId, results.ToString());
+                }
+                else
+                {
+                    string id = parts[RecordId];
+
+                    if (string.IsNullOrWhiteSpace(id))
+                    {
+                        id = System.Guid.NewGuid().ToString();
+                    }
+
+                    var data = new HikCameraSetting(id,
+                                                  cameraName,
+                                                  cameraHost.AbsoluteUri.ToString(CultureInfo.InvariantCulture),
+                                                  userId,
+                                                  password,
+                                                  TimeSpan.FromSeconds(alarmCancelInterval),
+                                                  pluginConfig.HikvisionIsapiCameraProperties,
+                                                  TimeSpan.FromSeconds(propertiesRefreshInterval),
+                                                  snapshotDirectory,
+                                                  videoDownloadDirectory);
+
+                    pluginConfig.AddHikvisionIsapiCamera(data);
+                    pluginConfig.FireConfigChanged();
+                    divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                }
+            }
+        }
+        private void HandleOnvifCameraPostBack(NameValueCollection parts, string form)
+        {
+            if (form == NameToIdWithPrefix(OnvifDeleteCamera))
+            {
+                pluginConfig.RemoveOnvifCamera(parts[RecordId]);
+                pluginConfig.FireConfigChanged();
+                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+            }
+            else if (form == NameToIdWithPrefix(OnvifCancelCamera))
+            {
+                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+            }
+            else if (form == NameToIdWithPrefix(OnvifSaveCamera))
+            {
+                StringBuilder results = new StringBuilder();
+                string cameraName = parts[nameof(OnvifCameraSetting.Name)];
+                if (string.IsNullOrWhiteSpace(cameraName))
+                {
+                    results.AppendLine("Camera Name is empty.<br>");
+                }
+
+                string userId = parts[nameof(OnvifCameraSetting.Login)];
+                string password = parts[nameof(OnvifCameraSetting.Password)];
+
+                string cameraHostString = parts[nameof(OnvifCameraSetting.CameraHost)];
+                if (!Uri.TryCreate(cameraHostString, UriKind.Absolute, out var cameraHost))
+                {
+                    results.AppendLine("Camera address is not valid.<br>");
+                }
+
+                var alarmCancelIntervalString = parts[nameof(OnvifCameraSetting.AlarmCancelInterval)];
+                if (!long.TryParse(alarmCancelIntervalString, NumberStyles.Any, CultureInfo.InvariantCulture, out var alarmCancelInterval) ||
+                    alarmCancelInterval < 0)
+                {
+                    results.AppendLine("Alarm cancel interval is not valid.<br>");
+                }
+
+                 
+
+                var snapshotDirectory = parts[nameof(OnvifCameraSetting.SnapshotDownloadDirectory)];
+                if (!Directory.Exists(snapshotDirectory))
+                {
+                    results.AppendLine("Snapshot directory is not valid.<br>");
+                }
+
+                 
+
+                if (results.Length > 0)
+                {
+                    divToUpdate.Add(SaveErrorDivId, results.ToString());
+                }
+                else
+                {
+                    string id = parts[RecordId];
+
+                    if (string.IsNullOrWhiteSpace(id))
+                    {
+                        id = System.Guid.NewGuid().ToString();
+                    }
+
+                    var data = new OnvifCameraSetting(id,
+                                                  cameraName,
+                                                  cameraHost.AbsoluteUri.ToString(CultureInfo.InvariantCulture),
+                                                  userId,
+                                                  password,
+                                                  TimeSpan.FromSeconds(alarmCancelInterval),
+                                                  snapshotDirectory);
+
+                    pluginConfig.AddOnvifCamera(data);
+                    pluginConfig.FireConfigChanged();
+                    divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                }
+            }
+        }
         private void HandleSaveMainSettingPostBack(NameValueCollection parts)
         {
             StringBuilder results = new StringBuilder();
@@ -681,16 +857,21 @@ namespace Hspi.Pages
             return PageTypeButton(name, label, type.ToString(), id);
         }
 
-        private const string CancelCamera = "CancelCamera";
-        private const string CancelCameraProperty = "CancelCameraProperty";
         private const string DebugLoggingId = "DebugLoggingId";
-        private const string DeleteCamera = "DeleteCamera";
-        private const string DeleteCameraProperty = "DeleteCameraProperty";
         private const string ErrorDivId = "message_id";
-        private const string SaveCamera = "SaveCamera";
-        private const string SaveCameraProperty = "SaveCameraProperty";
-        private const string SaveErrorDivId = "SaveErrorDivId";
+        private const string HikCancelCamera = "CancelCamera";
+        private const string HikCancelCameraProperty = "CancelCameraProperty";
+        private const string HikDeleteCamera = "DeleteCamera";
+        private const string HikDeleteCameraProperty = "DeleteCameraProperty";
+        private const string HikSaveCamera = "SaveCamera";
+        private const string HikSaveCameraProperty = "SaveCameraProperty";
         private const string SettingSaveButtonName = "SettingSave";
+        private const string OnvifCancelCamera = "OnvifCancelCamera";
+        private const string OnvifCancelCameraProperty = "OnvifCancelCameraProperty";
+        private const string OnvifDeleteCamera = "OnvifDeleteCamera";
+        private const string OnvifDeleteCameraProperty = "OnvifDeleteCameraProperty";
+        private const string OnvifSaveCamera = "OnvifSaveCamera";
+        private const string SaveErrorDivId = "SaveErrorDivId";
         private const string TabId = "tab";
         private static readonly string pageName = Invariant($"{PluginData.PlugInName} Configuration").Replace(' ', '_');
         private static readonly string pageUrl = HttpUtility.UrlEncode(pageName);

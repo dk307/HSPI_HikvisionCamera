@@ -1,5 +1,4 @@
 ﻿using HomeSeerAPI;
-using Hspi.Camera;
 using Hspi.Pages;
 using Hspi.Utils;
 using NullGuard;
@@ -90,7 +89,7 @@ namespace Hspi
                                 stringBuilder.Append(action.Interval);
                                 stringBuilder.Append(" on ");
 
-                                if ((action != null) && pluginConfig.Cameras.TryGetValue(action.Id, out var device))
+                                if ((action != null) && pluginConfig.AllCameras.TryGetValue(action.Id, out var device))
                                 {
                                     stringBuilder.Append(device.Name);
                                 }
@@ -231,8 +230,7 @@ namespace Hspi
 
         private static async Task TakeSnapshots(TimeSpan timeSpan, TimeSpan interval, CameraManager cameraManager)
         {
-            await cameraManager.DownloadContinuousSnapshots(timeSpan, interval,
-                                                       HikvisionCamera.Track1).ConfigureAwait(false);
+            await cameraManager.DownloadContinuousSnapshots(timeSpan, interval).ConfigureAwait(false);
         }
 
         private CameraManager GetCameraManager(string camerId)

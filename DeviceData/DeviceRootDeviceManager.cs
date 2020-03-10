@@ -1,15 +1,15 @@
 using HomeSeerAPI;
 using Hspi.Camera;
 using Hspi.Exceptions;
+using Nito.AsyncEx;
 using NullGuard;
 using Scheduler.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
-using Nito.AsyncEx;
 using static System.FormattableString;
 
 namespace Hspi.DeviceData
@@ -17,7 +17,7 @@ namespace Hspi.DeviceData
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal sealed class DeviceRootDeviceManager
     {
-        public DeviceRootDeviceManager(CameraSettings cameraSettings,
+        public DeviceRootDeviceManager(ICameraSettings cameraSettings,
                                        IHSApplication HS,
                                        CancellationToken cancellationToken)
         {
@@ -28,7 +28,7 @@ namespace Hspi.DeviceData
             CreateParentDevice();
         }
 
-        public CameraSettings CameraSettings { get; }
+        public ICameraSettings CameraSettings { get; }
 
         public async Task ProcessUpdate(ICameraContruct value)
         {
@@ -47,9 +47,9 @@ namespace Hspi.DeviceData
             }
         }
 
-        public async Task HandleCommand(DeviceIdentifier deviceIdentifier, HikvisionCamera camera, string stringValue, double value, ePairControlUse control)
+        public async Task HandleCommand(DeviceIdentifier deviceIdentifier, CameraBase camera, string stringValue, double value, ePairControlUse control)
         {
-            if (deviceIdentifier.DeviceId != CameraSettings.Id)
+            if (deviceIdentifier.CameraId != CameraSettings.Id)
             {
                 throw new ArgumentException("Invalid Device Identifier");
             }
@@ -170,8 +170,8 @@ namespace Hspi.DeviceData
         {
             if (!parentRefId.HasValue)
             {
-                string parentAddress = new DeviceIdentifier(CameraSettings.Id, DeviceType.Root, "Root").Address;
-                RootDeviceData rootDeviceData = new RootDeviceData();
+                string parentAddress = CameraSettings.GetRootDeviceIdentifier().Address;
+                var rootDeviceData = CameraSettings.GetRootDevice();
                 string name = Invariant($"{CameraSettings.Name} - {rootDeviceData.DefaultName}");
                 var parentHSDevice = CreateDevice(null, name, parentAddress, rootDeviceData);
                 parentHSDevice.MISC_Set(HS, Enums.dvMISC.CONTROL_POPUP);
@@ -197,7 +197,7 @@ namespace Hspi.DeviceData
                 DeviceClass device = deviceEnumerator.GetNext();
                 if ((device != null) &&
                     (device.get_Interface(HS) != null) &&
-                    (device.get_Interface(HS).Trim() == PluginData.PlugInName))
+                    string.Equals(device.get_Interface(HS).Trim(), PluginData.PlugInName, StringComparison.Ordinal))
                 {
                     string address = device.get_Address(HS);
                     if (address.StartsWith(baseAddress, StringComparison.Ordinal))
@@ -207,12 +207,11 @@ namespace Hspi.DeviceData
                         {
                             devices.Add(address, deviceData);
                             deviceData.OnPlugInLoad(HS, CameraSettings);
-                        }
 
-                        var rootDevice = (deviceData as RootDeviceData);
-                        if (rootDevice != null)
-                        {
-                            parentRefId = device.get_Ref(HS);
+                            if (deviceData.IsRootDevice)
+                            {
+                                parentRefId = device.get_Ref(HS);
+                            }
                         }
                     }
                 }
@@ -221,27 +220,7 @@ namespace Hspi.DeviceData
 
         private DeviceDataBase GetDevice(DeviceIdentifier deviceIdentifier)
         {
-            switch (deviceIdentifier.DeviceType)
-            {
-                case DeviceType.Root:
-                    return new RootDeviceData();
-
-                case DeviceType.CameraProperty:
-                    if (CameraSettings.PeriodicFetchedCameraProperties.TryGetValue(deviceIdentifier.DeviceTypeId, out var cameraProperty))
-                    {
-                        return new CameraPropertyDeviceData(cameraProperty);
-                    }
-                    return null;
-
-                case DeviceType.Alarm:
-                    return new AlarmDeviceData(deviceIdentifier.DeviceTypeId);
-
-                case DeviceType.AlarmStreamConnected:
-                    return new AlarmConnectedDeviceData();
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return CameraSettings.GetDevice(deviceIdentifier);
         }
 
         private DeviceDataBase GetDeviceData(DeviceClass hsDevice)
