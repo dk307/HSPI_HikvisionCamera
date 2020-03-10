@@ -200,7 +200,7 @@ namespace Hspi.Camera.Onvif
         private async Task ReceiveEvents()
         {
 
-            while (Token.IsCancellationRequested)
+            while (!Token.IsCancellationRequested)
             {
                 OnvifClient onvifClient = null;
                 try
