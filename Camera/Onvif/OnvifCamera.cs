@@ -262,6 +262,7 @@ namespace Hspi.Camera.Onvif
             {
                 defaultHttpClient?.Dispose();
             }
+            base.Dispose(disposing);
         }
 
         #endregion IDisposable Support

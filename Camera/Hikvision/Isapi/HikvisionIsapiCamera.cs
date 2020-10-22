@@ -239,6 +239,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                 defaultHttpClient.Dispose();
                 handler.Dispose();
             }
+            base.Dispose(disposing);
         }
 
         private static Dictionary<string, List<CameraProperty>>
