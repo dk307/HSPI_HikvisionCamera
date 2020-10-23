@@ -23,7 +23,7 @@ namespace Hspi.Camera.Onvif
         {
             CameraSettings = cameraSettings;
             defaultHttpClient = CreateHttpClient();
-            downloadHelper = new DownloadHelper(CameraSettings.Name, defaultHttpClient, Token);
+            downloadHelper = new DownloadHelper(CameraSettings.Name, defaultHttpClient);
             alarmProcessingHelper = new AlarmProcessingHelper(CameraSettings.Name,
                                                   CameraSettings.AlarmCancelInterval,
                                                   CloneWithDifferentState,
@@ -52,7 +52,7 @@ namespace Hspi.Camera.Onvif
             string path = Path.Combine(CameraSettings.SnapshotDownloadDirectory,
                                        DateTimeOffset.Now.ToString("yyyy-MM-dd--HH-mm-ss-ff", CultureInfo.InvariantCulture));
 
-            return await downloadHelper.DownloadToFile(path, downloadUri, HttpMethod.Get, null, null).ConfigureAwait(false);
+            return await downloadHelper.DownloadToFile(Token, path, downloadUri, HttpMethod.Get, null, null).ConfigureAwait(false);
         }
 
         public async Task<Uri> GetSnapshotUri()

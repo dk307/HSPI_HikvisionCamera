@@ -33,6 +33,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
             TakeSnapshotTrack1,
             TakeSnapshotTrack2,
             Poll,
+            CancelDownloadVideos,
         };
 
         public override int HSDeviceType => (int)DeviceTypeInfo_m.DeviceTypeInfo.eDeviceType_Plugin.Root;
@@ -48,6 +49,13 @@ namespace Hspi.DeviceData.Hikvision.Isapi
                     PairType = VSVGPairs.VSVGPairType.SingleValue,
                     Value = (double)Commands.DownloadVideos,
                     Status = "Download Videos",
+                    Render = Enums.CAPIControlType.Button,
+                });
+                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                {
+                    PairType = VSVGPairs.VSVGPairType.SingleValue,
+                    Value = (double)Commands.CancelDownloadVideos,
+                    Status = "Cancel Download Videos",
                     Render = Enums.CAPIControlType.Button,
                 });
                 pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
@@ -136,6 +144,10 @@ namespace Hspi.DeviceData.Hikvision.Isapi
             {
                 case Commands.DownloadVideos:
                     camera.StartVideoDownload();
+                    break;
+
+                case Commands.CancelDownloadVideos:
+                    camera.CancelVideoDownload();
                     break;
 
                 case Commands.Reboot:

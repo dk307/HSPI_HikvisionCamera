@@ -37,7 +37,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
             handler = CreateHttpHandler();
             defaultHttpClient = CreateHttpClient();
-            downloadHelper = new DownloadHelper(CameraSettings.Name, defaultHttpClient, Token);
+            downloadHelper = new DownloadHelper(CameraSettings.Name, defaultHttpClient);
             alarmProcessingHelper = new AlarmProcessingHelper(CameraSettings.Name,
                                                               CameraSettings.AlarmCancelInterval,
                                                               CloneAlarmInfo,
@@ -68,10 +68,14 @@ namespace Hspi.Camera.Hikvision.Isapi
                                        DateTimeOffset.Now.ToString("yyyy-MM-dd--HH-mm-ss-ff", CultureInfo.InvariantCulture));
             Uri uri = CreateUri(Invariant($"/ISAPI/Streaming/channels/{channel}/picture"));
 
-            return await downloadHelper.DownloadToFile(path, uri, HttpMethod.Get, null, null).ConfigureAwait(false);
+            return await downloadHelper.DownloadToFile(Token, path, uri, HttpMethod.Get, null, null).ConfigureAwait(false);
         }
 
-        public async Task<IList<RecordedVideo>> GetRecording(int maxResults, int searchResultPostion, DateTimeOffset? filterStartTime, DateTimeOffset? filterEndTime)
+        public async Task<IList<RecordedVideo>> GetRecording(CancellationToken token,
+                                                             int maxResults, 
+                                                             int searchResultPostion, 
+                                                             DateTimeOffset? filterStartTime, 
+                                                             DateTimeOffset? filterEndTime)
         {
             StringBuilder stringBuilder = new StringBuilder();
             XmlWriterSettings settings = new XmlWriterSettings()
@@ -111,7 +115,7 @@ namespace Hspi.Camera.Hikvision.Isapi
             Uri uri = CreateUri(@"/ISAPI/ContentMgmt/search/");
             using (var request = new HttpRequestMessage(HttpMethod.Post, uri))
             {
-                using (var response = await Send(request, stringBuilder.ToString()).ConfigureAwait(false))
+                using (var response = await Send(token, request, stringBuilder.ToString()).ConfigureAwait(false))
                 {
                     var xmlDocument = await GetXMLDocumentFromResponse(response).ConfigureAwait(false);
 
@@ -120,7 +124,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
                     if (childNodeIter != null)
                     {
-                        while (childNodeIter.MoveNext())
+                        while (childNodeIter.MoveNext() && !Token.IsCancellationRequested)
                         {
                             var videoNode = childNodeIter.Current;
 
@@ -154,7 +158,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
             {
-                using (var response = await downloadHelper.SendToCamera(httpRequestMessage).ConfigureAwait(false))
+                using (var response = await downloadHelper.SendToCamera(Token, httpRequestMessage).ConfigureAwait(false))
                 {
                     var xmlDocument = await GetXMLDocumentFromResponse(response).ConfigureAwait(false);
 
@@ -172,7 +176,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
                     using (HttpRequestMessage httpRequestMessage1 = new HttpRequestMessage(HttpMethod.Put, uri))
                     {
-                        await downloadHelper.SendToCamera(httpRequestMessage1, xmlDocument.OuterXml).ConfigureAwait(false);
+                        await downloadHelper.SendToCamera(Token, httpRequestMessage1, xmlDocument.OuterXml).ConfigureAwait(false);
                     }
                     await FetchPropertiesForCommonUri(uri, new CameraProperty[] { cameraProperty }).ConfigureAwait(false);
                 }
@@ -186,7 +190,7 @@ namespace Hspi.Camera.Hikvision.Isapi
             Uri uri = CreateUri(@"/ISAPI/System/reboot");
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, uri))
             {
-                await Send(httpRequestMessage).ConfigureAwait(false);
+                await Send(Token, httpRequestMessage).ConfigureAwait(false);
             }
         }
 
@@ -202,7 +206,7 @@ namespace Hspi.Camera.Hikvision.Isapi
             Uri uri = CreateUri(Invariant($"/ISAPI/Streaming/channels/{channel}/requestKeyFrame"));
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, uri))
             {
-                await Send(httpRequestMessage).ConfigureAwait(false);
+                await Send(Token, httpRequestMessage).ConfigureAwait(false);
             }
         }
 
@@ -212,7 +216,7 @@ namespace Hspi.Camera.Hikvision.Isapi
             Uri uri = CreateUri(Invariant($"/ISAPI/ContentMgmt/record/control/manual/start/tracks/{track}"));
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, uri))
             {
-                await Send(httpRequestMessage).ConfigureAwait(false);
+                await Send(Token, httpRequestMessage).ConfigureAwait(false);
             }
         }
 
@@ -222,13 +226,19 @@ namespace Hspi.Camera.Hikvision.Isapi
             downloadEvent.Set();
         }
 
+        public void CancelVideoDownload()
+        {
+            Trace.TraceInformation(Invariant($"[{CameraSettings.Name}]Cancel Video Download"));
+            downloadTokenSource?.Cancel();
+        }
+
         public async Task StopRecording(int track)
         {
             Trace.TraceInformation(Invariant($"[{CameraSettings.Name}]Stop Recording for track {track}"));
             Uri uri = CreateUri(Invariant($"/ISAPI/ContentMgmt/record/control/manual/stop/tracks/{track}"));
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, uri))
             {
-                await Send(httpRequestMessage).ConfigureAwait(false);
+                await Send(Token, httpRequestMessage).ConfigureAwait(false);
             }
         }
 
@@ -274,7 +284,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                 XmlResolver = null,
             };
 
-            using (var stringReader = new System.IO.StringReader(responseString))
+            using (var stringReader = new StringReader(responseString))
             {
                 using (XmlReader reader = XmlReader.Create(stringReader, new XmlReaderSettings() { XmlResolver = null }))
                 {
@@ -344,7 +354,9 @@ namespace Hspi.Camera.Hikvision.Isapi
             return uri;
         }
 
-        private async Task DownloadRecordedVideo(RecordedVideo video, string path)
+        private async Task DownloadRecordedVideo(CancellationToken token, 
+                                                 RecordedVideo video, 
+                                                 string path)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Downloading {video.Name}"));
 
@@ -365,7 +377,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                 writer.WriteEndDocument();
             }
 
-            await downloadHelper.DownloadToFile(path, uri, HttpMethod.Get, "mp4", stringBuilder.ToString()).ConfigureAwait(false);
+            await downloadHelper.DownloadToFile(token, path, uri, HttpMethod.Get, "mp4", stringBuilder.ToString()).ConfigureAwait(false);
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Finished downloading {video.Name}"));
         }
 
@@ -375,20 +387,23 @@ namespace Hspi.Camera.Hikvision.Isapi
             {
                 await downloadEvent.WaitAsync(Token).ConfigureAwait(false);
 
+                downloadTokenSource =  CancellationTokenSource.CreateLinkedTokenSource(Token);
+
+                var downloadToken = downloadTokenSource.Token;
                 try
                 {
                     //oldest first
                     List<RecordedVideo> list = new List<RecordedVideo>();
                     do
                     {
-                        Token.ThrowIfCancellationRequested();
-                        IList<RecordedVideo> collection = await GetRecording(40, list.Count, null, null).ConfigureAwait(false);
+                        downloadToken.ThrowIfCancellationRequested();
+                        IList<RecordedVideo> collection = await GetRecording(downloadToken, 40, list.Count, null, null).ConfigureAwait(false);
                         if (collection.Count == 0)
                         {
                             break;
                         }
                         list.AddRange(collection);
-                    } while (!Token.IsCancellationRequested);
+                    } while (!downloadToken.IsCancellationRequested);
 
                     Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Found {list.Count} recorded files on camera"));
 
@@ -398,6 +413,8 @@ namespace Hspi.Camera.Hikvision.Isapi
                     {
                         try
                         {
+                            downloadToken.ThrowIfCancellationRequested();
+
                             var dayDirectory = video.StartTime.ToLocalTime().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
                             string fileDirectory = Path.Combine(CameraSettings.VideoDownloadDirectory, dayDirectory);
                             string fileName = Path.Combine(fileDirectory, video.Name + ".mp4");
@@ -407,14 +424,14 @@ namespace Hspi.Camera.Hikvision.Isapi
                             if (!fileInfo.Exists)
                             {
                                 Directory.CreateDirectory(fileDirectory);
-                                await DownloadRecordedVideo(video, fileName).ConfigureAwait(false);
+                                await DownloadRecordedVideo(downloadToken, video, fileName).ConfigureAwait(false);
                                 File.SetCreationTimeUtc(fileName, video.StartTime.UtcDateTime);
                                 File.SetLastWriteTimeUtc(fileName, video.EndTime.UtcDateTime);
                             }
                         }
                         catch (Exception ex)
                         {
-                            if (ex.IsCancelException() && Token.IsCancellationRequested)
+                            if (ex.IsCancelException() && downloadToken.IsCancellationRequested)
                             {
                                 throw;
                             }
@@ -425,12 +442,19 @@ namespace Hspi.Camera.Hikvision.Isapi
                 }
                 catch (Exception ex)
                 {
-                    if (ex.IsCancelException() && Token.IsCancellationRequested)
+                    if (ex.IsCancelException())
                     {
-                        throw;
-                    }
+                        if (Token.IsCancellationRequested)
+                        {
+                            throw;
+                        }
 
-                    Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download  videos for {CameraSettings.CameraHost} with {ex.GetFullMessage()}."));
+                        Trace.TraceInformation(Invariant($"[{CameraSettings.Name}]Download videos cancelled"));
+                    }
+                    else
+                    {
+                        Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download  videos for {CameraSettings.CameraHost} with {ex.GetFullMessage()}."));
+                    }
                 }
             }
         }
@@ -485,7 +509,7 @@ namespace Hspi.Camera.Hikvision.Isapi
         {
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
             {
-                HttpResponseMessage response = await downloadHelper.SendToCamera(httpRequestMessage).ConfigureAwait(false);
+                HttpResponseMessage response = await downloadHelper.SendToCamera(Token, httpRequestMessage).ConfigureAwait(false);
                 response = response.EnsureSuccessStatusCode();
 
                 XmlDocument xmlDocument = await GetXMLDocumentFromResponse(response).ConfigureAwait(false);
@@ -565,11 +589,12 @@ namespace Hspi.Camera.Hikvision.Isapi
             }
         }
 
-        private async Task<HttpResponseMessage> Send(HttpRequestMessage httpRequestMessage,
+        private async Task<HttpResponseMessage> Send(CancellationToken token,
+                                                     HttpRequestMessage httpRequestMessage,
                                                      string content = null,
                                                      HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
         {
-            return await downloadHelper.SendToCamera(httpRequestMessage, content, completionOption).ConfigureAwait(false);
+            return await downloadHelper.SendToCamera(token, httpRequestMessage, content, completionOption).ConfigureAwait(false);
         }
 
         private async Task StartAlarmStream()
@@ -587,7 +612,8 @@ namespace Hspi.Camera.Hikvision.Isapi
                         client.Timeout = Timeout.InfiniteTimeSpan;
                         using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
                         {
-                            using (var response = await downloadHelper.SendToCamera(httpRequestMessage,
+                            using (var response = await downloadHelper.SendToCamera(Token,
+                                                                                    httpRequestMessage,
                                                                                     client: client,
                                                                                     completionOption: HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                             {
@@ -686,6 +712,8 @@ namespace Hspi.Camera.Hikvision.Isapi
 
         private static readonly XmlPathData xPathForSelectingVideos =
                                                     new XmlPathData(@"*[local-name()='matchList']/*");
+
+        private CancellationTokenSource downloadTokenSource;
 
         private readonly AlarmProcessingHelper alarmProcessingHelper;
         private readonly TimeSpan alarmStreamThreshold = TimeSpan.FromSeconds(120);
