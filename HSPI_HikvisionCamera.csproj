@@ -171,6 +171,7 @@
     <Compile Include="Utils\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="App.config" />
     <None Include="Connected Services\Onvif.Contracts.DeviceManagement\b-2.xsd">
       <SubType>Designer</SubType>

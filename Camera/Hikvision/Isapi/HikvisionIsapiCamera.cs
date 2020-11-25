@@ -713,7 +713,9 @@ namespace Hspi.Camera.Hikvision.Isapi
         private static readonly XmlPathData xPathForSelectingVideos =
                                                     new XmlPathData(@"*[local-name()='matchList']/*");
 
+#pragma warning disable CA2213 // Disposable fields should be disposed
         private CancellationTokenSource downloadTokenSource;
+#pragma warning restore CA2213 // Disposable fields should be disposed
 
         private readonly AlarmProcessingHelper alarmProcessingHelper;
         private readonly TimeSpan alarmStreamThreshold = TimeSpan.FromSeconds(120);
