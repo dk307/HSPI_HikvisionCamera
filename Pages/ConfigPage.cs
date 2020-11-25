@@ -797,7 +797,6 @@ namespace Hspi.Pages
                 }
 
                  
-
                 var snapshotDirectory = parts[nameof(OnvifCameraSetting.SnapshotDownloadDirectory)];
                 if (!Directory.Exists(snapshotDirectory))
                 {
@@ -865,9 +864,7 @@ namespace Hspi.Pages
         private const string HikSaveCameraProperty = "SaveCameraProperty";
         private const string SettingSaveButtonName = "SettingSave";
         private const string OnvifCancelCamera = "OnvifCancelCamera";
-        private const string OnvifCancelCameraProperty = "OnvifCancelCameraProperty";
         private const string OnvifDeleteCamera = "OnvifDeleteCamera";
-        private const string OnvifDeleteCameraProperty = "OnvifDeleteCameraProperty";
         private const string OnvifSaveCamera = "OnvifSaveCamera";
         private const string SaveErrorDivId = "SaveErrorDivId";
         private const string TabId = "tab";
