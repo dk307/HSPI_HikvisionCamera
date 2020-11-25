@@ -229,10 +229,10 @@ namespace Hspi.Pages
 
             if (cameraProperties != null)
             {
-                stb.Append(FormPageButton(OnvifDeleteCameraProperty, "Delete"));
+                stb.Append(FormPageButton(HikDeleteCameraProperty, "Delete"));
             }
 
-            stb.Append(FormPageButton(OnvifCancelCameraProperty, "Cancel"));
+            stb.Append(FormPageButton(HikCancelCameraProperty, "Cancel"));
             stb.Append(Invariant($"</td></tr>"));
             stb.Append("<tr height='5'><td colspan=2></td></tr>");
             stb.Append(@"</table>");
@@ -608,11 +608,11 @@ namespace Hspi.Pages
             {
                 pluginConfig.RemoveHikvisionIsapiCameraProperty(parts[RecordId]);
                 pluginConfig.FireConfigChanged();
-                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
+                divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=2")));
             }
             else if (form == NameToIdWithPrefix(HikCancelCameraProperty))
             {
-                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
+                divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=2")));
             }
             else if (form == NameToIdWithPrefix(HikSaveCameraProperty))
             {
@@ -668,7 +668,7 @@ namespace Hspi.Pages
 
                     pluginConfig.AddHikvisionIsapiCameraProperty(data);
                     pluginConfig.FireConfigChanged();
-                    divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=2")));
+                    divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=2")));
                 }
             }
         }
@@ -679,11 +679,11 @@ namespace Hspi.Pages
             {
                 pluginConfig.RemoveHikvisionIsapiCamera(parts[RecordId]);
                 pluginConfig.FireConfigChanged();
-                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=1")));
             }
             else if (form == NameToIdWithPrefix(HikCancelCamera))
             {
-                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=1")));
             }
             else if (form == NameToIdWithPrefix(HikSaveCamera))
             {
@@ -755,7 +755,7 @@ namespace Hspi.Pages
 
                     pluginConfig.AddHikvisionIsapiCamera(data);
                     pluginConfig.FireConfigChanged();
-                    divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                    divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=1")));
                 }
             }
         }
@@ -765,11 +765,11 @@ namespace Hspi.Pages
             {
                 pluginConfig.RemoveOnvifCamera(parts[RecordId]);
                 pluginConfig.FireConfigChanged();
-                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=1")));
             }
             else if (form == NameToIdWithPrefix(OnvifCancelCamera))
             {
-                divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=1")));
             }
             else if (form == NameToIdWithPrefix(OnvifSaveCamera))
             {
@@ -797,14 +797,11 @@ namespace Hspi.Pages
                 }
 
                  
-
                 var snapshotDirectory = parts[nameof(OnvifCameraSetting.SnapshotDownloadDirectory)];
                 if (!Directory.Exists(snapshotDirectory))
                 {
                     results.AppendLine("Snapshot directory is not valid.<br>");
                 }
-
-                 
 
                 if (results.Length > 0)
                 {
@@ -829,7 +826,7 @@ namespace Hspi.Pages
 
                     pluginConfig.AddOnvifCamera(data);
                     pluginConfig.FireConfigChanged();
-                    divToUpdate.Add(SaveErrorDivId, RedirectPage(Invariant($"/{pageUrl}?{TabId}=1")));
+                    divToUpdate.Add(SaveErrorDivId, RedirectPageJS(Invariant($"/{pageUrl}?{TabId}=1")));
                 }
             }
         }
@@ -867,9 +864,7 @@ namespace Hspi.Pages
         private const string HikSaveCameraProperty = "SaveCameraProperty";
         private const string SettingSaveButtonName = "SettingSave";
         private const string OnvifCancelCamera = "OnvifCancelCamera";
-        private const string OnvifCancelCameraProperty = "OnvifCancelCameraProperty";
         private const string OnvifDeleteCamera = "OnvifDeleteCamera";
-        private const string OnvifDeleteCameraProperty = "OnvifDeleteCameraProperty";
         private const string OnvifSaveCamera = "OnvifSaveCamera";
         private const string SaveErrorDivId = "SaveErrorDivId";
         private const string TabId = "tab";

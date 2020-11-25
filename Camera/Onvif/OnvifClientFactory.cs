@@ -28,7 +28,9 @@ namespace Hspi.Camera.Onvif
             CustomBinding customBinding = CreateCustomBinding(connectionParameters.ConnectionTimeout,
                                                               connectionParameters.Credentials,
                                                               messageEncodingVersion);
+#pragma warning disable CA2000 // Dispose objects before losing scope
             ChannelFactory<TService> factory = new ChannelFactory<TService>(customBinding);
+#pragma warning restore CA2000 // Dispose objects before losing scope
 
             var clientInspector = new CustomMessageInspector();
 
