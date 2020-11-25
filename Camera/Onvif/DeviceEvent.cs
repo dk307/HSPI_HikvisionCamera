@@ -113,7 +113,7 @@ namespace Hspi.Camera.Onvif
             return $"{ConcatString(topic)}-{ConcatString(source)}-{ConcatString(data)}";
         }
 
-        private IReadOnlyDictionary<string, string> GetDataFromMessage(NotificationMessageHolderType notificationMessageHolderType,
+        private static IReadOnlyDictionary<string, string> GetDataFromMessage(NotificationMessageHolderType notificationMessageHolderType,
                                                                        XPathExpression selector)
         {
             var sources = new Dictionary<string, string>();
@@ -138,7 +138,7 @@ namespace Hspi.Camera.Onvif
             return sources;
         }
 
-        private IReadOnlyList<string> GetTopics(NotificationMessageHolderType notificationMessageHolderType)
+        private static IReadOnlyList<string> GetTopics(NotificationMessageHolderType notificationMessageHolderType)
         {
             var topics = new List<string>();
             foreach (var topic in notificationMessageHolderType.Topic?.Any)

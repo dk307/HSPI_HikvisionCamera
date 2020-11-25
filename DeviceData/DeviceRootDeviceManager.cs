@@ -242,7 +242,7 @@ namespace Hspi.DeviceData
         private readonly CancellationToken cancellationToken;
         private readonly Dictionary<string, DeviceDataBase> devices = new Dictionary<string, DeviceDataBase>();
         private readonly IHSApplication HS;
-        private int? parentRefId = null;
+        private int? parentRefId;
         private readonly AsyncReaderWriterLock dataLock = new AsyncReaderWriterLock();
     };
 }

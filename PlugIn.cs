@@ -268,6 +268,6 @@ namespace Hspi
         private readonly Dictionary<string, CameraManager> connectorManager = new Dictionary<string, CameraManager>();
         private ConfigPage configPage;
         private PluginConfig pluginConfig;
-        private bool disposedValue = false;
+        private bool disposedValue;
     }
 }

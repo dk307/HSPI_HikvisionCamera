@@ -14,7 +14,9 @@ namespace Hspi.Pages
         {
         }
 
+#pragma warning disable CA1822 // Mark members as static
         public IPlugInAPI.strMultiReturn GetRefreshActionPostUI([AllowNull] NameValueCollection postData, IPlugInAPI.strTrigActInfo actionInfo)
+#pragma warning restore CA1822 // Mark members as static
         {
             IPlugInAPI.strMultiReturn result = default;
             result.DataOut = actionInfo.DataIn;

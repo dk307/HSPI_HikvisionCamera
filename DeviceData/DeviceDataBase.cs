@@ -34,7 +34,7 @@ namespace Hspi.DeviceData
         public virtual string HSDeviceTypeString => Invariant($"{PluginData.PlugInName} {DeviceType} Device");
 
         public abstract bool IsRootDevice { get; }
-        public int RefId { get; set; } = 0;
+        public int RefId { get; set; }
 
         public abstract bool StatusDevice { get; }
 

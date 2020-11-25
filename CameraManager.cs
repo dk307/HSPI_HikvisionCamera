@@ -80,7 +80,7 @@ namespace Hspi
             }
         }
 
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         #endregion IDisposable Support
 

@@ -14,15 +14,14 @@ namespace Hspi.Camera
     internal sealed class DownloadHelper
     {
         public DownloadHelper(string cameraName,
-                              HttpClient defaultHttpClient,
-                              CancellationToken cancellationToken)
+                              HttpClient defaultHttpClient)
         {
             this.cameraName = cameraName;
             this.defaultHttpClient = defaultHttpClient;
-            this.cancellationToken = cancellationToken;
         }
 
-        public async Task<string> DownloadToFile(string path,
+        public async Task<string> DownloadToFile(CancellationToken token,
+                                                 string path,
                                                  Uri uri,
                                                  HttpMethod httpMethod,
                                                  [AllowNull]string extension,
@@ -34,7 +33,7 @@ namespace Hspi.Camera
                 string mediaType = null;
                 using (var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
                 {
-                    mediaType = await DownloadToStream(fileStream, uri, httpMethod, data).ConfigureAwait(false);
+                    mediaType = await DownloadToStream(token, fileStream, uri, httpMethod, data).ConfigureAwait(false);
                 }
                 string fileExtension = extension ?? MimeTypesMap.GetExtension(mediaType);
                 string destFileName = Path.ChangeExtension(path, fileExtension);
@@ -58,7 +57,8 @@ namespace Hspi.Camera
             }
         }
 
-        public async Task<HttpResponseMessage> SendToCamera(HttpRequestMessage httpRequestMessage,
+        public async Task<HttpResponseMessage> SendToCamera(CancellationToken token, 
+                                                            HttpRequestMessage httpRequestMessage,
                                                             string content = null,
                                                             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
                                                             HttpClient client = null)
@@ -68,22 +68,28 @@ namespace Hspi.Camera
                 httpRequestMessage.Content = new ByteArrayContent(Encoding.UTF8.GetBytes(content));
             }
 
-            var response = await (client ?? defaultHttpClient).SendAsync(httpRequestMessage, completionOption, cancellationToken).ConfigureAwait(false);
+            var response = await (client ?? defaultHttpClient).SendAsync(httpRequestMessage, completionOption, token).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
                 string failureContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                throw new HttpRequestException(Invariant($"Request failed with {response.StatusCode}:{response.ReasonPhrase} to {httpRequestMessage.RequestUri} with {failureContent}"));
+                string message = Invariant($"Request failed with {response.StatusCode}:{response.ReasonPhrase} to {httpRequestMessage.RequestUri} with {failureContent}");
+                response.Dispose();
+                throw new HttpRequestException(message);
             }
 
             return response;
         }
 
-        private async Task<string> DownloadToStream(Stream stream, Uri uri, HttpMethod httpMethod, [AllowNull]string data)
+        private async Task<string> DownloadToStream(CancellationToken token,
+                                                    Stream stream, 
+                                                    Uri uri, 
+                                                    HttpMethod httpMethod, 
+                                                    [AllowNull]string data)
         {
             using (var httpRequestMessage = new HttpRequestMessage(httpMethod, uri))
             {
-                using (var response = await SendToCamera(httpRequestMessage, data,
+                using (var response = await SendToCamera(token, httpRequestMessage, data,
                                                          HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                 {
                     string mediaType = response.Content.Headers?.ContentType?.MediaType;
@@ -96,7 +102,7 @@ namespace Hspi.Camera
                     using (var downloadStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                     {
                         const int DownloadBufferSize = 1024 * 1024;
-                        await downloadStream.CopyToAsync(stream, DownloadBufferSize, cancellationToken).ConfigureAwait(false);
+                        await downloadStream.CopyToAsync(stream, DownloadBufferSize, token).ConfigureAwait(false);
                     }
 
                     return mediaType;
@@ -105,7 +111,6 @@ namespace Hspi.Camera
         }
 
         private readonly string cameraName;
-        private readonly CancellationToken cancellationToken;
         private readonly HttpClient defaultHttpClient;
     }
 }

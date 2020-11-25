@@ -132,7 +132,7 @@ namespace Hspi.Camera
             public OnOffCameraContruct CameraContruct { get; set; }
             public Stopwatch lastReceived = new Stopwatch();
             public Stopwatch lastUpdated = new Stopwatch();
-            public bool state = false;
+            public bool state;
         }
 
         private readonly string cameraName;
