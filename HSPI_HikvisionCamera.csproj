@@ -132,7 +132,6 @@
     <Compile Include="DeviceData\Hikvision\Isapi\AlarmConnectedDeviceData.cs" />
     <Compile Include="DeviceData\Onvif\RootDeviceData.cs" />
     <Compile Include="DeviceData\RootDeviceDataBase.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Utils\XmlPathData.cs" />
     <Compile Include="DeviceData\Onvif\EventsListeningDeviceData.cs" />
     <Compile Include="DeviceData\Hikvision\Isapi\CameraPropertyDeviceData.cs" />
@@ -172,7 +171,6 @@
     <Compile Include="Utils\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="App.config" />
     <None Include="Connected Services\Onvif.Contracts.DeviceManagement\b-2.xsd">
       <SubType>Designer</SubType>
