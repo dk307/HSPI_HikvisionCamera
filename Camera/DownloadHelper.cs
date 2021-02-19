@@ -94,7 +94,7 @@ namespace Hspi.Camera
                 {
                     string mediaType = response.Content.Headers?.ContentType?.MediaType;
 
-                    if ((mediaType == null))
+                    if (mediaType == null)
                     {
                         throw new Exception(Invariant($"[{cameraName}]Invalid Data for {uri} :{mediaType ?? string.Empty}"));
                     }

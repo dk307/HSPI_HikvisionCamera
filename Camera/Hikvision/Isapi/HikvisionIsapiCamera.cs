@@ -408,6 +408,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
                     var videos = list.OrderBy(x => x.StartTime);
 
+                    HashSet<string> createdDirectories = new HashSet<string>();
                     foreach (var video in videos)
                     {
                         try
@@ -416,16 +417,18 @@ namespace Hspi.Camera.Hikvision.Isapi
 
                             var dayDirectory = video.StartTime.ToLocalTime().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
                             string fileDirectory = Path.Combine(CameraSettings.VideoDownloadDirectory, dayDirectory);
-                            string fileName = Path.Combine(fileDirectory, video.Name + ".mp4");
+                            string filePath = Path.Combine(fileDirectory, video.Name + ".mp4");
 
-                            var fileInfo = new FileInfo(fileName);
-
-                            if (!fileInfo.Exists)
+                            if (!File.Exists(filePath))
                             {
-                                Directory.CreateDirectory(fileDirectory);
-                                await DownloadRecordedVideo(downloadToken, video, fileName).ConfigureAwait(false);
-                                File.SetCreationTimeUtc(fileName, video.StartTime.UtcDateTime);
-                                File.SetLastWriteTimeUtc(fileName, video.EndTime.UtcDateTime);
+                                if (!createdDirectories.Contains(fileDirectory))
+                                {
+                                    Directory.CreateDirectory(fileDirectory);
+                                    createdDirectories.Add(fileDirectory);
+                                }
+                                await DownloadRecordedVideo(downloadToken, video, filePath).ConfigureAwait(false);
+                                File.SetCreationTimeUtc(filePath, video.StartTime.UtcDateTime);
+                                File.SetLastWriteTimeUtc(filePath, video.EndTime.UtcDateTime);
                             }
                         }
                         catch (Exception ex)

@@ -827,9 +827,6 @@
     <PackageReference Include="System.ServiceModel.Primitives">
       <Version>4.8.1</Version>
     </PackageReference>
-    <PackageReference Include="System.Threading.Tasks.Extensions">
-      <Version>4.5.4</Version>
-    </PackageReference>
     <PackageReference Include="System.Xml.XmlDocument">
       <Version>4.3.0</Version>
     </PackageReference>
