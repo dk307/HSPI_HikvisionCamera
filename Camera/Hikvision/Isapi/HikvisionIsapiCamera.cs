@@ -21,7 +21,6 @@ using static System.FormattableString;
 
 namespace Hspi.Camera.Hikvision.Isapi
 {
-
     // Based on
     // https://down.dipol.com.pl/Cctv/-Hikvision-/isapi/HIKVISION%20ISAPI_2.6-IPMD%20Service.pdf
 
@@ -72,9 +71,9 @@ namespace Hspi.Camera.Hikvision.Isapi
         }
 
         public async Task<IList<RecordedVideo>> GetRecording(CancellationToken token,
-                                                             int maxResults, 
-                                                             int searchResultPostion, 
-                                                             DateTimeOffset? filterStartTime, 
+                                                             int maxResults,
+                                                             int searchResultPostion,
+                                                             DateTimeOffset? filterStartTime,
                                                              DateTimeOffset? filterEndTime)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -354,8 +353,8 @@ namespace Hspi.Camera.Hikvision.Isapi
             return uri;
         }
 
-        private async Task DownloadRecordedVideo(CancellationToken token, 
-                                                 RecordedVideo video, 
+        private async Task DownloadRecordedVideo(CancellationToken token,
+                                                 RecordedVideo video,
                                                  string path)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Downloading {video.Name}"));
@@ -387,7 +386,7 @@ namespace Hspi.Camera.Hikvision.Isapi
             {
                 await downloadEvent.WaitAsync(Token).ConfigureAwait(false);
 
-                downloadTokenSource =  CancellationTokenSource.CreateLinkedTokenSource(Token);
+                downloadTokenSource = CancellationTokenSource.CreateLinkedTokenSource(Token);
 
                 var downloadToken = downloadTokenSource.Token;
                 try
@@ -409,6 +408,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
                     var videos = list.OrderBy(x => x.StartTime);
 
+                    HashSet<string> createdDirectories = new HashSet<string>();
                     foreach (var video in videos)
                     {
                         try
@@ -417,16 +417,18 @@ namespace Hspi.Camera.Hikvision.Isapi
 
                             var dayDirectory = video.StartTime.ToLocalTime().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
                             string fileDirectory = Path.Combine(CameraSettings.VideoDownloadDirectory, dayDirectory);
-                            string fileName = Path.Combine(fileDirectory, video.Name + ".mp4");
+                            string filePath = Path.Combine(fileDirectory, video.Name + ".mp4");
 
-                            var fileInfo = new FileInfo(fileName);
-
-                            if (!fileInfo.Exists)
+                            if (!File.Exists(filePath))
                             {
-                                Directory.CreateDirectory(fileDirectory);
-                                await DownloadRecordedVideo(downloadToken, video, fileName).ConfigureAwait(false);
-                                File.SetCreationTimeUtc(fileName, video.StartTime.UtcDateTime);
-                                File.SetLastWriteTimeUtc(fileName, video.EndTime.UtcDateTime);
+                                if (!createdDirectories.Contains(fileDirectory))
+                                {
+                                    Directory.CreateDirectory(fileDirectory);
+                                    createdDirectories.Add(fileDirectory);
+                                }
+                                await DownloadRecordedVideo(downloadToken, video, filePath).ConfigureAwait(false);
+                                File.SetCreationTimeUtc(filePath, video.StartTime.UtcDateTime);
+                                File.SetLastWriteTimeUtc(filePath, video.EndTime.UtcDateTime);
                             }
                         }
                         catch (Exception ex)
@@ -436,7 +438,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                                 throw;
                             }
 
-                            Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download {video.RstpUri} for {CameraSettings.CameraHost} with {ex.GetFullMessage()}."));
+                            Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to download {video.RstpUri} for {CameraSettings.CameraHost} to {CameraSettings.VideoDownloadDirectory} with {ex.GetFullMessage()}."));
                         }
                     }
                 }
@@ -453,7 +455,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                     }
                     else
                     {
-                        Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download  videos for {CameraSettings.CameraHost} with {ex.GetFullMessage()}."));
+                        Trace.TraceError(Invariant($"[{CameraSettings.Name}]Failed to get download videos for {CameraSettings.CameraHost} with {ex.GetFullMessage()}."));
                     }
                 }
             }
@@ -464,13 +466,14 @@ namespace Hspi.Camera.Hikvision.Isapi
             var alarmInfo = (AlarmInfo)cameraContruct;
             return new AlarmInfo(alarmInfo.AlarmType, alarmInfo.ChannelID, state);
         }
+
         private async Task Enqueue(OnOffCameraContruct alarm)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Alarm:{alarm.Id} Active:{alarm.Active}"));
             await Updates.EnqueueAsync(alarm, Token).ConfigureAwait(false);
         }
 
-        private async Task Enqueue(CameraProperty cameraInfo, [AllowNull]string value)
+        private async Task Enqueue(CameraProperty cameraInfo, [AllowNull] string value)
         {
             Trace.WriteLine(Invariant($"[{CameraSettings.Name}]Property:{cameraInfo.Name} Value:{value ?? string.Empty}"));
             await Updates.EnqueueAsync(new CameraPropertyInfo(cameraInfo, value), Token).ConfigureAwait(false);
