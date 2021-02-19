@@ -31,7 +31,7 @@ namespace Hspi.Camera
             try
             {
                 string mediaType = null;
-                using (var fileStream = new FileStream(tempPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+                using (var fileStream = new FileStream(tempPath,  FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, 1024* 1024,  true))
                 {
                     mediaType = await DownloadToStream(token, fileStream, uri, httpMethod, data).ConfigureAwait(false);
                 }
