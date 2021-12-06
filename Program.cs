@@ -14,7 +14,7 @@ namespace Hspi
 
         private const int serverPort = 10400;
 
-        private static ConsoleTraceListener consoleTracer = new ConsoleTraceListener();
+        private static readonly ConsoleTraceListener consoleTracer = new ConsoleTraceListener();
 
         /// <summary>
         /// Defines the entry point of the application.

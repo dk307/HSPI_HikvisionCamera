@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" targetNamespace="http://www.onvif.org/ver10/events/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" targetNamespace="http://www.onvif.org/ver10/events/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:import namespace="http://docs.oasis-open.org/wsn/bw-2" location="bw-2-vs-mod.wsdl" />
   <wsdl:types>
-    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.onvif.org/ver10/events/wsdl" version="19.06">
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.onvif.org/ver10/events/wsdl" version="20.06">
       <xs:import schemaLocation="http://www.w3.org/2005/08/addressing/ws-addr.xsd" namespace="http://www.w3.org/2005/08/addressing" />
       <xs:import schemaLocation="http://docs.oasis-open.org/wsn/t-1.xsd" namespace="http://docs.oasis-open.org/wsn/t-1" />
       <xs:import schemaLocation="http://docs.oasis-open.org/wsn/b-2.xsd" namespace="http://docs.oasis-open.org/wsn/b-2" />
@@ -54,6 +54,16 @@
         <xs:attribute name="PersistentNotificationStorage" type="xs:boolean">
           <xs:annotation>
             <xs:documentation>Indication if the device supports persistent notification storage.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="EventBrokerProtocols" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>A space separated list of supported event broker protocols as defined by the tev:EventBrokerProtocol datatype.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MaxEventBrokers" type="xs:int">
+          <xs:annotation>
+            <xs:documentation>Maxiumum number of event broker configurations that can be added to the device.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:anyAttribute processContents="lax" />
@@ -265,6 +275,105 @@
           <xs:documentation>When this element is included in the SubscriptionPolicy, the pullpoint shall not provide Initialized or Deleted events for Properties.</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="AddEventBroker">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="EventBroker" type="tev:EventBrokerConfig" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AddEventBrokerResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteEventBroker">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="1" name="Address" type="xs:anyURI" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteEventBrokerResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetEventBrokers">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="Address" type="xs:anyURI" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetEventBrokersResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="EventBroker" type="tev:EventBrokerConfig" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="EventBrokerConfig">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="Address" type="xs:anyURI">
+            <xs:annotation>
+              <xs:documentation>Event broker address in the format "scheme://host:port[/resource]". The supported schemes shall be returned by the EventBrokerProtocols capability. The resource part of the URL is only valid when using websocket. The Address must be unique.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="TopicPrefix" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Prefix that will be prepended to all topics before they are published. This is used to make published topics unique for each device. TopicPrefix is not allowed to be empty.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="UserName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>User name for the event broker.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="Password" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Password for the event broker. Password shall not be included when returned with GetEventBrokers.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="CertificateID" type="xs:token">
+            <xs:annotation>
+              <xs:documentation>Optional certificate ID in the key store pointing to a client certificate to be used for authenticating the device at the message broker.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="PublishFilter" type="wsnt:FilterType">
+            <xs:annotation>
+              <xs:documentation>Concrete Topic Expression to select specific topics to publish.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="QoS" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Quality of service level to use when publishing. This defines the guarantee of delivery for a specific message: 0 = At most once, 1 = At least once, 2 = Exactly once.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="Status" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Current connection status (see tev:ConnectionStatus for possible values).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax" />
+        </xs:sequence>
+        <xs:anyAttribute processContents="lax" />
+      </xs:complexType>
+      <xs:simpleType name="EventBrokerProtocol">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="mqtt" />
+          <xs:enumeration value="mqtts" />
+          <xs:enumeration value="ws" />
+          <xs:enumeration value="wss" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ConnectionStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Offline" />
+          <xs:enumeration value="Connecting" />
+          <xs:enumeration value="Connected" />
+        </xs:restriction>
+      </xs:simpleType>
     </xs:schema>
   </wsdl:types>
   <wsdl:message name="GetServiceCapabilitiesRequest">
@@ -306,6 +415,24 @@
   <wsdl:message name="GetEventPropertiesResponse">
     <wsdl:part name="parameters" element="tev:GetEventPropertiesResponse" />
   </wsdl:message>
+  <wsdl:message name="AddEventBrokerRequest">
+    <wsdl:part name="parameters" element="tev:AddEventBroker" />
+  </wsdl:message>
+  <wsdl:message name="AddEventBrokerResponse">
+    <wsdl:part name="parameters" element="tev:AddEventBrokerResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEventBrokerRequest">
+    <wsdl:part name="parameters" element="tev:DeleteEventBroker" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEventBrokerResponse">
+    <wsdl:part name="parameters" element="tev:DeleteEventBrokerResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEventBrokersRequest">
+    <wsdl:part name="parameters" element="tev:GetEventBrokers" />
+  </wsdl:message>
+  <wsdl:message name="GetEventBrokersResponse">
+    <wsdl:part name="parameters" element="tev:GetEventBrokersResponse" />
+  </wsdl:message>
   <wsdl:portType name="EventPortType">
     <wsdl:operation name="GetServiceCapabilities">
       <wsdl:documentation>Returns the capabilities of the event service. The result is returned in a typed answer.</wsdl:documentation>
@@ -340,6 +467,21 @@
 				the device.</wsdl:documentation>
       <wsdl:input wsaw:Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest" message="tev:GetEventPropertiesRequest" />
       <wsdl:output wsaw:Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse" message="tev:GetEventPropertiesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="AddEventBroker">
+      <wsdl:documentation>The AddEventBroker command allows an ONVIF client to add an event broker configuration to device to enable ONVIF events to be transferred to an event broker. If an existing event broker configuration already exists with the same Address, the existing configuration shall be modified.</wsdl:documentation>
+      <wsdl:input message="tev:AddEventBrokerRequest" />
+      <wsdl:output message="tev:AddEventBrokerResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEventBroker">
+      <wsdl:documentation>The DeleteEventBroker allows an ONVIF client to delete an event broker configuration from an ONVIF device.</wsdl:documentation>
+      <wsdl:input message="tev:DeleteEventBrokerRequest" />
+      <wsdl:output message="tev:DeleteEventBrokerResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEventBrokers">
+      <wsdl:documentation>The GetEventBrokers command lets a client retrieve event broker configurations from the device.</wsdl:documentation>
+      <wsdl:input message="tev:GetEventBrokersRequest" />
+      <wsdl:output message="tev:GetEventBrokersResponse" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="PullPointSubscription">
@@ -497,6 +639,33 @@
     </wsdl:operation>
     <wsdl:operation name="GetEventProperties">
       <soap:operation soapAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddEventBroker">
+      <soap:operation soapAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/AddEventBrokerRequest" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEventBroker">
+      <soap:operation soapAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/DeleteEventBrokerRequest" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventBrokers">
+      <soap:operation soapAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventBrokersRequest" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

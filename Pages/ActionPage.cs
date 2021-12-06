@@ -14,9 +14,9 @@ namespace Hspi.Pages
         {
         }
 
-#pragma warning disable CA1822 // Mark members as static
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1643:Strings should not be concatenated using '+' in a loop", Justification = "<Pending>")]
         public IPlugInAPI.strMultiReturn GetRefreshActionPostUI([AllowNull] NameValueCollection postData, IPlugInAPI.strTrigActInfo actionInfo)
-#pragma warning restore CA1822 // Mark members as static
         {
             IPlugInAPI.strMultiReturn result = default;
             result.DataOut = actionInfo.DataIn;

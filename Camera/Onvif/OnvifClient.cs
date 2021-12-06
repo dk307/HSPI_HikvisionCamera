@@ -19,10 +19,7 @@ namespace Hspi.Camera.Onvif
     {
         public OnvifClient(ConnectionParameters connectionParameters, TimeSpan subscriptionTerminationTime)
         {
-            if (connectionParameters == null)
-                throw new ArgumentNullException(nameof(connectionParameters));
-
-            ConnectionParameters = connectionParameters;
+            ConnectionParameters = connectionParameters ?? throw new ArgumentNullException(nameof(connectionParameters));
             this.subscriptionTerminationTime = subscriptionTerminationTime;
 
             deviceServicePath = connectionParameters.ConnectionUri.AbsolutePath;
@@ -75,7 +72,7 @@ namespace Hspi.Camera.Onvif
 
                 if (profile == null)
                 {
-                    throw new Exception("No Onvif profile found");
+                    throw new InvalidOperationException("No Onvif profile found");
                 }
 
                 var snapshotUriResponse = await media.GetSnapshotUriAsync(profile.token).ConfigureAwait(false);
@@ -99,7 +96,7 @@ namespace Hspi.Camera.Onvif
             {
                 if (deviceCapabilities.Events == null || !deviceCapabilities.Events.WSPullPointSupport)
                 {
-                    throw new Exception("Device doesn't support pull point subscription");
+                    throw new NotSupportedException("Device doesn't support pull point subscription");
                 }
 
                 var eventServiceUri = new Uri(deviceCapabilities.Events.XAddr);
@@ -224,6 +221,6 @@ namespace Hspi.Camera.Onvif
         private readonly OnvifClientFactory onvifClientFactory = new OnvifClientFactory();
         private readonly TimeSpan subscriptionTerminationTime;
         private Hspi.Onvif.Contracts.DeviceManagement.Capabilities deviceCapabilities;
-        private AsyncReaderWriterLock instanceLock = new AsyncReaderWriterLock();
+        private readonly AsyncReaderWriterLock instanceLock = new AsyncReaderWriterLock();
     }
 }

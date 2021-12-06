@@ -8,7 +8,7 @@ namespace Hspi.DeviceData
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal abstract class RootDeviceDataBase : DeviceDataBase
     {
-        public RootDeviceDataBase(DeviceType deviceType, string deviceTypeId)
+        protected RootDeviceDataBase(DeviceType deviceType, string deviceTypeId)
             : base(deviceType, deviceTypeId)
         {
         }
@@ -21,6 +21,7 @@ namespace Hspi.DeviceData
 
         public override void OnPlugInLoad(IHSApplication HS, ICameraSettings cameraSettings)
         {
+            // Method intentionally left empty.
         }
 
         public override void SetOnDeviceCreateData(IHSApplication HS, ICameraSettings cameraSettings, int refID)

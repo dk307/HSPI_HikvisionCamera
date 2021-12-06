@@ -8,6 +8,7 @@ namespace Hspi
     /// Just a wrapper on basic HS plugin
     /// </summary>
     /// <seealso cref="IPlugInAPI" />
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "<Pending>")]
     internal abstract class IPlugInAPI2 : IPlugInAPI
     {
         /// <summary>

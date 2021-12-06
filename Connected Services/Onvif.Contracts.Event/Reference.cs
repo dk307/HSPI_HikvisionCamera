@@ -12,7 +12,7 @@ namespace Hspi.Onvif.Contracts.Event {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -72,7 +72,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -133,7 +133,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -179,7 +179,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -225,7 +225,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -271,7 +271,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -359,7 +359,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -433,7 +433,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -464,7 +464,7 @@ namespace Hspi.Onvif.Contracts.Event {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TopicExpressionDialectUnknownFaultType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(InvalidFilterFaultType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SubscribeCreationFailedFaultType))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -580,7 +580,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -626,7 +626,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -672,7 +672,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -681,7 +681,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -690,7 +690,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -699,7 +699,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -708,7 +708,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -759,7 +759,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -768,7 +768,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -777,7 +777,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -786,7 +786,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -795,7 +795,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -846,7 +846,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -855,7 +855,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -878,7 +878,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -901,7 +901,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -910,7 +910,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -919,7 +919,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -928,7 +928,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -937,7 +937,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -946,7 +946,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -955,7 +955,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -978,1247 +978,12 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2")]
     public partial class SubscribeCreationFailedFaultType : BaseFaultType {
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", ConfigurationName="Onvif.Contracts.Event.EventPortType")]
-    public interface EventPortType {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesReques" +
-            "t", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesRespon" +
-            "se")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="Capabilities")]
-        Hspi.Onvif.Contracts.Event.Capabilities GetServiceCapabilities();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesReques" +
-            "t", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesRespon" +
-            "se")]
-        [return: System.ServiceModel.MessageParameterAttribute(Name="Capabilities")]
-        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.Capabilities> GetServiceCapabilitiesAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "esponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.ResourceUnknownFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="ResourceUnknownFault", Namespace="http://docs.oasis-open.org/wsrf/r-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.InvalidFilterFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="InvalidFilterFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.TopicExpressionDialectUnknownFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="TopicExpressionDialectUnknownFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.InvalidTopicExpressionFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="InvalidTopicExpressionFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.TopicNotSupportedFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="TopicNotSupportedFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.InvalidProducerPropertiesExpressionFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="InvalidProducerPropertiesExpressionFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.InvalidMessageContentExpressionFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="InvalidMessageContentExpressionFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.UnacceptableInitialTerminationTimeFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="UnacceptableInitialTerminationTimeFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.UnrecognizedPolicyRequestFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="UnrecognizedPolicyRequestFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.UnsupportedPolicyRequestFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="UnsupportedPolicyRequestFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.NotifyMessageNotSupportedFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="NotifyMessageNotSupportedFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.SubscribeCreationFailedFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", Name="SubscribeCreationFailedFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse CreatePullPointSubscription(Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest request);
-        
-        // CODEGEN: Generating message contract since the operation has multiple return values.
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "equest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
-            "esponse")]
-        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse> CreatePullPointSubscriptionAsync(Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse GetEventProperties(Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest request);
-        
-        // CODEGEN: Generating message contract since the operation has multiple return values.
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse")]
-        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse> GetEventPropertiesAsync(Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest request);
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl")]
-    public partial class Capabilities : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        private bool wSSubscriptionPolicySupportField;
-        
-        private bool wSSubscriptionPolicySupportFieldSpecified;
-        
-        private bool wSPullPointSupportField;
-        
-        private bool wSPullPointSupportFieldSpecified;
-        
-        private bool wSPausableSubscriptionManagerInterfaceSupportField;
-        
-        private bool wSPausableSubscriptionManagerInterfaceSupportFieldSpecified;
-        
-        private int maxNotificationProducersField;
-        
-        private bool maxNotificationProducersFieldSpecified;
-        
-        private int maxPullPointsField;
-        
-        private bool maxPullPointsFieldSpecified;
-        
-        private bool persistentNotificationStorageField;
-        
-        private bool persistentNotificationStorageFieldSpecified;
-        
-        private System.Xml.XmlAttribute[] anyAttrField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool WSSubscriptionPolicySupport {
-            get {
-                return this.wSSubscriptionPolicySupportField;
-            }
-            set {
-                this.wSSubscriptionPolicySupportField = value;
-                this.RaisePropertyChanged("WSSubscriptionPolicySupport");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool WSSubscriptionPolicySupportSpecified {
-            get {
-                return this.wSSubscriptionPolicySupportFieldSpecified;
-            }
-            set {
-                this.wSSubscriptionPolicySupportFieldSpecified = value;
-                this.RaisePropertyChanged("WSSubscriptionPolicySupportSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool WSPullPointSupport {
-            get {
-                return this.wSPullPointSupportField;
-            }
-            set {
-                this.wSPullPointSupportField = value;
-                this.RaisePropertyChanged("WSPullPointSupport");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool WSPullPointSupportSpecified {
-            get {
-                return this.wSPullPointSupportFieldSpecified;
-            }
-            set {
-                this.wSPullPointSupportFieldSpecified = value;
-                this.RaisePropertyChanged("WSPullPointSupportSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool WSPausableSubscriptionManagerInterfaceSupport {
-            get {
-                return this.wSPausableSubscriptionManagerInterfaceSupportField;
-            }
-            set {
-                this.wSPausableSubscriptionManagerInterfaceSupportField = value;
-                this.RaisePropertyChanged("WSPausableSubscriptionManagerInterfaceSupport");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool WSPausableSubscriptionManagerInterfaceSupportSpecified {
-            get {
-                return this.wSPausableSubscriptionManagerInterfaceSupportFieldSpecified;
-            }
-            set {
-                this.wSPausableSubscriptionManagerInterfaceSupportFieldSpecified = value;
-                this.RaisePropertyChanged("WSPausableSubscriptionManagerInterfaceSupportSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public int MaxNotificationProducers {
-            get {
-                return this.maxNotificationProducersField;
-            }
-            set {
-                this.maxNotificationProducersField = value;
-                this.RaisePropertyChanged("MaxNotificationProducers");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxNotificationProducersSpecified {
-            get {
-                return this.maxNotificationProducersFieldSpecified;
-            }
-            set {
-                this.maxNotificationProducersFieldSpecified = value;
-                this.RaisePropertyChanged("MaxNotificationProducersSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public int MaxPullPoints {
-            get {
-                return this.maxPullPointsField;
-            }
-            set {
-                this.maxPullPointsField = value;
-                this.RaisePropertyChanged("MaxPullPoints");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool MaxPullPointsSpecified {
-            get {
-                return this.maxPullPointsFieldSpecified;
-            }
-            set {
-                this.maxPullPointsFieldSpecified = value;
-                this.RaisePropertyChanged("MaxPullPointsSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool PersistentNotificationStorage {
-            get {
-                return this.persistentNotificationStorageField;
-            }
-            set {
-                this.persistentNotificationStorageField = value;
-                this.RaisePropertyChanged("PersistentNotificationStorage");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool PersistentNotificationStorageSpecified {
-            get {
-                return this.persistentNotificationStorageFieldSpecified;
-            }
-            set {
-                this.persistentNotificationStorageFieldSpecified = value;
-                this.RaisePropertyChanged("PersistentNotificationStorageSpecified");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
-        public System.Xml.XmlAttribute[] AnyAttr {
-            get {
-                return this.anyAttrField;
-            }
-            set {
-                this.anyAttrField = value;
-                this.RaisePropertyChanged("AnyAttr");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2")]
-    public partial class FilterType : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.onvif.org/ver10/events/wsdl")]
-    public partial class CreatePullPointSubscriptionSubscriptionPolicy : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreatePullPointSubscription", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
-    public partial class CreatePullPointSubscriptionRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
-        public Hspi.Onvif.Contracts.Event.FilterType Filter;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public string InitialTerminationTime;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=2)]
-        public Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionSubscriptionPolicy SubscriptionPolicy;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlElement[] Any;
-        
-        public CreatePullPointSubscriptionRequest() {
-        }
-        
-        public CreatePullPointSubscriptionRequest(Hspi.Onvif.Contracts.Event.FilterType Filter, string InitialTerminationTime, Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionSubscriptionPolicy SubscriptionPolicy, System.Xml.XmlElement[] Any) {
-            this.Filter = Filter;
-            this.InitialTerminationTime = InitialTerminationTime;
-            this.SubscriptionPolicy = SubscriptionPolicy;
-            this.Any = Any;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="CreatePullPointSubscriptionResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
-    public partial class CreatePullPointSubscriptionResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
-        public Hspi.Onvif.Contracts.Event.EndpointReferenceType SubscriptionReference;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        public System.DateTime CurrentTime;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", IsNullable=true)]
-        public System.Nullable<System.DateTime> TerminationTime;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlElement[] Any;
-        
-        public CreatePullPointSubscriptionResponse() {
-        }
-        
-        public CreatePullPointSubscriptionResponse(Hspi.Onvif.Contracts.Event.EndpointReferenceType SubscriptionReference, System.DateTime CurrentTime, System.Nullable<System.DateTime> TerminationTime, System.Xml.XmlElement[] Any) {
-            this.SubscriptionReference = SubscriptionReference;
-            this.CurrentTime = CurrentTime;
-            this.TerminationTime = TerminationTime;
-            this.Any = Any;
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
-    public partial class TopicSetType : ExtensibleDocumented {
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TopicSetType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TopicType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TopicNamespaceType))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
-    public abstract partial class ExtensibleDocumented : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private Documentation documentationField;
-        
-        private System.Xml.XmlAttribute[] anyAttrField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Documentation documentation {
-            get {
-                return this.documentationField;
-            }
-            set {
-                this.documentationField = value;
-                this.RaisePropertyChanged("documentation");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
-        public System.Xml.XmlAttribute[] AnyAttr {
-            get {
-                return this.anyAttrField;
-            }
-            set {
-                this.anyAttrField = value;
-                this.RaisePropertyChanged("AnyAttr");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
-    public partial class Documentation : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlNode[] anyField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlNode[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
-    public partial class TopicType : ExtensibleDocumented {
-        
-        private QueryExpressionType messagePatternField;
-        
-        private TopicType[] topicField;
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        private string nameField;
-        
-        private System.Xml.XmlQualifiedName[] messageTypesField;
-        
-        private bool finalField;
-        
-        public TopicType() {
-            this.finalField = false;
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public QueryExpressionType MessagePattern {
-            get {
-                return this.messagePatternField;
-            }
-            set {
-                this.messagePatternField = value;
-                this.RaisePropertyChanged("MessagePattern");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Topic", Order=1)]
-        public TopicType[] Topic {
-            get {
-                return this.topicField;
-            }
-            set {
-                this.topicField = value;
-                this.RaisePropertyChanged("Topic");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=2)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="NCName")]
-        public string name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-                this.RaisePropertyChanged("name");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public System.Xml.XmlQualifiedName[] messageTypes {
-            get {
-                return this.messageTypesField;
-            }
-            set {
-                this.messageTypesField = value;
-                this.RaisePropertyChanged("messageTypes");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool final {
-            get {
-                return this.finalField;
-            }
-            set {
-                this.finalField = value;
-                this.RaisePropertyChanged("final");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
-    public partial class QueryExpressionType : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlNode[] anyField;
-        
-        private string dialectField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlNode[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="anyURI")]
-        public string Dialect {
-            get {
-                return this.dialectField;
-            }
-            set {
-                this.dialectField = value;
-                this.RaisePropertyChanged("Dialect");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
-    public partial class TopicNamespaceType : ExtensibleDocumented {
-        
-        private TopicNamespaceTypeTopic[] topicField;
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        private string nameField;
-        
-        private string targetNamespaceField;
-        
-        private bool finalField;
-        
-        public TopicNamespaceType() {
-            this.finalField = false;
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Topic", Order=0)]
-        public TopicNamespaceTypeTopic[] Topic {
-            get {
-                return this.topicField;
-            }
-            set {
-                this.topicField = value;
-                this.RaisePropertyChanged("Topic");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=1)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="NCName")]
-        public string name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-                this.RaisePropertyChanged("name");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="anyURI")]
-        public string targetNamespace {
-            get {
-                return this.targetNamespaceField;
-            }
-            set {
-                this.targetNamespaceField = value;
-                this.RaisePropertyChanged("targetNamespace");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        [System.ComponentModel.DefaultValueAttribute(false)]
-        public bool final {
-            get {
-                return this.finalField;
-            }
-            set {
-                this.finalField = value;
-                this.RaisePropertyChanged("final");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://docs.oasis-open.org/wsn/t-1")]
-    public partial class TopicNamespaceTypeTopic : TopicType {
-        
-        private string parentField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType="token")]
-        public string parent {
-            get {
-                return this.parentField;
-            }
-            set {
-                this.parentField = value;
-                this.RaisePropertyChanged("parent");
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetEventProperties", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
-    public partial class GetEventPropertiesRequest {
-        
-        public GetEventPropertiesRequest() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetEventPropertiesResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
-    public partial class GetEventPropertiesResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute("TopicNamespaceLocation", DataType="anyURI")]
-        public string[] TopicNamespaceLocation;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=1)]
-        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        public bool FixedTopicSet;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
-        public Hspi.Onvif.Contracts.Event.TopicSetType TopicSet;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=3)]
-        [System.Xml.Serialization.XmlElementAttribute("TopicExpressionDialect", Namespace="http://docs.oasis-open.org/wsn/b-2", DataType="anyURI")]
-        public string[] TopicExpressionDialect;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=4)]
-        [System.Xml.Serialization.XmlElementAttribute("MessageContentFilterDialect", DataType="anyURI")]
-        public string[] MessageContentFilterDialect;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=5)]
-        [System.Xml.Serialization.XmlElementAttribute("ProducerPropertiesFilterDialect", DataType="anyURI")]
-        public string[] ProducerPropertiesFilterDialect;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=6)]
-        [System.Xml.Serialization.XmlElementAttribute("MessageContentSchemaLocation", DataType="anyURI")]
-        public string[] MessageContentSchemaLocation;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=7)]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlElement[] Any;
-        
-        public GetEventPropertiesResponse() {
-        }
-        
-        public GetEventPropertiesResponse(string[] TopicNamespaceLocation, bool FixedTopicSet, Hspi.Onvif.Contracts.Event.TopicSetType TopicSet, string[] TopicExpressionDialect, string[] MessageContentFilterDialect, string[] ProducerPropertiesFilterDialect, string[] MessageContentSchemaLocation, System.Xml.XmlElement[] Any) {
-            this.TopicNamespaceLocation = TopicNamespaceLocation;
-            this.FixedTopicSet = FixedTopicSet;
-            this.TopicSet = TopicSet;
-            this.TopicExpressionDialect = TopicExpressionDialect;
-            this.MessageContentFilterDialect = MessageContentFilterDialect;
-            this.ProducerPropertiesFilterDialect = ProducerPropertiesFilterDialect;
-            this.MessageContentSchemaLocation = MessageContentSchemaLocation;
-            this.Any = Any;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface EventPortTypeChannel : Hspi.Onvif.Contracts.Event.EventPortType, System.ServiceModel.IClientChannel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class EventPortTypeClient : System.ServiceModel.ClientBase<Hspi.Onvif.Contracts.Event.EventPortType>, Hspi.Onvif.Contracts.Event.EventPortType {
-        
-        public EventPortTypeClient() {
-        }
-        
-        public EventPortTypeClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
-        }
-        
-        public EventPortTypeClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
-        }
-        
-        public EventPortTypeClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
-        }
-        
-        public EventPortTypeClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
-        }
-        
-        public Hspi.Onvif.Contracts.Event.Capabilities GetServiceCapabilities() {
-            return base.Channel.GetServiceCapabilities();
-        }
-        
-        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.Capabilities> GetServiceCapabilitiesAsync() {
-            return base.Channel.GetServiceCapabilitiesAsync();
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse Hspi.Onvif.Contracts.Event.EventPortType.CreatePullPointSubscription(Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest request) {
-            return base.Channel.CreatePullPointSubscription(request);
-        }
-        
-        public Hspi.Onvif.Contracts.Event.EndpointReferenceType CreatePullPointSubscription(Hspi.Onvif.Contracts.Event.FilterType Filter, string InitialTerminationTime, Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionSubscriptionPolicy SubscriptionPolicy, ref System.Xml.XmlElement[] Any, out System.DateTime CurrentTime, out System.Nullable<System.DateTime> TerminationTime) {
-            Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest inValue = new Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest();
-            inValue.Filter = Filter;
-            inValue.InitialTerminationTime = InitialTerminationTime;
-            inValue.SubscriptionPolicy = SubscriptionPolicy;
-            inValue.Any = Any;
-            Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse retVal = ((Hspi.Onvif.Contracts.Event.EventPortType)(this)).CreatePullPointSubscription(inValue);
-            CurrentTime = retVal.CurrentTime;
-            TerminationTime = retVal.TerminationTime;
-            Any = retVal.Any;
-            return retVal.SubscriptionReference;
-        }
-        
-        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse> CreatePullPointSubscriptionAsync(Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest request) {
-            return base.Channel.CreatePullPointSubscriptionAsync(request);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse Hspi.Onvif.Contracts.Event.EventPortType.GetEventProperties(Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest request) {
-            return base.Channel.GetEventProperties(request);
-        }
-        
-        public string[] GetEventProperties(out bool FixedTopicSet, out Hspi.Onvif.Contracts.Event.TopicSetType TopicSet, out string[] TopicExpressionDialect, out string[] MessageContentFilterDialect, out string[] ProducerPropertiesFilterDialect, out string[] MessageContentSchemaLocation, out System.Xml.XmlElement[] Any) {
-            Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest inValue = new Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest();
-            Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse retVal = ((Hspi.Onvif.Contracts.Event.EventPortType)(this)).GetEventProperties(inValue);
-            FixedTopicSet = retVal.FixedTopicSet;
-            TopicSet = retVal.TopicSet;
-            TopicExpressionDialect = retVal.TopicExpressionDialect;
-            MessageContentFilterDialect = retVal.MessageContentFilterDialect;
-            ProducerPropertiesFilterDialect = retVal.ProducerPropertiesFilterDialect;
-            MessageContentSchemaLocation = retVal.MessageContentSchemaLocation;
-            Any = retVal.Any;
-            return retVal.TopicNamespaceLocation;
-        }
-        
-        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse> GetEventPropertiesAsync(Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest request) {
-            return base.Channel.GetEventPropertiesAsync(request);
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", ConfigurationName="Onvif.Contracts.Event.PullPointSubscription")]
-    public interface PullPointSubscription {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessagesRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessagesResponse" +
-            "")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.PullMessagesFaultResponse), Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessages/Fault/P" +
-            "ullMessagesFaultResponse", Name="PullMessagesFaultResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        Hspi.Onvif.Contracts.Event.PullMessagesResponse PullMessages(Hspi.Onvif.Contracts.Event.PullMessagesRequest request);
-        
-        // CODEGEN: Generating message contract since the operation has multiple return values.
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessagesRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessagesResponse" +
-            "")]
-        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.PullMessagesResponse> PullMessagesAsync(Hspi.Onvif.Contracts.Event.PullMessagesRequest request);
-        
-        // CODEGEN: Generating message contract since message part namespace () does not match the default value (http://www.onvif.org/ver10/events/wsdl)
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        Hspi.Onvif.Contracts.Event.SeekResponse Seek(Hspi.Onvif.Contracts.Event.SeekRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekResponse")]
-        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.SeekResponse> SeekAsync(Hspi.Onvif.Contracts.Event.SeekRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPo" +
-            "intRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPo" +
-            "intResponse")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        void SetSynchronizationPoint();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPo" +
-            "intRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPo" +
-            "intResponse")]
-        System.Threading.Tasks.Task SetSynchronizationPointAsync();
-        
-        // CODEGEN: Generating message contract since the operation Unsubscribe is neither RPC nor document wrapped.
-        [System.ServiceModel.OperationContractAttribute(Action="http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.ResourceUnknownFaultType), Action="http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", Name="ResourceUnknownFault", Namespace="http://docs.oasis-open.org/wsrf/r-2")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.UnableToDestroySubscriptionFaultType), Action="http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", Name="UnableToDestroySubscriptionFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        Hspi.Onvif.Contracts.Event.UnsubscribeResponse1 Unsubscribe(Hspi.Onvif.Contracts.Event.UnsubscribeRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", ReplyAction="*")]
-        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.UnsubscribeResponse1> UnsubscribeAsync(Hspi.Onvif.Contracts.Event.UnsubscribeRequest request);
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="PullMessages", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
-    public partial class PullMessagesRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(DataType="duration")]
-        public string Timeout;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=1)]
-        public int MessageLimit;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlElement[] Any;
-        
-        public PullMessagesRequest() {
-        }
-        
-        public PullMessagesRequest(string Timeout, int MessageLimit, System.Xml.XmlElement[] Any) {
-            this.Timeout = Timeout;
-            this.MessageLimit = MessageLimit;
-            this.Any = Any;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="PullMessagesResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
-    public partial class PullMessagesResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
-        public System.DateTime CurrentTime;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=1)]
-        public System.DateTime TerminationTime;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=2)]
-        [System.Xml.Serialization.XmlElementAttribute("NotificationMessage", Namespace="http://docs.oasis-open.org/wsn/b-2")]
-        public Hspi.Onvif.Contracts.Event.NotificationMessageHolderType[] NotificationMessage;
-        
-        public PullMessagesResponse() {
-        }
-        
-        public PullMessagesResponse(System.DateTime CurrentTime, System.DateTime TerminationTime, Hspi.Onvif.Contracts.Event.NotificationMessageHolderType[] NotificationMessage) {
-            this.CurrentTime = CurrentTime;
-            this.TerminationTime = TerminationTime;
-            this.NotificationMessage = NotificationMessage;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="Seek", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
-    public partial class SeekRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
-        public System.DateTime UtcTime;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=1)]
-        public bool Reverse;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlElement[] Any;
-        
-        public SeekRequest() {
-        }
-        
-        public SeekRequest(System.DateTime UtcTime, bool Reverse, System.Xml.XmlElement[] Any) {
-            this.UtcTime = UtcTime;
-            this.Reverse = Reverse;
-            this.Any = Any;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SeekResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
-    public partial class SeekResponse {
-        
-        public SeekResponse() {
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://docs.oasis-open.org/wsn/b-2")]
-    public partial class Unsubscribe : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://docs.oasis-open.org/wsn/b-2")]
-    public partial class UnsubscribeResponse : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Xml.XmlElement[] anyField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
-        public System.Xml.XmlElement[] Any {
-            get {
-                return this.anyField;
-            }
-            set {
-                this.anyField = value;
-                this.RaisePropertyChanged("Any");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class UnsubscribeRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=0)]
-        public Hspi.Onvif.Contracts.Event.Unsubscribe Unsubscribe;
-        
-        public UnsubscribeRequest() {
-        }
-        
-        public UnsubscribeRequest(Hspi.Onvif.Contracts.Event.Unsubscribe Unsubscribe) {
-            this.Unsubscribe = Unsubscribe;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class UnsubscribeResponse1 {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=0)]
-        public Hspi.Onvif.Contracts.Event.UnsubscribeResponse UnsubscribeResponse;
-        
-        public UnsubscribeResponse1() {
-        }
-        
-        public UnsubscribeResponse1(Hspi.Onvif.Contracts.Event.UnsubscribeResponse UnsubscribeResponse) {
-            this.UnsubscribeResponse = UnsubscribeResponse;
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface PullPointSubscriptionChannel : Hspi.Onvif.Contracts.Event.PullPointSubscription, System.ServiceModel.IClientChannel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class PullPointSubscriptionClient : System.ServiceModel.ClientBase<Hspi.Onvif.Contracts.Event.PullPointSubscription>, Hspi.Onvif.Contracts.Event.PullPointSubscription {
-        
-        public PullPointSubscriptionClient() {
-        }
-        
-        public PullPointSubscriptionClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
-        }
-        
-        public PullPointSubscriptionClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
-        }
-        
-        public PullPointSubscriptionClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
-        }
-        
-        public PullPointSubscriptionClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Hspi.Onvif.Contracts.Event.PullMessagesResponse Hspi.Onvif.Contracts.Event.PullPointSubscription.PullMessages(Hspi.Onvif.Contracts.Event.PullMessagesRequest request) {
-            return base.Channel.PullMessages(request);
-        }
-        
-        public System.DateTime PullMessages(string Timeout, int MessageLimit, System.Xml.XmlElement[] Any, out System.DateTime TerminationTime, out Hspi.Onvif.Contracts.Event.NotificationMessageHolderType[] NotificationMessage) {
-            Hspi.Onvif.Contracts.Event.PullMessagesRequest inValue = new Hspi.Onvif.Contracts.Event.PullMessagesRequest();
-            inValue.Timeout = Timeout;
-            inValue.MessageLimit = MessageLimit;
-            inValue.Any = Any;
-            Hspi.Onvif.Contracts.Event.PullMessagesResponse retVal = ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).PullMessages(inValue);
-            TerminationTime = retVal.TerminationTime;
-            NotificationMessage = retVal.NotificationMessage;
-            return retVal.CurrentTime;
-        }
-        
-        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.PullMessagesResponse> PullMessagesAsync(Hspi.Onvif.Contracts.Event.PullMessagesRequest request) {
-            return base.Channel.PullMessagesAsync(request);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Hspi.Onvif.Contracts.Event.SeekResponse Hspi.Onvif.Contracts.Event.PullPointSubscription.Seek(Hspi.Onvif.Contracts.Event.SeekRequest request) {
-            return base.Channel.Seek(request);
-        }
-        
-        public void Seek(System.DateTime UtcTime, bool Reverse, System.Xml.XmlElement[] Any) {
-            Hspi.Onvif.Contracts.Event.SeekRequest inValue = new Hspi.Onvif.Contracts.Event.SeekRequest();
-            inValue.UtcTime = UtcTime;
-            inValue.Reverse = Reverse;
-            inValue.Any = Any;
-            Hspi.Onvif.Contracts.Event.SeekResponse retVal = ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).Seek(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.SeekResponse> Hspi.Onvif.Contracts.Event.PullPointSubscription.SeekAsync(Hspi.Onvif.Contracts.Event.SeekRequest request) {
-            return base.Channel.SeekAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.SeekResponse> SeekAsync(System.DateTime UtcTime, bool Reverse, System.Xml.XmlElement[] Any) {
-            Hspi.Onvif.Contracts.Event.SeekRequest inValue = new Hspi.Onvif.Contracts.Event.SeekRequest();
-            inValue.UtcTime = UtcTime;
-            inValue.Reverse = Reverse;
-            inValue.Any = Any;
-            return ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).SeekAsync(inValue);
-        }
-        
-        public void SetSynchronizationPoint() {
-            base.Channel.SetSynchronizationPoint();
-        }
-        
-        public System.Threading.Tasks.Task SetSynchronizationPointAsync() {
-            return base.Channel.SetSynchronizationPointAsync();
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Hspi.Onvif.Contracts.Event.UnsubscribeResponse1 Hspi.Onvif.Contracts.Event.PullPointSubscription.Unsubscribe(Hspi.Onvif.Contracts.Event.UnsubscribeRequest request) {
-            return base.Channel.Unsubscribe(request);
-        }
-        
-        public Hspi.Onvif.Contracts.Event.UnsubscribeResponse Unsubscribe(Hspi.Onvif.Contracts.Event.Unsubscribe Unsubscribe1) {
-            Hspi.Onvif.Contracts.Event.UnsubscribeRequest inValue = new Hspi.Onvif.Contracts.Event.UnsubscribeRequest();
-            inValue.Unsubscribe = Unsubscribe1;
-            Hspi.Onvif.Contracts.Event.UnsubscribeResponse1 retVal = ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).Unsubscribe(inValue);
-            return retVal.UnsubscribeResponse;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.UnsubscribeResponse1> Hspi.Onvif.Contracts.Event.PullPointSubscription.UnsubscribeAsync(Hspi.Onvif.Contracts.Event.UnsubscribeRequest request) {
-            return base.Channel.UnsubscribeAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.UnsubscribeResponse1> UnsubscribeAsync(Hspi.Onvif.Contracts.Event.Unsubscribe Unsubscribe) {
-            Hspi.Onvif.Contracts.Event.UnsubscribeRequest inValue = new Hspi.Onvif.Contracts.Event.UnsubscribeRequest();
-            inValue.Unsubscribe = Unsubscribe;
-            return ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).UnsubscribeAsync(inValue);
-        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2235,7 +1000,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2395,7 +1160,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2483,7 +1248,39 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2")]
+    public partial class FilterType : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2515,7 +1312,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2651,7 +1448,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2697,7 +1494,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2870,7 +1667,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2930,7 +1727,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3024,7 +1821,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3070,7 +1867,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3264,7 +2061,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3310,7 +2107,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3480,7 +2277,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3526,7 +2323,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3630,6 +2427,104 @@ namespace Hspi.Onvif.Contracts.Event {
         
         public RenewResponse1(Hspi.Onvif.Contracts.Event.RenewResponse RenewResponse) {
             this.RenewResponse = RenewResponse;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://docs.oasis-open.org/wsn/b-2")]
+    public partial class Unsubscribe : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://docs.oasis-open.org/wsn/b-2")]
+    public partial class UnsubscribeResponse : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class UnsubscribeRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=0)]
+        public Hspi.Onvif.Contracts.Event.Unsubscribe Unsubscribe;
+        
+        public UnsubscribeRequest() {
+        }
+        
+        public UnsubscribeRequest(Hspi.Onvif.Contracts.Event.Unsubscribe Unsubscribe) {
+            this.Unsubscribe = Unsubscribe;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class UnsubscribeResponse1 {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=0)]
+        public Hspi.Onvif.Contracts.Event.UnsubscribeResponse UnsubscribeResponse;
+        
+        public UnsubscribeResponse1() {
+        }
+        
+        public UnsubscribeResponse1(Hspi.Onvif.Contracts.Event.UnsubscribeResponse UnsubscribeResponse) {
+            this.UnsubscribeResponse = UnsubscribeResponse;
         }
     }
     
@@ -3765,7 +2660,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3797,7 +2692,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3863,7 +2758,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3895,7 +2790,7 @@ namespace Hspi.Onvif.Contracts.Event {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4077,6 +2972,1466 @@ namespace Hspi.Onvif.Contracts.Event {
             Hspi.Onvif.Contracts.Event.ResumeSubscriptionRequest inValue = new Hspi.Onvif.Contracts.Event.ResumeSubscriptionRequest();
             inValue.ResumeSubscription = ResumeSubscription;
             return ((Hspi.Onvif.Contracts.Event.PausableSubscriptionManager)(this)).ResumeSubscriptionAsync(inValue);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", ConfigurationName="Onvif.Contracts.Event.EventPortType")]
+    public interface EventPortType {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesReques" +
+            "t", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesRespon" +
+            "se")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Capabilities")]
+        Hspi.Onvif.Contracts.Event.Capabilities GetServiceCapabilities();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesReques" +
+            "t", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilitiesRespon" +
+            "se")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Capabilities")]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.Capabilities> GetServiceCapabilitiesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "esponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.ResourceUnknownFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="ResourceUnknownFault", Namespace="http://docs.oasis-open.org/wsrf/r-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.InvalidFilterFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="InvalidFilterFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.TopicExpressionDialectUnknownFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="TopicExpressionDialectUnknownFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.InvalidTopicExpressionFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="InvalidTopicExpressionFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.TopicNotSupportedFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="TopicNotSupportedFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.InvalidProducerPropertiesExpressionFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="InvalidProducerPropertiesExpressionFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.InvalidMessageContentExpressionFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="InvalidMessageContentExpressionFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.UnacceptableInitialTerminationTimeFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="UnacceptableInitialTerminationTimeFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.UnrecognizedPolicyRequestFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="UnrecognizedPolicyRequestFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.UnsupportedPolicyRequestFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="UnsupportedPolicyRequestFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.NotifyMessageNotSupportedFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="NotifyMessageNotSupportedFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.SubscribeCreationFailedFaultType), Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", Name="SubscribeCreationFailedFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse CreatePullPointSubscription(Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "equest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionR" +
+            "esponse")]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse> CreatePullPointSubscriptionAsync(Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse GetEventProperties(Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse")]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse> GetEventPropertiesAsync(Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/AddEventBrokerRequest", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void AddEventBroker(Hspi.Onvif.Contracts.Event.EventBrokerConfig EventBroker);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/AddEventBrokerRequest", ReplyAction="*")]
+        System.Threading.Tasks.Task AddEventBrokerAsync(Hspi.Onvif.Contracts.Event.EventBrokerConfig EventBroker);
+        
+        // CODEGEN: Parameter 'Address' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/DeleteEventBrokerRequest", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        Hspi.Onvif.Contracts.Event.DeleteEventBrokerResponse DeleteEventBroker(Hspi.Onvif.Contracts.Event.DeleteEventBrokerRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/DeleteEventBrokerRequest", ReplyAction="*")]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.DeleteEventBrokerResponse> DeleteEventBrokerAsync(Hspi.Onvif.Contracts.Event.DeleteEventBrokerRequest request);
+        
+        // CODEGEN: Parameter 'EventBroker' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventBrokersRequest", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="EventBroker")]
+        Hspi.Onvif.Contracts.Event.GetEventBrokersResponse GetEventBrokers(Hspi.Onvif.Contracts.Event.GetEventBrokersRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventBrokersRequest", ReplyAction="*")]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.GetEventBrokersResponse> GetEventBrokersAsync(Hspi.Onvif.Contracts.Event.GetEventBrokersRequest request);
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl")]
+    public partial class Capabilities : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        private bool wSSubscriptionPolicySupportField;
+        
+        private bool wSSubscriptionPolicySupportFieldSpecified;
+        
+        private bool wSPullPointSupportField;
+        
+        private bool wSPullPointSupportFieldSpecified;
+        
+        private bool wSPausableSubscriptionManagerInterfaceSupportField;
+        
+        private bool wSPausableSubscriptionManagerInterfaceSupportFieldSpecified;
+        
+        private int maxNotificationProducersField;
+        
+        private bool maxNotificationProducersFieldSpecified;
+        
+        private int maxPullPointsField;
+        
+        private bool maxPullPointsFieldSpecified;
+        
+        private bool persistentNotificationStorageField;
+        
+        private bool persistentNotificationStorageFieldSpecified;
+        
+        private string eventBrokerProtocolsField;
+        
+        private int maxEventBrokersField;
+        
+        private bool maxEventBrokersFieldSpecified;
+        
+        private System.Xml.XmlAttribute[] anyAttrField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool WSSubscriptionPolicySupport {
+            get {
+                return this.wSSubscriptionPolicySupportField;
+            }
+            set {
+                this.wSSubscriptionPolicySupportField = value;
+                this.RaisePropertyChanged("WSSubscriptionPolicySupport");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool WSSubscriptionPolicySupportSpecified {
+            get {
+                return this.wSSubscriptionPolicySupportFieldSpecified;
+            }
+            set {
+                this.wSSubscriptionPolicySupportFieldSpecified = value;
+                this.RaisePropertyChanged("WSSubscriptionPolicySupportSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool WSPullPointSupport {
+            get {
+                return this.wSPullPointSupportField;
+            }
+            set {
+                this.wSPullPointSupportField = value;
+                this.RaisePropertyChanged("WSPullPointSupport");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool WSPullPointSupportSpecified {
+            get {
+                return this.wSPullPointSupportFieldSpecified;
+            }
+            set {
+                this.wSPullPointSupportFieldSpecified = value;
+                this.RaisePropertyChanged("WSPullPointSupportSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool WSPausableSubscriptionManagerInterfaceSupport {
+            get {
+                return this.wSPausableSubscriptionManagerInterfaceSupportField;
+            }
+            set {
+                this.wSPausableSubscriptionManagerInterfaceSupportField = value;
+                this.RaisePropertyChanged("WSPausableSubscriptionManagerInterfaceSupport");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool WSPausableSubscriptionManagerInterfaceSupportSpecified {
+            get {
+                return this.wSPausableSubscriptionManagerInterfaceSupportFieldSpecified;
+            }
+            set {
+                this.wSPausableSubscriptionManagerInterfaceSupportFieldSpecified = value;
+                this.RaisePropertyChanged("WSPausableSubscriptionManagerInterfaceSupportSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int MaxNotificationProducers {
+            get {
+                return this.maxNotificationProducersField;
+            }
+            set {
+                this.maxNotificationProducersField = value;
+                this.RaisePropertyChanged("MaxNotificationProducers");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MaxNotificationProducersSpecified {
+            get {
+                return this.maxNotificationProducersFieldSpecified;
+            }
+            set {
+                this.maxNotificationProducersFieldSpecified = value;
+                this.RaisePropertyChanged("MaxNotificationProducersSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int MaxPullPoints {
+            get {
+                return this.maxPullPointsField;
+            }
+            set {
+                this.maxPullPointsField = value;
+                this.RaisePropertyChanged("MaxPullPoints");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MaxPullPointsSpecified {
+            get {
+                return this.maxPullPointsFieldSpecified;
+            }
+            set {
+                this.maxPullPointsFieldSpecified = value;
+                this.RaisePropertyChanged("MaxPullPointsSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool PersistentNotificationStorage {
+            get {
+                return this.persistentNotificationStorageField;
+            }
+            set {
+                this.persistentNotificationStorageField = value;
+                this.RaisePropertyChanged("PersistentNotificationStorage");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PersistentNotificationStorageSpecified {
+            get {
+                return this.persistentNotificationStorageFieldSpecified;
+            }
+            set {
+                this.persistentNotificationStorageFieldSpecified = value;
+                this.RaisePropertyChanged("PersistentNotificationStorageSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string EventBrokerProtocols {
+            get {
+                return this.eventBrokerProtocolsField;
+            }
+            set {
+                this.eventBrokerProtocolsField = value;
+                this.RaisePropertyChanged("EventBrokerProtocols");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int MaxEventBrokers {
+            get {
+                return this.maxEventBrokersField;
+            }
+            set {
+                this.maxEventBrokersField = value;
+                this.RaisePropertyChanged("MaxEventBrokers");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MaxEventBrokersSpecified {
+            get {
+                return this.maxEventBrokersFieldSpecified;
+            }
+            set {
+                this.maxEventBrokersFieldSpecified = value;
+                this.RaisePropertyChanged("MaxEventBrokersSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
+        public System.Xml.XmlAttribute[] AnyAttr {
+            get {
+                return this.anyAttrField;
+            }
+            set {
+                this.anyAttrField = value;
+                this.RaisePropertyChanged("AnyAttr");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://www.onvif.org/ver10/events/wsdl")]
+    public partial class CreatePullPointSubscriptionSubscriptionPolicy : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CreatePullPointSubscription", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class CreatePullPointSubscriptionRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        public Hspi.Onvif.Contracts.Event.FilterType Filter;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string InitialTerminationTime;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=2)]
+        public Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionSubscriptionPolicy SubscriptionPolicy;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.XmlAnyElementAttribute()]
+        public System.Xml.XmlElement[] Any;
+        
+        public CreatePullPointSubscriptionRequest() {
+        }
+        
+        public CreatePullPointSubscriptionRequest(Hspi.Onvif.Contracts.Event.FilterType Filter, string InitialTerminationTime, Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionSubscriptionPolicy SubscriptionPolicy, System.Xml.XmlElement[] Any) {
+            this.Filter = Filter;
+            this.InitialTerminationTime = InitialTerminationTime;
+            this.SubscriptionPolicy = SubscriptionPolicy;
+            this.Any = Any;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CreatePullPointSubscriptionResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class CreatePullPointSubscriptionResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        public Hspi.Onvif.Contracts.Event.EndpointReferenceType SubscriptionReference;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        public System.DateTime CurrentTime;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", IsNullable=true)]
+        public System.Nullable<System.DateTime> TerminationTime;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=3)]
+        [System.Xml.Serialization.XmlAnyElementAttribute()]
+        public System.Xml.XmlElement[] Any;
+        
+        public CreatePullPointSubscriptionResponse() {
+        }
+        
+        public CreatePullPointSubscriptionResponse(Hspi.Onvif.Contracts.Event.EndpointReferenceType SubscriptionReference, System.DateTime CurrentTime, System.Nullable<System.DateTime> TerminationTime, System.Xml.XmlElement[] Any) {
+            this.SubscriptionReference = SubscriptionReference;
+            this.CurrentTime = CurrentTime;
+            this.TerminationTime = TerminationTime;
+            this.Any = Any;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
+    public partial class TopicSetType : ExtensibleDocumented {
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TopicSetType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TopicType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TopicNamespaceType))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
+    public abstract partial class ExtensibleDocumented : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private Documentation documentationField;
+        
+        private System.Xml.XmlAttribute[] anyAttrField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Documentation documentation {
+            get {
+                return this.documentationField;
+            }
+            set {
+                this.documentationField = value;
+                this.RaisePropertyChanged("documentation");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
+        public System.Xml.XmlAttribute[] AnyAttr {
+            get {
+                return this.anyAttrField;
+            }
+            set {
+                this.anyAttrField = value;
+                this.RaisePropertyChanged("AnyAttr");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
+    public partial class Documentation : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlNode[] anyField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlNode[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
+    public partial class TopicType : ExtensibleDocumented {
+        
+        private QueryExpressionType messagePatternField;
+        
+        private TopicType[] topicField;
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        private string nameField;
+        
+        private System.Xml.XmlQualifiedName[] messageTypesField;
+        
+        private bool finalField;
+        
+        public TopicType() {
+            this.finalField = false;
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public QueryExpressionType MessagePattern {
+            get {
+                return this.messagePatternField;
+            }
+            set {
+                this.messagePatternField = value;
+                this.RaisePropertyChanged("MessagePattern");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Topic", Order=1)]
+        public TopicType[] Topic {
+            get {
+                return this.topicField;
+            }
+            set {
+                this.topicField = value;
+                this.RaisePropertyChanged("Topic");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=2)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="NCName")]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+                this.RaisePropertyChanged("name");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public System.Xml.XmlQualifiedName[] messageTypes {
+            get {
+                return this.messageTypesField;
+            }
+            set {
+                this.messageTypesField = value;
+                this.RaisePropertyChanged("messageTypes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool final {
+            get {
+                return this.finalField;
+            }
+            set {
+                this.finalField = value;
+                this.RaisePropertyChanged("final");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
+    public partial class QueryExpressionType : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Xml.XmlNode[] anyField;
+        
+        private string dialectField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=0)]
+        public System.Xml.XmlNode[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="anyURI")]
+        public string Dialect {
+            get {
+                return this.dialectField;
+            }
+            set {
+                this.dialectField = value;
+                this.RaisePropertyChanged("Dialect");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
+    public partial class TopicNamespaceType : ExtensibleDocumented {
+        
+        private TopicNamespaceTypeTopic[] topicField;
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        private string nameField;
+        
+        private string targetNamespaceField;
+        
+        private bool finalField;
+        
+        public TopicNamespaceType() {
+            this.finalField = false;
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Topic", Order=0)]
+        public TopicNamespaceTypeTopic[] Topic {
+            get {
+                return this.topicField;
+            }
+            set {
+                this.topicField = value;
+                this.RaisePropertyChanged("Topic");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=1)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="NCName")]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+                this.RaisePropertyChanged("name");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="anyURI")]
+        public string targetNamespace {
+            get {
+                return this.targetNamespaceField;
+            }
+            set {
+                this.targetNamespaceField = value;
+                this.RaisePropertyChanged("targetNamespace");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool final {
+            get {
+                return this.finalField;
+            }
+            set {
+                this.finalField = value;
+                this.RaisePropertyChanged("final");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://docs.oasis-open.org/wsn/t-1")]
+    public partial class TopicNamespaceTypeTopic : TopicType {
+        
+        private string parentField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="token")]
+        public string parent {
+            get {
+                return this.parentField;
+            }
+            set {
+                this.parentField = value;
+                this.RaisePropertyChanged("parent");
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetEventProperties", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class GetEventPropertiesRequest {
+        
+        public GetEventPropertiesRequest() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetEventPropertiesResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class GetEventPropertiesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("TopicNamespaceLocation", DataType="anyURI")]
+        public string[] TopicNamespaceLocation;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        public bool FixedTopicSet;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="http://docs.oasis-open.org/wsn/t-1")]
+        public Hspi.Onvif.Contracts.Event.TopicSetType TopicSet;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute("TopicExpressionDialect", Namespace="http://docs.oasis-open.org/wsn/b-2", DataType="anyURI")]
+        public string[] TopicExpressionDialect;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute("MessageContentFilterDialect", DataType="anyURI")]
+        public string[] MessageContentFilterDialect;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute("ProducerPropertiesFilterDialect", DataType="anyURI")]
+        public string[] ProducerPropertiesFilterDialect;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute("MessageContentSchemaLocation", DataType="anyURI")]
+        public string[] MessageContentSchemaLocation;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=7)]
+        [System.Xml.Serialization.XmlAnyElementAttribute()]
+        public System.Xml.XmlElement[] Any;
+        
+        public GetEventPropertiesResponse() {
+        }
+        
+        public GetEventPropertiesResponse(string[] TopicNamespaceLocation, bool FixedTopicSet, Hspi.Onvif.Contracts.Event.TopicSetType TopicSet, string[] TopicExpressionDialect, string[] MessageContentFilterDialect, string[] ProducerPropertiesFilterDialect, string[] MessageContentSchemaLocation, System.Xml.XmlElement[] Any) {
+            this.TopicNamespaceLocation = TopicNamespaceLocation;
+            this.FixedTopicSet = FixedTopicSet;
+            this.TopicSet = TopicSet;
+            this.TopicExpressionDialect = TopicExpressionDialect;
+            this.MessageContentFilterDialect = MessageContentFilterDialect;
+            this.ProducerPropertiesFilterDialect = ProducerPropertiesFilterDialect;
+            this.MessageContentSchemaLocation = MessageContentSchemaLocation;
+            this.Any = Any;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl")]
+    public partial class EventBrokerConfig : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string addressField;
+        
+        private string topicPrefixField;
+        
+        private string userNameField;
+        
+        private string passwordField;
+        
+        private string certificateIDField;
+        
+        private FilterType publishFilterField;
+        
+        private int qoSField;
+        
+        private bool qoSFieldSpecified;
+        
+        private string statusField;
+        
+        private System.Xml.XmlElement[] anyField;
+        
+        private System.Xml.XmlAttribute[] anyAttrField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="anyURI", Order=0)]
+        public string Address {
+            get {
+                return this.addressField;
+            }
+            set {
+                this.addressField = value;
+                this.RaisePropertyChanged("Address");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string TopicPrefix {
+            get {
+                return this.topicPrefixField;
+            }
+            set {
+                this.topicPrefixField = value;
+                this.RaisePropertyChanged("TopicPrefix");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string UserName {
+            get {
+                return this.userNameField;
+            }
+            set {
+                this.userNameField = value;
+                this.RaisePropertyChanged("UserName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string Password {
+            get {
+                return this.passwordField;
+            }
+            set {
+                this.passwordField = value;
+                this.RaisePropertyChanged("Password");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="token", Order=4)]
+        public string CertificateID {
+            get {
+                return this.certificateIDField;
+            }
+            set {
+                this.certificateIDField = value;
+                this.RaisePropertyChanged("CertificateID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public FilterType PublishFilter {
+            get {
+                return this.publishFilterField;
+            }
+            set {
+                this.publishFilterField = value;
+                this.RaisePropertyChanged("PublishFilter");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public int QoS {
+            get {
+                return this.qoSField;
+            }
+            set {
+                this.qoSField = value;
+                this.RaisePropertyChanged("QoS");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool QoSSpecified {
+            get {
+                return this.qoSFieldSpecified;
+            }
+            set {
+                this.qoSFieldSpecified = value;
+                this.RaisePropertyChanged("QoSSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string Status {
+            get {
+                return this.statusField;
+            }
+            set {
+                this.statusField = value;
+                this.RaisePropertyChanged("Status");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyElementAttribute(Order=8)]
+        public System.Xml.XmlElement[] Any {
+            get {
+                return this.anyField;
+            }
+            set {
+                this.anyField = value;
+                this.RaisePropertyChanged("Any");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
+        public System.Xml.XmlAttribute[] AnyAttr {
+            get {
+                return this.anyAttrField;
+            }
+            set {
+                this.anyAttrField = value;
+                this.RaisePropertyChanged("AnyAttr");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="DeleteEventBroker", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class DeleteEventBrokerRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="anyURI")]
+        public string Address;
+        
+        public DeleteEventBrokerRequest() {
+        }
+        
+        public DeleteEventBrokerRequest(string Address) {
+            this.Address = Address;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="DeleteEventBrokerResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class DeleteEventBrokerResponse {
+        
+        public DeleteEventBrokerResponse() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetEventBrokers", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class GetEventBrokersRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="anyURI")]
+        public string Address;
+        
+        public GetEventBrokersRequest() {
+        }
+        
+        public GetEventBrokersRequest(string Address) {
+            this.Address = Address;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetEventBrokersResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class GetEventBrokersResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("EventBroker")]
+        public Hspi.Onvif.Contracts.Event.EventBrokerConfig[] EventBroker;
+        
+        public GetEventBrokersResponse() {
+        }
+        
+        public GetEventBrokersResponse(Hspi.Onvif.Contracts.Event.EventBrokerConfig[] EventBroker) {
+            this.EventBroker = EventBroker;
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface EventPortTypeChannel : Hspi.Onvif.Contracts.Event.EventPortType, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class EventPortTypeClient : System.ServiceModel.ClientBase<Hspi.Onvif.Contracts.Event.EventPortType>, Hspi.Onvif.Contracts.Event.EventPortType {
+        
+        public EventPortTypeClient() {
+        }
+        
+        public EventPortTypeClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public EventPortTypeClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public EventPortTypeClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public EventPortTypeClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public Hspi.Onvif.Contracts.Event.Capabilities GetServiceCapabilities() {
+            return base.Channel.GetServiceCapabilities();
+        }
+        
+        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.Capabilities> GetServiceCapabilitiesAsync() {
+            return base.Channel.GetServiceCapabilitiesAsync();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse Hspi.Onvif.Contracts.Event.EventPortType.CreatePullPointSubscription(Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest request) {
+            return base.Channel.CreatePullPointSubscription(request);
+        }
+        
+        public Hspi.Onvif.Contracts.Event.EndpointReferenceType CreatePullPointSubscription(Hspi.Onvif.Contracts.Event.FilterType Filter, string InitialTerminationTime, Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionSubscriptionPolicy SubscriptionPolicy, ref System.Xml.XmlElement[] Any, out System.DateTime CurrentTime, out System.Nullable<System.DateTime> TerminationTime) {
+            Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest inValue = new Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest();
+            inValue.Filter = Filter;
+            inValue.InitialTerminationTime = InitialTerminationTime;
+            inValue.SubscriptionPolicy = SubscriptionPolicy;
+            inValue.Any = Any;
+            Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse retVal = ((Hspi.Onvif.Contracts.Event.EventPortType)(this)).CreatePullPointSubscription(inValue);
+            CurrentTime = retVal.CurrentTime;
+            TerminationTime = retVal.TerminationTime;
+            Any = retVal.Any;
+            return retVal.SubscriptionReference;
+        }
+        
+        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionResponse> CreatePullPointSubscriptionAsync(Hspi.Onvif.Contracts.Event.CreatePullPointSubscriptionRequest request) {
+            return base.Channel.CreatePullPointSubscriptionAsync(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse Hspi.Onvif.Contracts.Event.EventPortType.GetEventProperties(Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest request) {
+            return base.Channel.GetEventProperties(request);
+        }
+        
+        public string[] GetEventProperties(out bool FixedTopicSet, out Hspi.Onvif.Contracts.Event.TopicSetType TopicSet, out string[] TopicExpressionDialect, out string[] MessageContentFilterDialect, out string[] ProducerPropertiesFilterDialect, out string[] MessageContentSchemaLocation, out System.Xml.XmlElement[] Any) {
+            Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest inValue = new Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest();
+            Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse retVal = ((Hspi.Onvif.Contracts.Event.EventPortType)(this)).GetEventProperties(inValue);
+            FixedTopicSet = retVal.FixedTopicSet;
+            TopicSet = retVal.TopicSet;
+            TopicExpressionDialect = retVal.TopicExpressionDialect;
+            MessageContentFilterDialect = retVal.MessageContentFilterDialect;
+            ProducerPropertiesFilterDialect = retVal.ProducerPropertiesFilterDialect;
+            MessageContentSchemaLocation = retVal.MessageContentSchemaLocation;
+            Any = retVal.Any;
+            return retVal.TopicNamespaceLocation;
+        }
+        
+        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.GetEventPropertiesResponse> GetEventPropertiesAsync(Hspi.Onvif.Contracts.Event.GetEventPropertiesRequest request) {
+            return base.Channel.GetEventPropertiesAsync(request);
+        }
+        
+        public void AddEventBroker(Hspi.Onvif.Contracts.Event.EventBrokerConfig EventBroker) {
+            base.Channel.AddEventBroker(EventBroker);
+        }
+        
+        public System.Threading.Tasks.Task AddEventBrokerAsync(Hspi.Onvif.Contracts.Event.EventBrokerConfig EventBroker) {
+            return base.Channel.AddEventBrokerAsync(EventBroker);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Hspi.Onvif.Contracts.Event.DeleteEventBrokerResponse Hspi.Onvif.Contracts.Event.EventPortType.DeleteEventBroker(Hspi.Onvif.Contracts.Event.DeleteEventBrokerRequest request) {
+            return base.Channel.DeleteEventBroker(request);
+        }
+        
+        public void DeleteEventBroker(string Address) {
+            Hspi.Onvif.Contracts.Event.DeleteEventBrokerRequest inValue = new Hspi.Onvif.Contracts.Event.DeleteEventBrokerRequest();
+            inValue.Address = Address;
+            Hspi.Onvif.Contracts.Event.DeleteEventBrokerResponse retVal = ((Hspi.Onvif.Contracts.Event.EventPortType)(this)).DeleteEventBroker(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.DeleteEventBrokerResponse> Hspi.Onvif.Contracts.Event.EventPortType.DeleteEventBrokerAsync(Hspi.Onvif.Contracts.Event.DeleteEventBrokerRequest request) {
+            return base.Channel.DeleteEventBrokerAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.DeleteEventBrokerResponse> DeleteEventBrokerAsync(string Address) {
+            Hspi.Onvif.Contracts.Event.DeleteEventBrokerRequest inValue = new Hspi.Onvif.Contracts.Event.DeleteEventBrokerRequest();
+            inValue.Address = Address;
+            return ((Hspi.Onvif.Contracts.Event.EventPortType)(this)).DeleteEventBrokerAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Hspi.Onvif.Contracts.Event.GetEventBrokersResponse Hspi.Onvif.Contracts.Event.EventPortType.GetEventBrokers(Hspi.Onvif.Contracts.Event.GetEventBrokersRequest request) {
+            return base.Channel.GetEventBrokers(request);
+        }
+        
+        public Hspi.Onvif.Contracts.Event.EventBrokerConfig[] GetEventBrokers(string Address) {
+            Hspi.Onvif.Contracts.Event.GetEventBrokersRequest inValue = new Hspi.Onvif.Contracts.Event.GetEventBrokersRequest();
+            inValue.Address = Address;
+            Hspi.Onvif.Contracts.Event.GetEventBrokersResponse retVal = ((Hspi.Onvif.Contracts.Event.EventPortType)(this)).GetEventBrokers(inValue);
+            return retVal.EventBroker;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.GetEventBrokersResponse> Hspi.Onvif.Contracts.Event.EventPortType.GetEventBrokersAsync(Hspi.Onvif.Contracts.Event.GetEventBrokersRequest request) {
+            return base.Channel.GetEventBrokersAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.GetEventBrokersResponse> GetEventBrokersAsync(string Address) {
+            Hspi.Onvif.Contracts.Event.GetEventBrokersRequest inValue = new Hspi.Onvif.Contracts.Event.GetEventBrokersRequest();
+            inValue.Address = Address;
+            return ((Hspi.Onvif.Contracts.Event.EventPortType)(this)).GetEventBrokersAsync(inValue);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", ConfigurationName="Onvif.Contracts.Event.PullPointSubscription")]
+    public interface PullPointSubscription {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessagesRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessagesResponse" +
+            "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.PullMessagesFaultResponse), Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessages/Fault/P" +
+            "ullMessagesFaultResponse", Name="PullMessagesFaultResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        Hspi.Onvif.Contracts.Event.PullMessagesResponse PullMessages(Hspi.Onvif.Contracts.Event.PullMessagesRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessagesRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/PullMessagesResponse" +
+            "")]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.PullMessagesResponse> PullMessagesAsync(Hspi.Onvif.Contracts.Event.PullMessagesRequest request);
+        
+        // CODEGEN: Generating message contract since message part namespace () does not match the default value (http://www.onvif.org/ver10/events/wsdl)
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        Hspi.Onvif.Contracts.Event.SeekResponse Seek(Hspi.Onvif.Contracts.Event.SeekRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SeekResponse")]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.SeekResponse> SeekAsync(Hspi.Onvif.Contracts.Event.SeekRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPo" +
+            "intRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPo" +
+            "intResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        void SetSynchronizationPoint();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPo" +
+            "intRequest", ReplyAction="http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPo" +
+            "intResponse")]
+        System.Threading.Tasks.Task SetSynchronizationPointAsync();
+        
+        // CODEGEN: Generating message contract since the operation Unsubscribe is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", ReplyAction="*")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.ResourceUnknownFaultType), Action="http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", Name="ResourceUnknownFault", Namespace="http://docs.oasis-open.org/wsrf/r-2")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Hspi.Onvif.Contracts.Event.UnableToDestroySubscriptionFaultType), Action="http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", Name="UnableToDestroySubscriptionFault", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        Hspi.Onvif.Contracts.Event.UnsubscribeResponse1 Unsubscribe(Hspi.Onvif.Contracts.Event.UnsubscribeRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest", ReplyAction="*")]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.UnsubscribeResponse1> UnsubscribeAsync(Hspi.Onvif.Contracts.Event.UnsubscribeRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PullMessages", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class PullMessagesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType="duration")]
+        public string Timeout;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=1)]
+        public int MessageLimit;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.XmlAnyElementAttribute()]
+        public System.Xml.XmlElement[] Any;
+        
+        public PullMessagesRequest() {
+        }
+        
+        public PullMessagesRequest(string Timeout, int MessageLimit, System.Xml.XmlElement[] Any) {
+            this.Timeout = Timeout;
+            this.MessageLimit = MessageLimit;
+            this.Any = Any;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PullMessagesResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class PullMessagesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        public System.DateTime CurrentTime;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=1)]
+        public System.DateTime TerminationTime;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://docs.oasis-open.org/wsn/b-2", Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute("NotificationMessage", Namespace="http://docs.oasis-open.org/wsn/b-2")]
+        public Hspi.Onvif.Contracts.Event.NotificationMessageHolderType[] NotificationMessage;
+        
+        public PullMessagesResponse() {
+        }
+        
+        public PullMessagesResponse(System.DateTime CurrentTime, System.DateTime TerminationTime, Hspi.Onvif.Contracts.Event.NotificationMessageHolderType[] NotificationMessage) {
+            this.CurrentTime = CurrentTime;
+            this.TerminationTime = TerminationTime;
+            this.NotificationMessage = NotificationMessage;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Seek", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class SeekRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=0)]
+        public System.DateTime UtcTime;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.onvif.org/ver10/events/wsdl", Order=1)]
+        public bool Reverse;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
+        [System.Xml.Serialization.XmlAnyElementAttribute()]
+        public System.Xml.XmlElement[] Any;
+        
+        public SeekRequest() {
+        }
+        
+        public SeekRequest(System.DateTime UtcTime, bool Reverse, System.Xml.XmlElement[] Any) {
+            this.UtcTime = UtcTime;
+            this.Reverse = Reverse;
+            this.Any = Any;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SeekResponse", WrapperNamespace="http://www.onvif.org/ver10/events/wsdl", IsWrapped=true)]
+    public partial class SeekResponse {
+        
+        public SeekResponse() {
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface PullPointSubscriptionChannel : Hspi.Onvif.Contracts.Event.PullPointSubscription, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class PullPointSubscriptionClient : System.ServiceModel.ClientBase<Hspi.Onvif.Contracts.Event.PullPointSubscription>, Hspi.Onvif.Contracts.Event.PullPointSubscription {
+        
+        public PullPointSubscriptionClient() {
+        }
+        
+        public PullPointSubscriptionClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public PullPointSubscriptionClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public PullPointSubscriptionClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public PullPointSubscriptionClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Hspi.Onvif.Contracts.Event.PullMessagesResponse Hspi.Onvif.Contracts.Event.PullPointSubscription.PullMessages(Hspi.Onvif.Contracts.Event.PullMessagesRequest request) {
+            return base.Channel.PullMessages(request);
+        }
+        
+        public System.DateTime PullMessages(string Timeout, int MessageLimit, System.Xml.XmlElement[] Any, out System.DateTime TerminationTime, out Hspi.Onvif.Contracts.Event.NotificationMessageHolderType[] NotificationMessage) {
+            Hspi.Onvif.Contracts.Event.PullMessagesRequest inValue = new Hspi.Onvif.Contracts.Event.PullMessagesRequest();
+            inValue.Timeout = Timeout;
+            inValue.MessageLimit = MessageLimit;
+            inValue.Any = Any;
+            Hspi.Onvif.Contracts.Event.PullMessagesResponse retVal = ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).PullMessages(inValue);
+            TerminationTime = retVal.TerminationTime;
+            NotificationMessage = retVal.NotificationMessage;
+            return retVal.CurrentTime;
+        }
+        
+        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.PullMessagesResponse> PullMessagesAsync(Hspi.Onvif.Contracts.Event.PullMessagesRequest request) {
+            return base.Channel.PullMessagesAsync(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Hspi.Onvif.Contracts.Event.SeekResponse Hspi.Onvif.Contracts.Event.PullPointSubscription.Seek(Hspi.Onvif.Contracts.Event.SeekRequest request) {
+            return base.Channel.Seek(request);
+        }
+        
+        public void Seek(System.DateTime UtcTime, bool Reverse, System.Xml.XmlElement[] Any) {
+            Hspi.Onvif.Contracts.Event.SeekRequest inValue = new Hspi.Onvif.Contracts.Event.SeekRequest();
+            inValue.UtcTime = UtcTime;
+            inValue.Reverse = Reverse;
+            inValue.Any = Any;
+            Hspi.Onvif.Contracts.Event.SeekResponse retVal = ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).Seek(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.SeekResponse> Hspi.Onvif.Contracts.Event.PullPointSubscription.SeekAsync(Hspi.Onvif.Contracts.Event.SeekRequest request) {
+            return base.Channel.SeekAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.SeekResponse> SeekAsync(System.DateTime UtcTime, bool Reverse, System.Xml.XmlElement[] Any) {
+            Hspi.Onvif.Contracts.Event.SeekRequest inValue = new Hspi.Onvif.Contracts.Event.SeekRequest();
+            inValue.UtcTime = UtcTime;
+            inValue.Reverse = Reverse;
+            inValue.Any = Any;
+            return ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).SeekAsync(inValue);
+        }
+        
+        public void SetSynchronizationPoint() {
+            base.Channel.SetSynchronizationPoint();
+        }
+        
+        public System.Threading.Tasks.Task SetSynchronizationPointAsync() {
+            return base.Channel.SetSynchronizationPointAsync();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Hspi.Onvif.Contracts.Event.UnsubscribeResponse1 Hspi.Onvif.Contracts.Event.PullPointSubscription.Unsubscribe(Hspi.Onvif.Contracts.Event.UnsubscribeRequest request) {
+            return base.Channel.Unsubscribe(request);
+        }
+        
+        public Hspi.Onvif.Contracts.Event.UnsubscribeResponse Unsubscribe(Hspi.Onvif.Contracts.Event.Unsubscribe Unsubscribe1) {
+            Hspi.Onvif.Contracts.Event.UnsubscribeRequest inValue = new Hspi.Onvif.Contracts.Event.UnsubscribeRequest();
+            inValue.Unsubscribe = Unsubscribe1;
+            Hspi.Onvif.Contracts.Event.UnsubscribeResponse1 retVal = ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).Unsubscribe(inValue);
+            return retVal.UnsubscribeResponse;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.UnsubscribeResponse1> Hspi.Onvif.Contracts.Event.PullPointSubscription.UnsubscribeAsync(Hspi.Onvif.Contracts.Event.UnsubscribeRequest request) {
+            return base.Channel.UnsubscribeAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Hspi.Onvif.Contracts.Event.UnsubscribeResponse1> UnsubscribeAsync(Hspi.Onvif.Contracts.Event.Unsubscribe Unsubscribe) {
+            Hspi.Onvif.Contracts.Event.UnsubscribeRequest inValue = new Hspi.Onvif.Contracts.Event.UnsubscribeRequest();
+            inValue.Unsubscribe = Unsubscribe;
+            return ((Hspi.Onvif.Contracts.Event.PullPointSubscription)(this)).UnsubscribeAsync(inValue);
         }
     }
 }

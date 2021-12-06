@@ -7,7 +7,7 @@ namespace Hspi.Camera
 
     internal abstract class OnOffCameraContruct : ICameraContruct
     {
-        public OnOffCameraContruct(string id, DeviceType deviceType, bool active)
+        protected OnOffCameraContruct(string id, DeviceType deviceType, bool active)
         {
             Id = id;
             DeviceType = deviceType;

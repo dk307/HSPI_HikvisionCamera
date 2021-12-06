@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" elementFormDefault="qualified" targetNamespace="http://www.onvif.org/ver10/schema" version="19.12" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" elementFormDefault="qualified" targetNamespace="http://www.onvif.org/ver10/schema" version="21.06" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:include schemaLocation="common.xsd" />
   <xs:import schemaLocation="http://www.w3.org/2005/05/xmlmime" namespace="http://www.w3.org/2005/05/xmlmime" />
   <xs:import schemaLocation="http://www.w3.org/2003/05/soap-envelope" namespace="http://www.w3.org/2003/05/soap-envelope" />
@@ -85,10 +85,10 @@
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Items" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="IntAttrList">
+  <xs:simpleType name="IntList">
     <xs:list itemType="xs:int" />
   </xs:simpleType>
-  <xs:simpleType name="FloatAttrList">
+  <xs:simpleType name="FloatList">
     <xs:list itemType="xs:float" />
   </xs:simpleType>
   <xs:simpleType name="StringAttrList">
@@ -114,9 +114,9 @@
   </xs:element>
   <xs:element name="StringList" type="tt:StringList" />
   <xs:element name="IntRange" type="tt:IntRange" />
-  <xs:element name="IntList" type="tt:IntAttrList" />
+  <xs:element name="IntList" type="tt:IntList" />
   <xs:element name="FloatRange" type="tt:FloatRange" />
-  <xs:element name="FloatList" type="tt:FloatAttrList" />
+  <xs:element name="FloatList" type="tt:FloatList" />
   <xs:element name="DurationRange" type="tt:DurationRange" />
   <xs:element name="IntRectangleRange" type="tt:IntRectangleRange" />
   <xs:complexType name="AnyHolder">
@@ -1087,12 +1087,12 @@
       </xs:element>
       <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax" />
     </xs:sequence>
-    <xs:attribute name="GovLengthRange" type="tt:IntAttrList">
+    <xs:attribute name="GovLengthRange" type="tt:IntList">
       <xs:annotation>
         <xs:documentation>Exactly two values, which define the Lower and Upper bounds for the supported group of Video frames length. These values typically correspond to the I-Frame distance.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="FrameRatesSupported" type="tt:FloatAttrList">
+    <xs:attribute name="FrameRatesSupported" type="tt:FloatList">
       <xs:annotation>
         <xs:documentation>List of supported target frame rates in fps (frames per second). The list shall be sorted with highest values first.</xs:documentation>
       </xs:annotation>
@@ -1343,6 +1343,11 @@
             <xs:documentation>Optional parameter to configure if the metadata stream shall contain the Geo Location coordinates of each target.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
+        <xs:attribute name="ShapePolygon" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>Optional parameter to configure if the generated metadata stream should contain shape information as polygon.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
         <xs:anyAttribute processContents="lax" />
       </xs:extension>
     </xs:complexContent>
@@ -1393,6 +1398,11 @@
     <xs:attribute name="GeoLocation" type="xs:boolean">
       <xs:annotation>
         <xs:documentation>True if the device is able to stream the Geo Located positions of each target.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="MaxContentFilterSize" type="xs:int">
+      <xs:annotation>
+        <xs:documentation>A device signalling support for content filtering shall support expressions with the provided expression size.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:anyAttribute processContents="lax" />
@@ -4026,7 +4036,7 @@ decoding .A decoder shall decode every data it receives (according to its capabi
       </xs:element>
       <xs:element minOccurs="0" name="Extension" type="tt:PTZConfigurationOptions2" />
     </xs:sequence>
-    <xs:attribute name="PTZRamps" type="tt:IntAttrList">
+    <xs:attribute name="PTZRamps" type="tt:IntList">
       <xs:annotation>
         <xs:documentation>
 					The list of acceleration ramps supported by the device. The
@@ -4551,6 +4561,14 @@ decoding .A decoder shall decode every data it receives (according to its capabi
       <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace" processContents="lax" />
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="MoveAndTrackMethod">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PresetToken" />
+      <xs:enumeration value="GeoLocation" />
+      <xs:enumeration value="PTZVector" />
+      <xs:enumeration value="ObjectID" />
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="ImagingStatus">
     <xs:sequence>
       <xs:element name="FocusStatus" type="tt:FocusStatus" />
@@ -5996,12 +6014,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ItemList">
-    <xs:annotation>
-      <xs:documentation>
-			List of parameters according to the corresponding ItemListDescription.
-			Each item in the list shall have a unique name.
-		</xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="SimpleItem">
         <xs:annotation>
@@ -6174,7 +6186,7 @@ If set to 0.0, infinity will be used.</xs:documentation>
     <xs:sequence>
       <xs:element name="Parameters" type="tt:ItemList">
         <xs:annotation>
-          <xs:documentation>List of configuration parameters as defined in the correspding description.</xs:documentation>
+          <xs:documentation>List of configuration parameters as defined in the corresponding description.</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>
@@ -6263,6 +6275,11 @@ If set to 0.0, infinity will be used.</xs:documentation>
       </xs:element>
       <xs:element minOccurs="0" name="Extension" type="tt:SupportedRulesExtension" />
     </xs:sequence>
+    <xs:attribute name="Limit" type="xs:int">
+      <xs:annotation>
+        <xs:documentation>Maximum number of concurrent instances.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:anyAttribute processContents="lax" />
   </xs:complexType>
   <xs:complexType name="SupportedRulesExtension">
@@ -6283,23 +6300,17 @@ If set to 0.0, infinity will be used.</xs:documentation>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="AnalyticsModuleDescription" type="tt:ConfigDescription" />
       <xs:element minOccurs="0" name="Extension" type="tt:SupportedAnalyticsModulesExtension" />
     </xs:sequence>
+    <xs:attribute name="Limit" type="xs:int">
+      <xs:annotation>
+        <xs:documentation>Maximum number of concurrent instances.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
     <xs:anyAttribute processContents="lax" />
   </xs:complexType>
   <xs:complexType name="SupportedAnalyticsModulesExtension">
     <xs:sequence>
       <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax" />
     </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="PolygonConfiguration">
-    <xs:sequence>
-      <xs:element name="Polygon" type="tt:Polygon">
-        <xs:annotation>
-          <xs:documentation>Contains Polygon configuration for rule parameters</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax" />
-    </xs:sequence>
-    <xs:anyAttribute processContents="lax" />
   </xs:complexType>
   <xs:complexType name="PolylineArray">
     <xs:sequence>
@@ -7665,7 +7676,12 @@ and sample rate. </xs:documentation>
 		   gun_shot, scream, glass_breaking, tire_screech   
 		</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:string" />
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="gun_shot" />
+      <xs:enumeration value="scream" />
+      <xs:enumeration value="glass_breaking" />
+      <xs:enumeration value="tire_screech" />
+    </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="AudioClassCandidate">
     <xs:sequence>
@@ -8111,6 +8127,29 @@ and sample rate. </xs:documentation>
   </xs:complexType>
   <xs:complexType name="StorageReferencePathExtension">
     <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax" />
+    </xs:sequence>
+    <xs:anyAttribute processContents="lax" />
+  </xs:complexType>
+  <xs:element name="PolygonOptions" type="tt:PolygonOptions" />
+  <xs:complexType name="PolygonOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RectangleOnly" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>
+True if the device supports defining a region only using Rectangle.
+The rectangle points are still passed using a Polygon element if the device does not support polygon regions. In this case, the points provided in the Polygon element shall represent a rectangle.
+				</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="VertexLimits" type="tt:IntRange">
+        <xs:annotation>
+          <xs:documentation>
+Provides the minimum and maximum number of points that can be defined in the Polygon.
+If RectangleOnly is not set to true, this parameter is required.
+				</xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax" />
     </xs:sequence>
     <xs:anyAttribute processContents="lax" />

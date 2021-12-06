@@ -7,7 +7,7 @@ namespace Hspi.Camera
 {
     internal abstract class SnapshotsHelper
     {
-        public SnapshotsHelper(CancellationToken cancellationToken)
+        protected SnapshotsHelper(CancellationToken cancellationToken)
         {
             this.cancellationToken = cancellationToken;
         }

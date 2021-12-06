@@ -20,12 +20,12 @@ namespace Hspi.Camera
             this.defaultHttpClient = defaultHttpClient;
         }
 
-        public async Task<string> DownloadToFile(CancellationToken token,
-                                                 string path,
+        public async Task<string> DownloadToFile(string path,
                                                  Uri uri,
                                                  HttpMethod httpMethod,
-                                                 [AllowNull]string extension,
-                                                 [AllowNull]string data)
+                                                 [AllowNull] string extension,
+                                                 [AllowNull] string data,
+                                                 CancellationToken token)
         {
             string tempPath = Path.ChangeExtension(path, "tmp");
             try
@@ -33,7 +33,7 @@ namespace Hspi.Camera
                 string mediaType = null;
                 using (var fileStream = new FileStream(tempPath,  FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, 1024* 1024,  true))
                 {
-                    mediaType = await DownloadToStream(token, fileStream, uri, httpMethod, data).ConfigureAwait(false);
+                    mediaType = await DownloadToStream(fileStream, uri, httpMethod, data, token).ConfigureAwait(false);
                 }
                 string fileExtension = extension ?? MimeTypesMap.GetExtension(mediaType);
                 string destFileName = Path.ChangeExtension(path, fileExtension);
@@ -57,8 +57,8 @@ namespace Hspi.Camera
             }
         }
 
-        public async Task<HttpResponseMessage> SendToCamera(CancellationToken token, 
-                                                            HttpRequestMessage httpRequestMessage,
+        public async Task<HttpResponseMessage> SendToCamera(HttpRequestMessage httpRequestMessage,
+                                                            CancellationToken token,
                                                             string content = null,
                                                             HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
                                                             HttpClient client = null)
@@ -81,22 +81,22 @@ namespace Hspi.Camera
             return response;
         }
 
-        private async Task<string> DownloadToStream(CancellationToken token,
-                                                    Stream stream, 
-                                                    Uri uri, 
-                                                    HttpMethod httpMethod, 
-                                                    [AllowNull]string data)
+        private async Task<string> DownloadToStream(Stream stream,
+                                                    Uri uri,
+                                                    HttpMethod httpMethod,
+                                                    [AllowNull] string data,
+                                                    CancellationToken token)
         {
             using (var httpRequestMessage = new HttpRequestMessage(httpMethod, uri))
             {
-                using (var response = await SendToCamera(token, httpRequestMessage, data,
+                using (var response = await SendToCamera(httpRequestMessage, token, data,
                                                          HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
                 {
                     string mediaType = response.Content.Headers?.ContentType?.MediaType;
 
                     if (mediaType == null)
                     {
-                        throw new Exception(Invariant($"[{cameraName}]Invalid Data for {uri} :{mediaType ?? string.Empty}"));
+                        throw new InvalidOperationException(Invariant($"[{cameraName}]Invalid Data for {uri} :{mediaType}"));
                     }
 
                     using (var downloadStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))

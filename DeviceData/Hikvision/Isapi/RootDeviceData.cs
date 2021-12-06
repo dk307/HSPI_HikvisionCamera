@@ -43,91 +43,93 @@ namespace Hspi.DeviceData.Hikvision.Isapi
         {
             get
             {
-                var pairs = new List<VSVGPairs.VSPair>();
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                var pairs = new List<VSVGPairs.VSPair>
                 {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.DownloadVideos,
-                    Status = "Download Videos",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.CancelDownloadVideos,
-                    Status = "Cancel Download Videos",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.Reboot,
-                    Status = "Reboot",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.RequestKeyFrameTrack1,
-                    Status = "Request Key Frame Track1",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.RequestKeyFrameTrack2,
-                    Status = "Request Key Frame Track2",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.StartRecordingTrack1,
-                    Status = "Start Recording Track1",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.StartRecordingTrack2,
-                    Status = "Start Recording Track2",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.StopRecordingTrack1,
-                    Status = "Stop Recording Track1",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.StopRecordingTrack2,
-                    Status = "Stop Recording Track2",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.TakeSnapshotTrack1,
-                    Status = "Take Snapshot Track1",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.TakeSnapshotTrack2,
-                    Status = "Take Snapshot Track2",
-                    Render = Enums.CAPIControlType.Button,
-                });
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = (double)Commands.Poll,
-                    Status = "Poll",
-                    Render = Enums.CAPIControlType.Button,
-                });
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.DownloadVideos,
+                        Status = "Download Videos",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.CancelDownloadVideos,
+                        Status = "Cancel Download Videos",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.Reboot,
+                        Status = "Reboot",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.RequestKeyFrameTrack1,
+                        Status = "Request Key Frame Track1",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.RequestKeyFrameTrack2,
+                        Status = "Request Key Frame Track2",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.StartRecordingTrack1,
+                        Status = "Start Recording Track1",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.StartRecordingTrack2,
+                        Status = "Start Recording Track2",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.StopRecordingTrack1,
+                        Status = "Stop Recording Track1",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.StopRecordingTrack2,
+                        Status = "Stop Recording Track2",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.TakeSnapshotTrack1,
+                        Status = "Take Snapshot Track1",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.TakeSnapshotTrack2,
+                        Status = "Take Snapshot Track2",
+                        Render = Enums.CAPIControlType.Button,
+                    },
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Control)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = (double)Commands.Poll,
+                        Status = "Poll",
+                        Render = Enums.CAPIControlType.Button,
+                    }
+                };
                 return pairs;
             }
         }
@@ -186,6 +188,7 @@ namespace Hspi.DeviceData.Hikvision.Isapi
 
         public override void OnPlugInLoad(IHSApplication HS, ICameraSettings cameraSettings)
         {
+            // Method intentionally left empty.
         }
 
         private static async Task TakeSnapshot(HikvisionIsapiCamera camera, int track)

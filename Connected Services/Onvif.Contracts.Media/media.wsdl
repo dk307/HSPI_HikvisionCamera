@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.onvif.org/ver10/media/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" targetNamespace="http://www.onvif.org/ver10/media/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
-    <xs:schema xmlns:tt="http://www.onvif.org/ver10/schema" elementFormDefault="qualified" targetNamespace="http://www.onvif.org/ver10/media/wsdl" version="19.06">
+    <xs:schema xmlns:tt="http://www.onvif.org/ver10/schema" elementFormDefault="qualified" targetNamespace="http://www.onvif.org/ver10/media/wsdl" version="21.06">
       <xs:import schemaLocation="../../../ver10/schema/onvif.xsd" namespace="http://www.onvif.org/ver10/schema" />
       <xs:element name="GetServiceCapabilities">
         <xs:complexType>
@@ -1594,12 +1594,6 @@ AudioOutputConfiguration shall be removed.</xs:documentation>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:simpleType name="EncodingTypes">
-        <xs:annotation>
-          <xs:documentation>Indication which encodings are supported for this video source. The list may contain one or more enumeration values of tt:VideoEncoding.</xs:documentation>
-        </xs:annotation>
-        <xs:list itemType="xs:string" />
-      </xs:simpleType>
       <xs:complexType name="VideoSourceMode">
         <xs:sequence>
           <xs:element name="MaxFramerate" type="xs:float">
@@ -1612,7 +1606,7 @@ AudioOutputConfiguration shall be removed.</xs:documentation>
               <xs:documentation>Max horizontal and vertical resolution for this video source mode.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="Encodings" type="trt:EncodingTypes">
+          <xs:element name="Encodings" type="tt:StringList">
             <xs:annotation>
               <xs:documentation>Indication which encodings are supported for this video source. The list may contain one or more enumeration values of tt:VideoEncoding.</xs:documentation>
             </xs:annotation>

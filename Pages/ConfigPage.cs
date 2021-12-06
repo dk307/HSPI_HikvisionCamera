@@ -315,7 +315,6 @@ namespace Hspi.Pages
         private string BuildAddNewOnvifCameraWebPageBody([AllowNull]OnvifCameraSetting cameraSettings)
         {
             TimeSpan DefaultAlarmCancelInterval = TimeSpan.FromSeconds(30);
-            TimeSpan DefaultCameraPropertiesRefreshInterval = TimeSpan.FromSeconds(60);
 
             string id = cameraSettings?.Id ?? Guid.NewGuid().ToString();
             string name = cameraSettings?.Name ?? string.Empty;
@@ -490,7 +489,7 @@ namespace Hspi.Pages
             var tab3 = new clsJQuery.Tab
             {
                 tabTitle = "ISAPI Properties",
-                tabDIVID = Invariant($"tabs{i++}"),
+                tabDIVID = Invariant($"tabs{i}"),
                 tabContent = BuildHikvsionISAPICamerasPropertiesTab()
             };
             tabs.tabs.Add(tab3);
@@ -638,7 +637,9 @@ namespace Hspi.Pages
                 try
                 {
                     XmlPathData xPath = new XmlPathData(cameraPropertyXPath);
-                    var path = xPath.Path;
+#pragma warning disable S1481 // Unused local variables should be removed
+                    var _ = xPath.Path;
+#pragma warning restore S1481 // Unused local variables should be removed
                 }
                 catch (Exception)
                 {
