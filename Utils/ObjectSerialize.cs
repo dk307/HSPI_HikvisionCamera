@@ -22,7 +22,7 @@ namespace Hspi.Utils
         {
             if (obj == null)
             {
-                return null;
+                return Array.Empty<byte>();
             }
 
             using (var memoryStream = new MemoryStream())
@@ -35,6 +35,7 @@ namespace Hspi.Utils
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Vulnerability", "S5773:Types allowed to be deserialized should be restricted", Justification = "<Pending>")]
         public static object DeSerializeFromBytes([AllowNull]byte[] arrBytes)
         {
             if (arrBytes == null || arrBytes.Length == 0)

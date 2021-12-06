@@ -109,9 +109,11 @@ namespace Hspi.DeviceData
                 string address = deviceAddress;
                 device.set_Address(HS, address);
                 device.set_Device_Type_String(HS, deviceData.HSDeviceTypeString);
-                var deviceType = new DeviceTypeInfo_m.DeviceTypeInfo();
-                deviceType.Device_API = deviceData.DeviceAPI;
-                deviceType.Device_Type = deviceData.HSDeviceType;
+                var deviceType = new DeviceTypeInfo_m.DeviceTypeInfo
+                {
+                    Device_API = deviceData.DeviceAPI,
+                    Device_Type = deviceData.HSDeviceType
+                };
 
                 device.set_DeviceType_Set(HS, deviceType);
                 device.set_Interface(HS, PluginData.PlugInName);
@@ -184,9 +186,7 @@ namespace Hspi.DeviceData
 
         private void GetCurrentDevices()
         {
-            var deviceEnumerator = HS.GetDeviceEnumerator() as clsDeviceEnumeration;
-
-            if (deviceEnumerator == null)
+            if (!(HS.GetDeviceEnumerator() is clsDeviceEnumeration deviceEnumerator))
             {
                 throw new HspiException(Invariant($"{PluginData.PlugInName} failed to get a device enumerator from HomeSeer."));
             }

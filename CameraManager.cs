@@ -86,7 +86,9 @@ namespace Hspi
 
         private readonly CameraBase camera;
         private readonly CombinedCancelToken cancelTokenSource;
+#pragma warning disable S1450 // Private fields only used as local variables in methods should become local variables
         private readonly IHSApplication HS;
+#pragma warning restore S1450 // Private fields only used as local variables in methods should become local variables
         private readonly DeviceRootDeviceManager rootDeviceData;
     }
 }

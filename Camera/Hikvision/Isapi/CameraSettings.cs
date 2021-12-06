@@ -79,8 +79,7 @@ namespace Hspi.Camera.Hikvision.Isapi
                 return false;
             }
 
-            CameraSettings cameraSettingsObj = obj as CameraSettings;
-            if (cameraSettingsObj == null)
+            if (!(obj is CameraSettings cameraSettingsObj))
             {
                 return false;
             }
@@ -92,8 +91,7 @@ namespace Hspi.Camera.Hikvision.Isapi
 
         public bool Equals(ICameraSettings other)
         {
-            var otherCameraSetting = other as CameraSettings;
-            return otherCameraSetting == null ? false : Equals(otherCameraSetting);
+            return other is CameraSettings otherCameraSetting && Equals(otherCameraSetting);
         }
 
         public DeviceDataBase GetDevice(DeviceIdentifier deviceIdentifier)

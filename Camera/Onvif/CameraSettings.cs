@@ -59,8 +59,7 @@ namespace Hspi.Camera.Onvif
                 return false;
             }
 
-            CameraSettings cameraSettingsObj = obj as CameraSettings;
-            if (cameraSettingsObj == null)
+            if (!(obj is CameraSettings cameraSettingsObj))
             {
                 return false;
             }
@@ -72,8 +71,7 @@ namespace Hspi.Camera.Onvif
 
         public bool Equals(ICameraSettings other)
         {
-            var otherCameraSetting = other as CameraSettings;
-            return otherCameraSetting == null ? false : Equals(otherCameraSetting);
+            return (other is CameraSettings otherCameraSetting) && Equals(otherCameraSetting);
         }
 
         public DeviceDataBase GetDevice(DeviceIdentifier deviceIdentifier)

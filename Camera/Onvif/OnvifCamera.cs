@@ -52,7 +52,7 @@ namespace Hspi.Camera.Onvif
             string path = Path.Combine(CameraSettings.SnapshotDownloadDirectory,
                                        DateTimeOffset.Now.ToString("yyyy-MM-dd--HH-mm-ss-ff", CultureInfo.InvariantCulture));
 
-            return await downloadHelper.DownloadToFile(Token, path, downloadUri, HttpMethod.Get, null, null).ConfigureAwait(false);
+            return await downloadHelper.DownloadToFile(path, downloadUri, HttpMethod.Get, null, null, Token).ConfigureAwait(false);
         }
 
         public async Task<Uri> GetSnapshotUri()
@@ -101,7 +101,7 @@ namespace Hspi.Camera.Onvif
         {
             using (_ = await onvifClientLock.LockAsync(Token).ConfigureAwait(false))
             {
-                onvifClient = null;
+                onvifClientMain = null;
             }
         }
 
@@ -117,13 +117,11 @@ namespace Hspi.Camera.Onvif
             var credentials = new NetworkCredential(CameraSettings.Login, CameraSettings.Password);
             credCache.Add(new Uri(CameraSettings.CameraHost), "Digest", credentials);
 
-#pragma warning disable CA2000 // Dispose objects before losing scope
             var httpClientHandler = new HttpClientHandler
             {
                 Credentials = credCache,
                 MaxConnectionsPerServer = 4,
             };
-#pragma warning restore CA2000 // Dispose objects before losing scope
 
             if (httpClientHandler.SupportsAutomaticDecompression)
             {
@@ -164,7 +162,7 @@ namespace Hspi.Camera.Onvif
             {
                 using (_ = await onvifClientLock.LockAsync(Token).ConfigureAwait(false))
                 {
-                    if (onvifClient == null)
+                    if (onvifClientMain == null)
                     {
                         Uri deviceUri = new Uri(CameraSettings.CameraHost);
                         var credential = new NetworkCredential(CameraSettings.Login, CameraSettings.Password);
@@ -175,9 +173,9 @@ namespace Hspi.Camera.Onvif
 
                         await onvifClientTemp.ConnectAsync(Token).ConfigureAwait(false);
 
-                        this.onvifClient = onvifClientTemp;
+                        this.onvifClientMain = onvifClientTemp;
                     }
-                    return this.onvifClient;
+                    return this.onvifClientMain;
                 }
             }
             catch (Exception ex)
@@ -251,8 +249,8 @@ namespace Hspi.Camera.Onvif
         private readonly AlarmProcessingHelper alarmProcessingHelper;
         private readonly HttpClient defaultHttpClient;
         private readonly DownloadHelper downloadHelper;
-        private OnvifClient onvifClient;
-        private AsyncLock onvifClientLock = new AsyncLock();
+        private OnvifClient onvifClientMain;
+        private readonly AsyncLock onvifClientLock = new AsyncLock();
 
         #region IDisposable Support
 

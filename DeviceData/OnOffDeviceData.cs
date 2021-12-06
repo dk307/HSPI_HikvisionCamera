@@ -6,7 +6,7 @@ namespace Hspi.DeviceData
 {
     internal abstract class OnOffDeviceData : DeviceDataBase
     {
-        public OnOffDeviceData(DeviceType deviceType, string deviceTypeId) : base(deviceType, deviceTypeId)
+        protected OnOffDeviceData(DeviceType deviceType, string deviceTypeId) : base(deviceType, deviceTypeId)
         {
         }
 
@@ -16,20 +16,22 @@ namespace Hspi.DeviceData
         {
             get
             {
-                var pairs = new List<VSVGPairs.VGPair>();
-                pairs.Add(new VSVGPairs.VGPair()
+                var pairs = new List<VSVGPairs.VGPair>
                 {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Graphic = Path.Combine(PluginData.HSImagesPathRoot, "on.gif"),
-                    Set_Value = OnValue,
-                });
+                    new VSVGPairs.VGPair()
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Graphic = Path.Combine(PluginData.HSImagesPathRoot, "on.gif"),
+                        Set_Value = OnValue,
+                    },
 
-                pairs.Add(new VSVGPairs.VGPair()
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Graphic = Path.Combine(PluginData.HSImagesPathRoot, "off.gif"),
-                    Set_Value = OffValue
-                });
+                    new VSVGPairs.VGPair()
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Graphic = Path.Combine(PluginData.HSImagesPathRoot, "off.gif"),
+                        Set_Value = OffValue
+                    }
+                };
 
                 return pairs;
             }
@@ -41,24 +43,26 @@ namespace Hspi.DeviceData
         {
             get
             {
-                var pairs = new List<VSVGPairs.VSPair>();
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Status)
+                var pairs = new List<VSVGPairs.VSPair>
                 {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = OffValue,
-                    ControlUse = ePairControlUse._Off,
-                    Status = OffValueString,
-                    Render = Enums.CAPIControlType.Button
-                });
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Status)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = OffValue,
+                        ControlUse = ePairControlUse._Off,
+                        Status = OffValueString,
+                        Render = Enums.CAPIControlType.Button
+                    },
 
-                pairs.Add(new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Status)
-                {
-                    PairType = VSVGPairs.VSVGPairType.SingleValue,
-                    Value = OnValue,
-                    ControlUse = ePairControlUse._On,
-                    Status = OnValueString,
-                    Render = Enums.CAPIControlType.Button
-                });
+                    new VSVGPairs.VSPair(HomeSeerAPI.ePairStatusControl.Status)
+                    {
+                        PairType = VSVGPairs.VSVGPairType.SingleValue,
+                        Value = OnValue,
+                        ControlUse = ePairControlUse._On,
+                        Status = OnValueString,
+                        Render = Enums.CAPIControlType.Button
+                    }
+                };
                 return pairs;
             }
         }

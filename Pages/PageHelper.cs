@@ -12,7 +12,7 @@ namespace Hspi.Pages
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal abstract class PageHelper : PageBuilderAndMenu.clsPageBuilder
     {
-        public PageHelper(IHSApplication HS, PluginConfig pluginConfig, string pageName) : base(pageName)
+        protected PageHelper(IHSApplication HS, PluginConfig pluginConfig, string pageName) : base(pageName)
         {
             this.HS = HS;
             this.pluginConfig = pluginConfig;

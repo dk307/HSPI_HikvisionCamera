@@ -10,7 +10,7 @@ namespace Hspi.Camera
     [NullGuard(ValidationFlags.Arguments | ValidationFlags.NonPublic)]
     internal abstract class CameraBase : IDisposable
     {
-        public CameraBase(CancellationToken shutdown)
+        protected CameraBase(CancellationToken shutdown)
         {
             Updates = new AsyncProducerConsumerQueue<ICameraContruct>();
             sourceToken = CancellationTokenSource.CreateLinkedTokenSource(shutdown);
@@ -30,6 +30,7 @@ namespace Hspi.Camera
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)

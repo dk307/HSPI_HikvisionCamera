@@ -81,7 +81,9 @@ namespace Hspi
                 HsClient.Connect();
                 HS = HsClient.ServiceProxy;
 
+#pragma warning disable S1481 // Unused local variables should be removed
                 var apiVersion = HS.APIVersion; // just to make sure our connection is valid
+#pragma warning restore S1481 // Unused local variables should be removed
 
                 hsTraceListener = new HSTraceListener(this as ILogger);
                 Debug.Listeners.Add(hsTraceListener);
@@ -97,7 +99,9 @@ namespace Hspi
                 CallbackClient.Connect();
                 Callback = CallbackClient.ServiceProxy;
 
+#pragma warning disable S1481 // Unused local variables should be removed
                 var apiVersion = Callback.APIVersion; // just to make sure our connection is valid
+#pragma warning restore S1481 // Unused local variables should be removed
             }
             catch (Exception ex)
             {
@@ -120,8 +124,8 @@ namespace Hspi
 
         public void Dispose()
         {
-            DisconnectHspiConnection();
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public override string GenPage([AllowNull]string link) => string.Empty;
@@ -201,7 +205,10 @@ namespace Hspi
 
         public override bool RaisesGenericCallbacks() => false;
 
-        public override SearchReturn[] Search([AllowNull]string searchString, bool regEx) => null;
+        public override SearchReturn[] Search([AllowNull]string searchString, bool regEx)
+        {
+            return Array.Empty<SearchReturn>();
+        }
 
         public override void set_Condition(IPlugInAPI.strTrigActInfo actionInfo, bool value)
         {
@@ -257,6 +264,8 @@ namespace Hspi
             {
                 if (disposing)
                 {
+                    DisconnectHspiConnection();
+
                     if (HsClient != null)
                     {
                         HsClient.Disconnected -= HsClient_Disconnected;
