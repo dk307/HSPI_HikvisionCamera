@@ -1,4 +1,4 @@
 ﻿[*.cs]
 
-# CA1068: CancellationToken parameters must come last
-dotnet_diagnostic.CA1068.severity = silent
+# S927: Parameter names should match base declaration and other partial definitions
+dotnet_diagnostic.S927.severity = none

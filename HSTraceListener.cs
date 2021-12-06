@@ -63,7 +63,9 @@ namespace Hspi
                     }
                 }
                 catch
-                { }
+                {
+                    //ignore all logging errors
+                }
             }
         }
 
@@ -86,7 +88,9 @@ namespace Hspi
                     logger.LogDebug(message);
                 }
                 catch
-                { }
+                { 
+                    //ignore all logging errors
+                }
             }
         }
 

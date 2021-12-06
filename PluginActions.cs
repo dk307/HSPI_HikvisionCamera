@@ -89,7 +89,7 @@ namespace Hspi
                                 stringBuilder.Append(action.Interval);
                                 stringBuilder.Append(" on ");
 
-                                if ((action != null) && pluginConfig.AllCameras.TryGetValue(action.Id, out var device))
+                                if (pluginConfig.AllCameras.TryGetValue(action.Id, out var device))
                                 {
                                     stringBuilder.Append(device.Name);
                                 }
