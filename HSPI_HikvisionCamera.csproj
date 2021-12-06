@@ -170,10 +170,10 @@
     <None Include="Connected Services\Onvif.Contracts.DeviceManagement\bf-2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Onvif.Contracts.DeviceManagement\common1.xsd">
+    <None Include="Connected Services\Onvif.Contracts.DeviceManagement\common.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Onvif.Contracts.DeviceManagement\devicemgmt1.wsdl" />
+    <None Include="Connected Services\Onvif.Contracts.DeviceManagement\devicemgmt.wsdl" />
     <None Include="Connected Services\Onvif.Contracts.DeviceManagement\Hspi.Onvif.Contracts.DeviceManagement.AddScopesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -426,7 +426,7 @@
     <None Include="Connected Services\Onvif.Contracts.DeviceManagement\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Onvif.Contracts.DeviceManagement\onvif1.xsd">
+    <None Include="Connected Services\Onvif.Contracts.DeviceManagement\onvif.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\Onvif.Contracts.DeviceManagement\t-1.xsd">
@@ -447,7 +447,7 @@
     <None Include="Connected Services\Onvif.Contracts.Event\bf-2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Onvif.Contracts.Event\event-vs1.wsdl" />
+    <None Include="Connected Services\Onvif.Contracts.Event\event-vs.wsdl" />
     <None Include="Connected Services\Onvif.Contracts.Event\Hspi.Onvif.Contracts.Event.Capabilities.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -544,7 +544,7 @@
     <None Include="Connected Services\Onvif.Contracts.Event\ws-addr.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\Onvif.Contracts.Event\WS-BaseNotification1.wsdl" />
+    <None Include="Connected Services\Onvif.Contracts.Event\WS-BaseNotification.wsdl" />
     <None Include="Connected Services\Onvif.Contracts.Event\WS-Resource.wsdl" />
     <None Include="Connected Services\Onvif.Contracts.Event\xml.xsd">
       <SubType>Designer</SubType>
@@ -835,16 +835,16 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\Onvif.Contracts.DeviceManagement\" />
-    <WCFMetadataStorage Include="Connected Services\Onvif.Contracts.Event\" />
-    <WCFMetadataStorage Include="Connected Services\Onvif.Contracts.Media\" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\Onvif.Contracts.DeviceManagement\" />
+    <WCFMetadataStorage Include="Connected Services\Onvif.Contracts.Event\" />
+    <WCFMetadataStorage Include="Connected Services\Onvif.Contracts.Media\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- ILMerge -->
